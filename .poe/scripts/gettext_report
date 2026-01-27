@@ -1,0 +1,30 @@
+#!/bin/sh
+LOCALE_DIR="back/myapp/locale"
+POT_FILE="$LOCALE_DIR/django.pot"
+./back/manage.py makemessages -a --keep-pot >/dev/null
+trap "rm -f $POT_FILE 2>/dev/null" EXIT
+DEFAULT_LANG=en
+AVAILABLE_LANGS=$(find "$LOCALE_DIR" -mindepth 1 -maxdepth 1 -type d -exec basename '{}' ';')
+echo '__________________________________________________'
+msg_ko=
+for lang in $AVAILABLE_LANGS; do
+  PO_FILE="$LOCALE_DIR/$lang/LC_MESSAGES/django.po"
+  if [ -f "$PO_FILE" ]; then
+    echo "Analyzing $PO_FILE"
+    untranslated=$(msgattrib --no-wrap -F --untranslated "$PO_FILE")
+    if [ -n "$untranslated" ]; then
+      echo "$untranslated" >&2
+      msg_ko=1
+    fi
+  fi
+done
+if git ls-files --exclude-standard -o -m | grep -q -E '\.mo$'; then
+  echo "Some .mo files are not up to date" >&2
+  git ls-files --exclude-standard -o -m | grep -E '\.mo$' >&2
+  msg_ko=1
+fi
+if [ -z "$msg_ko" ]; then
+  echo "Ok"
+else
+  exit 1
+fi

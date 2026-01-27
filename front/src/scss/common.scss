@@ -1,0 +1,8 @@
+@use "./sds-design-system/color-shades" as *;
+.v-application ol,
+.v-application ul {
+  padding-left: 24px;
+}
+.v-input--density-compact { /* stylelint-disable-line selector-class-pattern */
+  --v-input-control-height: 26px !important;
+}

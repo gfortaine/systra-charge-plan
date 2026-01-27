@@ -1,0 +1,61 @@
+@use "./color-shades" as *;
+.drawer {
+  background-color: $secondary !important;
+}
+.icon {
+  opacity: 1 !important;
+  color: $white;
+}
+.icon-selected {
+  color: $secondary;
+}
+.drawer-header {
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid $white;
+  align-items: center;
+  padding-left: 16px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  color: $white;
+}
+.fold-down-pane-text-closed {
+  margin-left: 40px;
+  display: none;
+}
+.drawer-header:hover {
+  background-color: $secondary-light;
+  color: $secondary;
+}
+.fold-down-pane-text-opened {
+  margin-left: 30px;
+  padding-right: 45px;
+}
+.app-menu {
+  height: calc(100% - 80px);
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+}
+.app-menu-item-title {
+  color: $white;
+}
+.app-menu-item {
+  padding: 0 13px !important;
+  justify-content: flex-start !important;
+  flex: 0;
+}
+.app-menu-item:hover {
+  background-color: $secondary-light;
+  .icon,
+  .app-menu-item-title {
+    color: $secondary;
+  }
+}
+.app-menu-item-selected {
+  background-color: $secondary-light !important;
+}
+.app-menu-item-title-selected {
+  color: $secondary !important;
+}

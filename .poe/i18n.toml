@@ -1,0 +1,11 @@
+[tasks.i18n_extract]
+help = "Extracts python i18n translations"
+cmd = "./back/manage.py makemessages --all"
+
+[tasks.i18n_compile]
+help = "Compiles python i18n translations"
+cmd = "./back/manage.py compilemessages -i .venv -i node_modules -i .gitlab-ci-local -i front"
+
+[tasks.i18n_report]
+help = "Report any missing python i18n translations"
+cmd = "./.poe/scripts/gettext_report"

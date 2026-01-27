@@ -1,0 +1,61 @@
+#!/bin/sh
+set -e
+cd "$(dirname "$0")"
+if [ -z "$1" ]; then
+  echo "You must specify the new application name as first argument" >&2
+  exit 1
+elif ! echo "$1" | grep -q '^[a-z_]\+$'; then
+  echo "The new application name should be lower case only + underscore" >&2
+  exit 1
+fi
+name="$1"
+if [ -n "$2" ] && echo "$2" | grep -q '^https:'; then
+  url="$2"
+fi
+# shellcheck disable=SC2018,SC2019
+uname="$(echo "$name"|cut -c1|tr a-z A-Z)$(echo "$name"|tr '_' ' '|cut -c2-)"
+for f in \
+  README.md \
+  pyproject.toml \
+  package.json \
+  $(find docker -type f) \
+  back/myapp/templates/index.html \
+  .gitlab/merge_request_templates/code-review-checklist.md \
+  .gitlab-ci.yml \
+  .gitignore \
+  .dockerignore \
+  $(find .poe -type f) \
+  $(find . -type f name '*.*js') \
+  $(find . -type f name '*.jsx') \
+  $(find . -type f name '*.py') \
+  leaks.toml
+; do
+  sed -ri -e "s/myapp/$name/g" -e "s/Myapp/$uname/g" "$f"
+done
+mv back/myapp back/"$name"
+rm -rf \
+  CHANGELOG.md \
+  .git
+# set version to 0.1.0
+sed -ri '/^version =/{s/".*"/"0.1.0"/}' pyproject.toml
+sed -ri '/^  "version": /{s/".*"/"version": "0.1.0"/}' package.json
+sed -ri "/Code Generators/d" pyproject.toml
+sed -ri "/Start of Boilerplate doc/,/End of Boilerplate doc/d" README.md
+if [ -n "$url" ]; then
+  for f in \
+    README.md \
+    pyproject.toml \
+    package.json \
+  ; do
+    sed -ri "s|https://gitlab.com/.*/boilerplates/[^-a-z0-9]+|$url" "$f"
+  done
+fi
+cat <<EOF
+Don’t forget to:
+- edit the LICENSE file
+- edit pyproject.toml file (description, author, private, urls)
+- edit package.json file (description, author, private, urls)
+- edit README.md file (badges, description, env variables)
+- change the static assets files
+- change the favicon.ico icon file
+EOF

@@ -1,0 +1,195 @@
+[project]
+name = "myapp"
+version = "1.0.0"
+description = "Boilerplate for django + react."
+authors = [
+    { name = "Cyrille Pontvieux", email = "cpontvieux@systra.com" },
+]
+maintainers = [
+    { name = "Cyrille Pontvieux", email = "cpontvieux@systra.com" },
+]
+# license = "LicenseRef-Proprietary"
+license = "MIT"
+requires-python = "~=3.13.0"
+readme = "README.md"
+keywords = [
+    "boilerplate",
+    "monorepo",
+    "django",
+    "graphql",
+    "react",
+]
+# https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Environment :: Web Environment",
+    "Framework :: Django",
+    "Framework :: Django :: 5.2",
+    "Intended Audience :: Developers",
+    # "License :: Other/Proprietary License",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    "Topic :: Software Development :: Code Generators",
+    "Typing :: Typed",
+]
+dependencies = [
+    "django~=5.2",
+    "django-cors-headers", # CORS headers for Django
+    "django-extensions", # More commands for Django
+    "django-pdb", # Django Python Debugger
+    "django-oauth2-authcodeflow", # Authent
+    "djvite", # Vite integration
+    "pillow", # To handle images, like django ImageField
+    "psycopg[binary]", # Postgresql driver
+    "requests", # Http requests
+    "strawberry-graphql", # GraphQL
+    "strawberry-graphql-django", # GraphQL for Django
+]
+
+[project.urls]
+Homepage = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate"
+Repository = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate"
+"Bug Tracker" = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/-/issues"
+"Merge Requests" = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/-/merge_requests"
+Changelog = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/-/blob/master/CHANGELOG.md"
+
+[dependency-groups]
+dev = [
+    "django-debug-toolbar", # Debug toolbar
+    "django-mock-queries", # Mocking Django queryset
+    "flake8", # PEP8
+    "flake8-pyproject", # Allow to read configuration from pyproject.toml
+    "flake8-todo", # todo in codes as warning checkstyle
+    "isort", # sorting imports
+    "parameterized", # Parameterize multiple tests with a unique function
+    "pdbpp", # Python Debugger ++
+    "poethepoet", # Task runner
+    "pydot", # Dot (graph) generation
+    "pytest", # Python Unit Tests
+    "pytest-cov", # Coverage for Pytest
+    "pytest-django", # Pytest for Django
+    "pytest-freezer", # Time freeze for Pytest
+    "pytest-html", # Allow html output for Pytest results
+    "werkzeug", # Simple http and wsgi server for dev
+]
+
+typing = [
+    "django-stubs",
+    "mypy",
+    "types-mock",
+    "types-requests",
+]
+
+[tool.uv]
+default-groups = [
+    "dev",
+    "typing",
+]
+
+[tool.poe]
+include = [
+    ".poe/graphs.toml",
+    ".poe/i18n.toml",
+    ".poe/linters.toml",
+    ".poe/secret.toml",
+    ".poe/server.toml",
+    ".poe/tests.toml",
+    ".poe/version.toml",
+]
+
+[tool.flake8]
+max-line-length = 160
+ignore = [
+    "W503",  # allow breaking line before a binary operator and improve readability
+    "W504",  # allow line break after binary operator (if ones prefer)
+]
+exclude = [
+    ".cache",
+    ".gitlab-ci-local",
+    ".venv",
+    "venv",
+    "node_modules",
+    "back/myapp/migrations",
+]
+
+[tool.isort]
+# https://github.com/PyCQA/isort/wiki/isort-Settings
+line_length = 160
+skip_glob = "back/myapp/migrations/*"
+skip_gitignore = true
+# https://pycqa.github.io/isort/docs/configuration/multi_line_output_modes.html
+multi_line_output = 3
+reverse_relative = true
+use_parentheses = true
+combine_star = true
+force_grid_wrap = 2
+include_trailing_comma = true
+
+[tool.mypy]
+mypy_path = "$MYPY_CONFIG_FILE_DIR/back"
+# https://mypy.readthedocs.io/en/stable/config_file.html#confval-exclude
+exclude = [
+    "/migrations/.*\\.py$",
+    "/tests/.*\\.py$",
+    "\\.cache",
+    "\\.gitlab-ci-local",
+    "\\.venv",
+    "venv",
+]
+allow_redefinition = false
+ignore_missing_imports = true
+local_partial_types = true
+plugins = ["mypy_django_plugin.main", "strawberry.ext.mypy_plugin"]
+
+[tool.django-stubs]
+django_settings_module = "config.settings"
+ignore_missing_model_attributes = true
+
+[tool.pytest.ini_options]
+pythonpath = "back"
+norecursedirs = [
+    ".cache",
+    ".gitlab-ci-local",
+    ".venv",
+    "node_modules",
+    "back/myapp/migrations",
+]
+filterwarnings = [
+]
+django_debug_mode = "keep" # respect debug mode in test settings
+DJANGO_SETTINGS_MODULE = "tests.settings"
+junit_family = "xunit2"
+junit_logging = "all"
+addopts = [
+    "--cache-clear",
+    "--color=auto",
+    "--code-highlight=yes",
+    "--junit-xml=reports/report.xunit",
+    "--html=reports/report.html",
+    "--self-contained-html",
+    "--cov=back/myapp",
+    "--cov-report=term",
+    "--cov-report=xml",
+    "--cov-report=html",
+]
+[tool.coverage.run]
+omit = [
+    "back/myapp/migrations/*",
+    "back/myapp/management/*",
+    "back/myapp/models/*",
+    "back/myapp/tests/*",
+    "*/__init__.py",
+]
+branch = true
+data_file = "reports/.coverage"
+relative_files = true
+[tool.coverage.report]
+precision = 2
+[tool.coverage.html]
+directory = "reports/coverage"
+title = "Myapp backend coverage"
+[tool.coverage.xml]
+output = "reports/coverage.xml"

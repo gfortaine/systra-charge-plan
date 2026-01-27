@@ -1,0 +1,70 @@
+services:
+  db:
+    image: postgres:17-alpine
+    healthcheck:
+      test: ["CMD", "/docker-healthcheck"]
+      interval: 30s
+      timeout: 2s
+      retries: 20
+    environment:
+      - POSTGRES_DB=myapp
+      - POSTGRES_USER=myapp
+      - POSTGRES_PASSWORD=myapp
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - type: volume
+        source: db
+        target: /var/lib/postgresql/data/pgdata
+        read_only: false
+      - type: bind
+        source: ./docker/db-healthcheck
+        target: /docker-healthcheck
+        read_only: true
+  app:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    depends_on:
+      - db
+    env_file: .env
+    environment:
+      - "PRE_EP_PATH=/preentrypoint.sh"
+      - "PRE_START_PATH=/prestart.sh"
+      - "DJANGO_DB_HOST=db"
+      - "DJANGO_PORT=${DJANGO_PORT:-8000}"
+      - "PORT=${PORT:-3978}"
+    user: ${UID:-1000}:${GID:-1000}
+    volumes:
+      - type: bind
+        source: .
+        target: /app
+        read_only: false
+      - type: bind
+        source: ./docker/dev/preentrypoint.sh
+        target: /preentrypoint.sh
+        read_only: true
+      - type: bind
+        source: ./docker/dev/prestart.sh
+        target: /prestart.sh
+        read_only: true
+      - type: bind
+        source: ./docker/dev/django-command
+        target: /django-command
+        read_only: true
+      - type: bind
+        source: ./docker/dev/django.conf
+        target: /etc/supervisor/conf.d/django.conf
+        read_only: true
+      - type: bind
+        source: ./docker/dev/vite-command
+        target: /vite-command
+        read_only: true
+      - type: bind
+        source: ./docker/dev/vite.conf
+        target: /etc/supervisor/conf.d/vite.conf
+        read_only: true
+    ports:
+      - ${DJANGO_PORT:-8000}:${DJANGO_PORT:-8000}
+      - ${PORT:-3978}:${PORT:-3978}
+volumes:
+  db:

@@ -1,0 +1,18 @@
+[tasks.lint]
+help = "Run all python linters"
+args = [{ name = "FILE_PATHS", positional = true, multiple = true }]
+ignore_fail = "return_non_zero"
+sequence = [
+  "lint_flake8 ${FILE_PATHS}",
+  "lint_mypy ${FILE_PATHS}",
+]
+
+[tasks.lint_flake8]
+help = "Run flake8 to check for linter errors"
+args = [{ name = "FILE_PATHS", positional = true, multiple = true, default = "." }]
+cmd = "flake8 ${FILE_PATHS}"
+
+[tasks.lint_mypy]
+help = "Run mypy to check fot typing errors"
+args = [{ name = "FILE_PATHS", positional = true, multiple = true, default = "." }]
+cmd = "mypy ${FILE_PATHS}"

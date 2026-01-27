@@ -1,0 +1,148 @@
+mutation {
+  createCategory (data: {
+    name: "test"
+  }) {
+    id
+    name
+  }
+}
+mutation {
+  createCategory (data: {
+    name: "Un test"
+  }) {
+    id
+    name
+  }
+}
+mutation {
+  updateCategory (
+    filters: {
+      name: {
+        exact: "Un test"
+      }
+    }
+    data: {
+    	name: "C’est mieux"
+  	}
+  ) {
+    name
+  }
+}
+query {
+  allCategories {
+    id
+    name
+  }
+}
+query {
+  allUsers (
+    filters: {
+      partName: "cyr"
+      lastName: {
+        iContains: "pont"
+      }
+    }
+    pagination: {
+      limit: 10
+    }
+  ) {
+    username
+    firstName
+    lastName
+  }
+}
+mutation {
+  createPost (data: {
+    title: "Premier post"
+    text: "Contenu pas terrible"
+    categories: {
+      set: [2]
+    }
+    author: {
+    	username: "admin"
+    }
+  }) {
+    id
+    pubdate
+    title
+    author {
+      fullName
+    }
+    categories {name}
+  }
+}
+mutation {
+  createPost (data: {
+    title: "Deuxième post"
+    text: "C’est ptre un poil mieux"
+    categories: {
+      set: [1, 2]
+    }
+  }) {
+    id
+    pubdate
+    title
+    author {
+      fullName
+    }
+    categories {name}
+  }
+}
+mutation {
+  createComment (data: {
+    post: {
+      set: 1
+    }
+    text: "first comment"
+  }) {
+    id
+    author {
+      id
+      username
+    }
+  }
+}
+query {
+  category(pk: 2) {
+    name
+    posts (filters: {
+      search: "post"
+    }) {
+      id
+      title
+    }
+  }
+}
+query {
+  allPosts (
+    pagination: {offset: 1, limit: 100}
+  	filters: {
+      authorUsername: {contains: "min"}
+      search: "post"
+    }
+  ) {
+    title
+    text
+    pubdate
+    author {
+      username
+    	fullName
+  	}
+    comments {
+      id
+      text
+      author {
+        fullName
+      }
+    }
+  }
+}
+query {
+  allCategories {
+    id
+    name
+    posts {
+      title
+    }
+  }
+}

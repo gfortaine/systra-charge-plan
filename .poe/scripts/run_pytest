@@ -1,0 +1,92 @@
+#!/bin/bash
+set -e
+PROJECT_NAME=myapp
+POSTGRES_VER=17
+PYTEST_ARGS=(
+    --metadata "Myapp back Git version" "$(git name-rev --name-only HEAD)"
+)
+if [ -n "$QUICK" ]; then
+    PYTEST_ARGS+=(--reuse-db --no-cov)
+else
+    PYTEST_ARGS+=(-v)
+fi
+
+run_docker_postgres() {
+    version="$1"
+    port="$2"
+    docker volume inspect ${PROJECT_NAME}_postgres >/dev/null 2>&1 || docker volume create ${PROJECT_NAME}_postgres >/dev/null
+    if [ "$(docker run --rm -it -v ${PROJECT_NAME}_postgres:/data busybox cat /data/PG_VERSION)" != "$version" ]; then
+      docker volume rm ${PROJECT_NAME}_postgres
+      docker volume create ${PROJECT_NAME}_postgres
+    fi
+    cid=$(docker run -d \
+        --shm-size=256MB \
+        -v ${PROJECT_NAME}_postgres:/var/lib/postgresql/data/pgdata \
+        -e "POSTGRES_USER=${PROJECT_NAME}" \
+        -e "POSTGRES_PASSWORD=${PROJECT_NAME}" \
+        -e "POSTGRES_DB=${PROJECT_NAME}" \
+        -e "PGDATA=/var/lib/postgresql/data/pgdata" \
+        -p "$port:5432" \
+        postgres:$version-alpine)
+    sleep 1
+    running=0
+    # shellcheck disable=SC2034
+    for i in $(seq 10); do
+        sleep 1
+        if echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h 127.0.0.1 -p "$port" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
+            running=1
+            break
+        fi
+    done
+    trap '[ -n "$cid" ] && docker rm -f $cid; unset cid' EXIT INT TERM
+    [ $running -eq 1 ]
+    trap '' EXIT INT TERM
+    echo "$cid"
+}
+run_local_postgres() {
+    port="$1"
+    pg_dir="$2"
+    mkdir -p "$pg_dir"
+    data_dir="$(readlink -f "$pg_dir"/data)"
+    tmp_dir="$(readlink -f "$pg_dir"/tmp)"
+    pw_file="$(readlink -f "$pg_dir"/pw)"
+    echo "${PROJECT_NAME}" > "$pw_file"
+    mkdir -p "$data_dir" "$tmp_dir"
+    initdb -D "$data_dir" --lc-messages=C -U ${PROJECT_NAME} --pwfile="$pw_file" -A trust >/dev/null
+    rm "$pw_file"
+    pg_pid=$(postgres -h 127.0.0.1 -p "$port" -D "$data_dir" -k "$tmp_dir" -F -c logging_collector=off >/dev/null & echo $!)
+    sleep 1
+    trap '[ -n "$pg_pid" ] && kill $pg_pid 2>/dev/null; sleep 1; rm -rf "$pg_dir"' EXIT INT TERM
+    echo "CREATE DATABASE ${PROJECT_NAME}" | PGPASSWORD=${PROJECT_NAME} psql -h 127.0.0.1 -p "$port" -U ${PROJECT_NAME} postgres
+    trap '' EXIT INT TERM
+    echo "$pg_pid"
+}
+
+if [ -z "$NO_DB" ]; then
+    [ -z "$DB_PORT" ] && DB_PORT=5432
+    export DB_PORT
+    export DJANGO_DB_HOST=localhost
+    export DJANGO_DB_PORT="${DB_PORT}"
+    echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h 127.0.0.1 -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1 && NO_DB=1
+    if [ -z "$NO_DB" ]; then
+        if [ -z "$NO_DOCKER" ] && which docker >/dev/null; then
+            echo "Running postgres $POSTGRES_VER in docker on port $DB_PORT"
+            pg_cid=$(run_docker_postgres "$POSTGRES_VER" "$DB_PORT")
+            trap 'docker rm -f $pg_cid >/dev/null 2>&1' EXIT INT TERM
+        elif which postgres >/dev/null && which initdb >/dev/null; then
+            echo "Running postgres with local postgres/initdb on port $DB_PORT"
+            pg_dir=/tmp/postgres$$
+            pg_pid=$(run_local_postgres "$DB_PORT" "$pg_dir"|tail -n1)
+            trap '[ -n "$pg_pid" ] && kill $pg_pid; sleep 1; rm -rf "$pg_dir"' EXIT INT TERM
+        else
+            echo "No way to run a Postgres database" >&2
+            exit 1
+        fi
+    fi
+    if ! echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h 127.0.0.1 -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
+      echo "Postgres database not running, please check your config" >&2
+    fi
+fi
+set -x
+# env PYTHONPATH=back pytest "${PYTEST_ARGS[@]}" "$@"
+pytest "${PYTEST_ARGS[@]}" "$@"

@@ -1,0 +1,188 @@
+include:
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/python-ci.yml'
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/javascript-ci.yml'
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/security-ci.yml'
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/secret-ci.yml'
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/linter-ci.yml'
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/tag-ci.yml'
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/publish-ci.yml'
+  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/deploy-ci.yml'
+stages:
+  - test
+  - release
+  - publish
+
+.pull_cache_only:
+  cache:
+    policy: pull
+security:
+  extends: .security
+secret:
+  extends: .secret
+
+pre_py:
+  extends: .python_313
+  stage: test
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  script:
+    - '#'
+pre_js:
+  extends: .js_22
+  stage: test
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  script:
+    - '#'
+
+linter_py:
+  extends:
+    - .linter_py313
+    - .pull_cache_only
+  needs:
+    - pre_py
+linter_js:
+  extends:
+    - .linter_js22
+    - .pull_cache_only
+  needs:
+    - pre_js
+i18n_py:
+  extends:
+    - .python_313
+    - .pull_cache_only
+  stage: test
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  needs:
+    - pre_py
+  before_script:
+    - sudo apt-get update && sudo apt-get install -y gettext
+    - !reference [.python_313, before_script]
+  script:
+    - |
+      [ -d back/myapp/locale ] || exit 0
+      uv run poe i18n_report
+i18n_js:
+  extends:
+    - .linter_js22
+    - .pull_cache_only
+  needs:
+    - pre_js
+  before_script:
+    - apt-get update && apt-get install -y gettext jq
+    - !reference [.js_22, before_script]
+  script:
+    - |
+      [ -d front/src/locales.json ] || exit 0
+      yarn run i18n-report
+test_py:
+  extends:
+    - .python_313
+    - .pull_cache_only
+  stage: test
+  needs:
+    - pre_py
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  image:
+    name: registry.gitlab.com/systra/qeto/docker/ci/python-postgres:3.13-17
+    # for sqlite:
+    # name: registry.gitlab.com/systra/qeto/docker/ci/python:3.13
+  variables:
+    DJANGO_DB_TYPE: postgresql
+    # DJANGO_DB_TYPE: sqlite
+  script:
+    - uv run poe test
+  artifacts:
+    when: always
+    paths:
+      - 'reports/**'
+    reports:
+      junit: reports/report.xunit
+      coverage_report:
+        coverage_format: cobertura
+        path: reports/coverage.xml
+test_js:
+  extends:
+    - .js_22
+    - .pull_cache_only
+  stage: test
+  needs:
+    - pre_js
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  before_script:
+    - |
+      [ -d reports ] && rm -rf reports; mkdir -p reports
+      [ -d build ] && rm -rf build; mkdir -p build
+      yarn run pre
+    - !reference [.js_22, before_script]
+  script:
+    - |
+      set -e
+      yarn run -s test || FAILED=1
+      [ -s reports/report-js.xunit ] && yarn run -s test-report
+      [ -z "$FAILED" ]
+  artifacts:
+    when: always
+    paths:
+      - reports/**
+    reports:
+      junit: reports/report-js.xunit
+      coverage_report:
+        coverage_format: cobertura
+        path: reports/coverage-js/cobertura-coverage.xml
+total_coverage:
+  stage: test
+  rules:
+    - if: $CI_COMMIT_BRANCH
+  image: python:3.13
+  needs:
+    - test_py
+    - test_js
+  before_script:
+    - pip install uv
+    - uv venv
+  script:
+    - uv run poe total_coverage
+  coverage: '/^Total coverage: ([\d.]+%)$/'
+test_docker:
+  stage: test
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  image:
+    name: docker:26-cli
+  variables:
+    DOCKER_TLS_CERTDIR: ""
+  interruptible: true
+  allow_failure: true
+  before_script:
+    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
+  script:
+    - |
+      set -x
+      docker buildx build --pull --no-cache --progress=plain -o type=tar,dest=/dev/null -f docker/Dockerfile .
+.tag_base:
+  extends: .tag_python
+  needs:
+    - security
+    - secret
+    - linter_py
+    - linter_js
+    - i18n_py
+    - i18n_js
+    - test_py
+    - test_js
+tag:major:
+  extends: .tag_base
+tag:minor:
+  extends: .tag_base
+tag:patch:
+  extends: .tag_base
+publish:
+  extends: .publish
+image_security:
+  extends: .image_security
+  needs:
+    - publish

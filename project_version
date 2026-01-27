@@ -1,0 +1,15 @@
+#!/bin/sh
+if [ "$1" = "get" ]; then
+  uv run poe -q get_version
+elif [ "$1" = "set" ]; then
+  ver="$2"
+  if [ -z "$ver" ]; then
+    echo "You should specify the version to set" >&2
+    exit 1
+  fi
+  uv run poe -q set_version "$ver"
+else
+  echo "Usage: $0 [get] | [set] version" >&2
+  echo "  version could be major, minor, patch or fixed semver version" >&2
+  exit 1
+fi

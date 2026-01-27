@@ -1,0 +1,12 @@
+# gitleaks config
+# https://github.com/zricethezav/gitleaks
+[allowlist]
+regexes = [
+    'AUTH_USER_MODEL',
+    'author',
+]
+stopwords = [
+    'myapp.User',
+    'UserPartialInput',
+    'strawberry.auto',
+]

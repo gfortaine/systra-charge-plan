@@ -1,0 +1,8 @@
+[tasks.test]
+help = "Run python tests"
+cmd = "./.poe/scripts/run_pytest"
+
+[tasks.total_coverage]
+cwd = ".poe"
+script = "scripts.coverage:total_coverage"
+print_result = true

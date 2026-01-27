@@ -1,0 +1,2 @@
+#!/bin/sh
+exec yarn run vue-gettext-extract -c front/gettext.config.mjs

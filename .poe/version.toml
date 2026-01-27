@@ -1,0 +1,34 @@
+[tasks.get_version]
+help = "Get current version"
+cmd = "uv version --short"
+
+[tasks.set_version]
+help = "Set version"
+args = [{ name = "VERSION", help="create a new version. Option: [patch, minor, major, x.y.z]", required=true, positional=true }]
+sequence = [
+  "set_python_version ${VERSION}",
+  "set_js_version",
+]
+
+[tasks.set_python_version]
+help = "Set Python version"
+args = [{ name = "VERSION", help="create a new version. Option: [patch, minor, major, x.y.z]", required=true, positional=true }]
+shell = """
+echo "$VERSION" | grep -Eq 'major|minor|patch' && uv version --bump "$VERSION" || uv version "$VERSION"
+"""
+
+[tasks.set_js_version]
+help = "Set JS version from Python version"
+interpreter = "python"
+shell = """
+import tomllib
+from json import load, dump
+version = tomllib.load(open('pyproject.toml', 'rb'))['project']['version']
+with open('package.json', 'r+') as f:
+    pkg = load(f)
+    pkg['version'] = version
+    f.seek(0)
+    f.truncate()
+    dump(pkg, f, indent=2)
+    f.write('\\n')
+"""
