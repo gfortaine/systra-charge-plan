@@ -70,6 +70,7 @@ export default [
         },
       ],
       'quote-props': ['warn', 'as-needed', { unnecessary: false }],
+      'react/prop-types': 'off',
     },
   },
 ]

@@ -1,5 +1,4 @@
-import viteReact from "@vitejs/plugin-react"
-import { tanstackRouter } from "@tanstack/router-plugin/vite"
+import viteReact from '@vitejs/plugin-react'
 import DjVitePlugin from 'djvite'
 import path from 'path'
 import { env } from 'process'
@@ -21,11 +20,6 @@ export default defineConfig({
   },
   plugins: [
     DjVitePlugin({ verbose: true, manifestPath: 'front/vite.manifest.json' }),
-    tanstackRouter({
-      target: 'react',
-      autoCodeSplitting: true,
-      routesDirectory: './src/routes',
-    }),
     viteReact(),
   ],
   resolve: {

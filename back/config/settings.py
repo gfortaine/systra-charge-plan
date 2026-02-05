@@ -229,6 +229,7 @@ if OIDC_RP_CLIENT_ID:
     OIDC_DJANGO_USERNAME_FUNC = lambda claims: claims['oid']  # noqa: E731
     OIDC_RP_SCOPES = ['openid', 'email', 'profile', 'offline_access']
     OIDC_MIDDLEWARE_LOGIN_REQUIRED_REDIRECT = False
+    # TODO Remove URLs of pages when auth is enabled
     OIDC_MIDDLEWARE_NO_AUTH_URL_PATTERNS = [
         '^/favicon.ico$',
         '^/admin/',
@@ -236,6 +237,9 @@ if OIDC_RP_CLIENT_ID:
         '^/$',
         '^/login$',
         '^/__debug__/',
+        '^/add-post',
+        '^/map',
+        '^/pickers',
     ]
     OIDC_MIDDLEWARE_API_URL_PATTERNS = ['^/graphql/']
     OIDC_MIDDLEWARE_SESSION_TIMEOUT_SECONDS = SESSION_COOKIE_AGE - 3600  # 30 days minus 1 hour
@@ -289,6 +293,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 DJVITE = {
     'DEV_MODE': DJANGO_VITE_DEV_MODE,
     'VITE_MANIFEST_PATH': BASE_DIR.parent / 'front' / 'vite.manifest.json',
+    'MODULE_EXTS': ['.js', '.jsx'],
 }
 STATICFILES_DIRS = []
 if (dist_path := BASE_DIR.parent / 'front' / 'dist').exists():
