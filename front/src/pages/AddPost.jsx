@@ -11,6 +11,7 @@ import {
 import CancelIcon from '@mui/icons-material/Cancel'
 import SaveIcon from '@mui/icons-material/Save'
 import { useForm, Controller } from 'react-hook-form'
+import './AddPost.css'
 
 export default function AddPost() {
   const { control, handleSubmit } = useForm({
@@ -45,7 +46,7 @@ export default function AddPost() {
     <Card>
       <CardHeader title="Add a post" />
       <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent>
+        <CardContent className="hello">
           <Controller
             name="title"
             control={control}
