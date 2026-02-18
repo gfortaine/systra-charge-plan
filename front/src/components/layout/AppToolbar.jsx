@@ -18,7 +18,8 @@ export default function AppToolbar({ onClickOpenDrawer }) {
             onClick={onClickOpenDrawer(true)}
             edge="start"
             sx={[
-              { marginRight: 2 },
+              { marginRight: 5 },
+              open && { display: 'none' },
             ]}
           >
             <MenuIcon />
