@@ -20,6 +20,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import MapIcon from '@mui/icons-material/Map'
+import { Link } from 'react-router-dom'
 
 const drawerWidth = 240
 
@@ -51,29 +52,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-}))
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  variants: [
-    {
-      props: ({ open }) => open,
-      style: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.enteringScreen,
-        }),
-      },
-    },
-  ],
 }))
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -112,21 +90,21 @@ export default function NavigationDrawer() {
     setOpen(false)
   }
 
+  const AppBar = styled(MuiAppBar, {
+    shouldForwardProp: (prop) => prop !== 'open',
+  })(({ theme }) => ({
+    zIndex: theme.zIndex.drawer - 200,
+    width: '100%',
+    paddingLeft: '64px',
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  }))
+
   const TopAppBar = (
     <AppBar position="fixed" open={open}>
       <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          sx={[
-            { marginRight: 5 },
-            open && { display: 'none' },
-          ]}
-        >
-          <MenuIcon />
-        </IconButton>
         <img src={app_logo} className="app-logo" alt="logo" />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
         <div>
@@ -146,38 +124,46 @@ export default function NavigationDrawer() {
 
   const DrawerList = (
     <List>
-      <ListItem key="Home" disablePadding>
-        <ListItemButton component="a" href="/">
-          <ListItemIcon>
-            <HomeIcon />
-          </ListItemIcon>
-          <ListItemText primary="Home" />
-        </ListItemButton>
-      </ListItem>
-      <ListItem key="Add-post" disablePadding>
-        <ListItemButton component="a" href="/add-post">
-          <ListItemIcon>
-            <PostAddIcon />
-          </ListItemIcon>
-          <ListItemText primary="Add a post" />
-        </ListItemButton>
-      </ListItem>
-      <ListItem key="Map" disablePadding>
-        <ListItemButton component="a" href="/map">
-          <ListItemIcon>
-            <MapIcon />
-          </ListItemIcon>
-          <ListItemText primary="Map" />
-        </ListItemButton>
-      </ListItem>
-      <ListItem key="Pickers" disablePadding>
-        <ListItemButton component="a" href="/pickers">
-          <ListItemIcon>
-            <CalendarMonthIcon />
-          </ListItemIcon>
-          <ListItemText primary="Date and time pickers" />
-        </ListItemButton>
-      </ListItem>
+      <Link to="/">
+        <ListItem key="Home" disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary="Home" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+      <Link to="/add-post">
+        <ListItem key="Add-post" disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <PostAddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add a post" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+      <Link to="/map">
+        <ListItem key="Map" disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <MapIcon />
+            </ListItemIcon>
+            <ListItemText primary="Map" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
+      <Link to="/pickers">
+        <ListItem key="Pickers" disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <CalendarMonthIcon />
+            </ListItemIcon>
+            <ListItemText primary="Date and time pickers" />
+          </ListItemButton>
+        </ListItem>
+      </Link>
     </List>
   )
 
@@ -186,8 +172,20 @@ export default function NavigationDrawer() {
       {TopAppBar}
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-          <ListItem key="Home" disablePadding>
-            <ListItemButton component="a" onClick={handleDrawerClose}>
+          <ListItem>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={[
+                { marginRight: 5 },
+                open && { display: 'none' },
+              ]}
+            >
+              <MenuIcon />
+            </IconButton>
+            <ListItemButton onClick={handleDrawerClose}>
               <ListItemIcon>
                 <ChevronLeftIcon />
               </ListItemIcon>
