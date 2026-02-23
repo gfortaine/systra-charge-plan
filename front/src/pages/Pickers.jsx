@@ -9,17 +9,13 @@ export default function Pickers() {
   return (
     <div className="pickers">
       <LocalizationProvider dateAdapter={AdapterMoment}>
-        <Card>
+        <Card className="pickers-card">
           <CardContent>
             <DatePicker />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent>
             <TimePicker label="Basic time picker" />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="pickers-card">
           <CardContent>
             <StaticTimePicker />
           </CardContent>
