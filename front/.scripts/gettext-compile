@@ -1,6 +1,2 @@
 #!/bin/sh
-if gettext --version >/dev/null 2>&1; then
-  yarn run -s vue-gettext-compile -c front/gettext.config.mjs
-else
-  echo '{}' > front/src/translations.json
-fi
+yarn run gettext-utils import-strings ./front/src/locale ./front/src/translations.json

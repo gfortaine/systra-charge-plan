@@ -1,2 +1,19 @@
 #!/bin/sh
-exec yarn run vue-gettext-extract -c front/gettext.config.mjs
+eval $(
+  node -e 'const locales = require("./front/src/locales.json"); console.log("DEFAULT_LANG=" + locales.default); console.log("AVAILABLE_LANGS=\"" + Object.keys(locales.languages).join(" ") + "\"")'
+)
+for lang in $AVAILABLE_LANGS; do
+  PO_FILE=./front/src/locale/$lang.po
+  [ -f $PO_FILE ] || touch $PO_FILE
+done
+yarn run -s \
+  gettext-utils export-strings \
+  './front/src/**/{*.js,*.jsx,*.ts,*.tsx}' \
+  ./front/src/locale/messages.pot \
+  --default-locale=$DEFAULT_LANG \
+  --po-files-path ./front/src/locale/
+yarn run -s \
+  gettext-utils merge-translations \
+  ./front/src/locale \
+  ./front/src/locale/messages.pot \
+  --default-locale=$DEFAULT_LANG \
