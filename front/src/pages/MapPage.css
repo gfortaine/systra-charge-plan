@@ -1,6 +1,4 @@
 #map-container {
   flex-grow: 1;
-  margin-bottom: 80px;
-  width: 100%;
-  background-color: lightgrey; /* temporarily set the background color so we can tell where the map container is positioned */
+  border-radius: 5px;
 }

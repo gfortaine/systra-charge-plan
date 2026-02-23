@@ -6,7 +6,7 @@ import Fail from '@page/Fail'
 import Home from '@page/Home'
 import Pickers from '@page/Pickers'
 import MapPage from '@page/MapPage'
-import AppToolbar from '@comp/layout/AppToolbar'
+import User from '@page/User'
 import NavigationDrawer from '@comp/layout/NavigationDrawer'
 import './App.css'
 
@@ -19,20 +19,18 @@ function App() {
 
   return (
     <div className="app">
-      {/* <AppToolbar
-        onClickOpenDrawer={toggleDrawer}
-      /> */}
-      <Box className="app-container">
-        <NavigationDrawer
-          open={open}
-          toggleDrawer={toggleDrawer}
-        />
+      <NavigationDrawer
+        open={open}
+        toggleDrawer={toggleDrawer}
+      />
+      <Box className="container">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/fail" element={<Fail />} />
           <Route path="/add-post" element={<AddPost />} />
           <Route path="/map" element={<MapPage />} />
           <Route path="/pickers" element={<Pickers />} />
+          <Route path="/user" element={<User />} />
         </Routes>
       </Box>
     </div>
