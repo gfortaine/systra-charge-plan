@@ -4,7 +4,7 @@ import { Box } from '@mui/material'
 
 /* i18n */
 import { selectBestLanguage } from './utils/i18n'
-import { createNodeGettextAdapter, LionessProvider } from 'lioness'
+import { createNodeGettextAdapter, LionessProvider } from '@src/lioness'
 import { LANGUAGES, DEFAULT_LANGUAGE } from './constants'
 import translations from './translations.json'
 
