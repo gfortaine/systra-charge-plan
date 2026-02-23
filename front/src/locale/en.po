@@ -7,6 +7,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: front/src/components/layout/NavigationDrawer.jsx:
+msgid "Fold down pane"
+msgstr "Fold down pane"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Add a post"
+msgstr "Add a post"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Publish"
+msgstr "Publish"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Cancel"
+msgstr "Cancel"
+
+#: front/src/pages/Home.jsx:
+msgid "Welcome to"
+msgstr "Welcome to"
+
 #: front/src/pages/Home.jsx:
 msgid "Select a blog post in the list, or create a new one!"
 msgstr "Select a blog post in the list, or create a new one!"
+
+#: front/src/pages/Home.jsx:
+msgid "Create a new blog post"
+msgstr "Create a new blog post"

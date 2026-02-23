@@ -28,24 +28,26 @@ function App() {
       messages={translations}
       locale={bestLanguage}
     >
-    <div className="app">
+      <div className="app">
         {/* <AppToolbar
           onClickOpenDrawer={toggleDrawer}
         /> */}
-        <Box className="app-container">
+        <Box className="container">
           <NavigationDrawer
             open={open}
             toggleDrawer={toggleDrawer}
           />
-        <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/fail" element={<Fail />} />
-            <Route path="/add-post" element={<AddPost />} />
-            <Route path="/map" element={<MapPage />} />
-            <Route path="/pickers" element={<Pickers />} />
-        </Routes>
-      </Box>
-    </div>
+          <Routes>
+            {routes.map((route, index) => (
+              <Route
+                key={index}
+                path={route.path}
+                element={route.element}
+              />
+            ))}
+          </Routes>
+        </Box>
+      </div>
     </LionessProvider>
   )
 }

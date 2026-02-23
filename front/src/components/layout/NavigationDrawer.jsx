@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import app_logo from '@static/logo-v1-white.png'
 import { NavLink } from 'react-router-dom'
+import { useTranslation } from '@src/lioness'
 
 import routes from '@src/routes.jsx'
 
@@ -78,6 +79,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 export default function NavigationDrawer() {
+  const { t } = useTranslation()
   const [open, setOpen] = React.useState(false)
 
   const handleDrawerOpen = () => {
@@ -165,7 +167,7 @@ export default function NavigationDrawer() {
               <ListItemIcon>
                 <ChevronLeftIcon />
               </ListItemIcon>
-              <ListItemText primary="Fold down pane" />
+              <ListItemText primary={t('Fold down pane')} />
             </ListItemButton>
           </ListItem>
         </DrawerHeader>
