@@ -16,11 +16,9 @@ import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import app_logo from '@static/logo-v1-white.png'
-import HomeIcon from '@mui/icons-material/Home'
-import PostAddIcon from '@mui/icons-material/PostAdd'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import MapIcon from '@mui/icons-material/Map'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+
+import routes from '@src/routes.jsx'
 
 const drawerWidth = 240
 
@@ -108,15 +106,17 @@ export default function NavigationDrawer() {
         <img src={app_logo} className="app-logo" alt="logo" />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
         <div>
-          <IconButton
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            color="inherit"
-          >
-            <AccountCircle />
-          </IconButton>
+          <NavLink to="/user">
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </NavLink>
         </div>
       </Toolbar>
     </AppBar>
@@ -124,46 +124,22 @@ export default function NavigationDrawer() {
 
   const DrawerList = (
     <List>
-      <Link to="/">
-        <ListItem key="Home" disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <HomeIcon />
-            </ListItemIcon>
-            <ListItemText primary="Home" />
-          </ListItemButton>
-        </ListItem>
-      </Link>
-      <Link to="/add-post">
-        <ListItem key="Add-post" disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <PostAddIcon />
-            </ListItemIcon>
-            <ListItemText primary="Add a post" />
-          </ListItemButton>
-        </ListItem>
-      </Link>
-      <Link to="/map">
-        <ListItem key="Map" disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <MapIcon />
-            </ListItemIcon>
-            <ListItemText primary="Map" />
-          </ListItemButton>
-        </ListItem>
-      </Link>
-      <Link to="/pickers">
-        <ListItem key="Pickers" disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <CalendarMonthIcon />
-            </ListItemIcon>
-            <ListItemText primary="Date and time pickers" />
-          </ListItemButton>
-        </ListItem>
-      </Link>
+      {routes.map((route, index) => {
+        if (route.isNav) {
+          return (
+            <NavLink key={index} to={route.path}>
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    { route.icon }
+                  </ListItemIcon>
+                  <ListItemText primary={route.title} />
+                </ListItemButton>
+              </ListItem>
+            </NavLink>
+          )
+        }
+      })}
     </List>
   )
 
