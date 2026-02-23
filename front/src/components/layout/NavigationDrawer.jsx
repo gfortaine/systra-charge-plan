@@ -127,7 +127,7 @@ export default function NavigationDrawer() {
       {routes.map((route, index) => {
         if (route.isNav) {
           return (
-            <NavLink key={index} to={route.path}>
+            <NavLink key={index} to={route.path} onClick={handleDrawerClose}>
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
