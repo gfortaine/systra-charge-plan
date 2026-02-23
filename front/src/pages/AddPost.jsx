@@ -1,16 +1,20 @@
 import TextField from '@mui/material/TextField'
 import {
+  Button,
   Card,
+  CardActions,
   CardContent,
+  CardHeader,
+  Container,
+  FormControl,
+  InputLabel,
   MenuItem,
   Select,
-  CardActions,
-  Button,
-  CardHeader,
 } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
 import SaveIcon from '@mui/icons-material/Save'
 import { useForm, Controller } from 'react-hook-form'
+import { NavLink } from 'react-router-dom'
 import './AddPost.css'
 
 export default function AddPost() {
@@ -43,77 +47,85 @@ export default function AddPost() {
   ]
 
   return (
-    <Card>
-      <CardHeader title="Add a post" />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <CardContent className="hello">
-          <Controller
-            name="title"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Title"
+    <Container>
+      <Card>
+        <CardHeader title="Add a post" />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <CardContent>
+            <FormControl>
+              <Controller
+                name="title"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Title"
+                  />
+                )}
               />
-            )}
-          />
-          <Controller
-            name="author"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                label="Author"
-              >
-                {names.map((name) => (
-                  <MenuItem
-                    key={name}
-                    value={name}
+              <Controller
+                name="author"
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <InputLabel>Author</InputLabel>
+                    <Select
+                      label="Author"
+                      {...field}
+                    >
+                      {names.map((name) => (
+                        <MenuItem
+                          key={name}
+                          value={name}
+                        >
+                          {name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </>
+                )}
+              />
+              <Controller
+                name="categories"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    label="Categories"
+                    multiple
                   >
-                    {name}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-          <Controller
-            name="categories"
-            control={control}
-            render={({ field }) => (
-              <Select
-                {...field}
-                label="Categories"
-                multiple
+                    {categories.map((category) => (
+                      <MenuItem
+                        key={category}
+                        value={category}
+                      >
+                        {category}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                )}
+              />
+            </FormControl>
+          </CardContent>
+          <CardActions>
+            <Button
+              variant="contained"
+              startIcon={<SaveIcon />}
+              type="submit"
+            >
+              Publish
+            </Button>
+            <NavLink to="/">
+              <Button
+                variant="contained"
+                startIcon={<CancelIcon />}
               >
-                {categories.map((category) => (
-                  <MenuItem
-                    key={category}
-                    value={category}
-                  >
-                    {category}
-                  </MenuItem>
-                ))}
-              </Select>
-            )}
-          />
-        </CardContent>
-        <CardActions>
-          <Button
-            variant="contained"
-            startIcon={<SaveIcon />}
-            type="submit"
-          >
-            Publish
-          </Button>
-          <Button
-            variant="contained"
-            startIcon={<CancelIcon />}
-            href="/"
-          >
-            Cancel
-          </Button>
-        </CardActions>
-      </form>
-    </Card>
+                Cancel
+              </Button>
+            </NavLink>
+          </CardActions>
+        </form>
+      </Card>
+    </Container>
   )
 }
