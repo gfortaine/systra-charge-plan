@@ -1,9 +1,10 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter as Router } from 'react-router-dom'
-import './main.css'
 import App from './App.jsx'
 import { backUrl } from './config'
+// styles
+import '@scss/main.scss'
 
 console.assert(backUrl)
 

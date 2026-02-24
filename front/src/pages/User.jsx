@@ -6,7 +6,7 @@ import {
 
 export default function Fail() {
   return (
-    <Container>
+    <Container className="view">
       <Card>
         <CardContent>
           Hello User!

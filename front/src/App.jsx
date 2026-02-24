@@ -8,10 +8,12 @@ import { createNodeGettextAdapter, LionessProvider } from '@src/lioness'
 import { LANGUAGES, DEFAULT_LANGUAGE } from './constants'
 import translations from './translations.json'
 
-// import AppToolbar from '@comp/layout/AppToolbar'
 import NavigationDrawer from '@comp/layout/NavigationDrawer'
 import useRoutes from '@src/routes.jsx'
-import './App.css'
+
+// Theming
+import { ThemeProvider } from '@mui/material/styles'
+import theme from '@src/theme.js'
 
 function App() {
   const bestLanguage = selectBestLanguage(navigator.languages, Object.keys(LANGUAGES), DEFAULT_LANGUAGE)
@@ -28,26 +30,25 @@ function App() {
       messages={translations}
       locale={bestLanguage}
     >
-      <div className="app">
-        {/* <AppToolbar
-          onClickOpenDrawer={toggleDrawer}
-        /> */}
-        <Box className="container">
-          <NavigationDrawer
-            open={open}
-            toggleDrawer={toggleDrawer}
-          />
-          <Routes>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                element={route.element}
-              />
-            ))}
-          </Routes>
-        </Box>
-      </div>
+      <ThemeProvider theme={theme}>
+        <div className="app">
+          <Box className="container">
+            <NavigationDrawer
+              open={open}
+              toggleDrawer={toggleDrawer}
+            />
+            <Routes>
+              {routes.map((route, index) => (
+                <Route
+                  key={index}
+                  path={route.path}
+                  element={route.element}
+                />
+              ))}
+            </Routes>
+          </Box>
+        </div>
+      </ThemeProvider>
     </LionessProvider>
   )
 }

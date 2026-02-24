@@ -16,7 +16,6 @@ import SaveIcon from '@mui/icons-material/Save'
 import { useForm, Controller } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 import { T } from '@src/lioness'
-import './AddPost.css'
 import { useTranslation } from '@src/lioness'
 
 export default function AddPost() {
@@ -50,85 +49,89 @@ export default function AddPost() {
   ]
 
   return (
-    <Container>
-      <Card>
-        <CardHeader title={t('Add a post')} />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <CardContent>
-            <FormControl>
-              <Controller
-                name="title"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    label="Title"
-                  />
-                )}
-              />
-              <Controller
-                name="author"
-                control={control}
-                render={({ field }) => (
-                  <>
-                    <InputLabel>Author</InputLabel>
-                    <Select
-                      label="Author"
+    <div className="view">
+      <Container>
+        <Card>
+          <CardHeader title={t('Add a post')} />
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <CardContent>
+              <FormControl>
+                <Controller
+                  name="title"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
                       {...field}
+                      label="Title"
+                    />
+                  )}
+                />
+                <Controller
+                  name="author"
+                  control={control}
+                  render={({ field }) => (
+                    <>
+                      <InputLabel>Author</InputLabel>
+                      <Select
+                        label="Author"
+                        {...field}
+                      >
+                        {names.map((name) => (
+                          <MenuItem
+                            key={name}
+                            value={name}
+                          >
+                            {name}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </>
+                  )}
+                />
+                <Controller
+                  name="categories"
+                  control={control}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      label="Categories"
+                      multiple
                     >
-                      {names.map((name) => (
+                      {categories.map((category) => (
                         <MenuItem
-                          key={name}
-                          value={name}
+                          key={category}
+                          value={category}
                         >
-                          {name}
+                          {category}
                         </MenuItem>
                       ))}
                     </Select>
-                  </>
-                )}
-              />
-              <Controller
-                name="categories"
-                control={control}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    label="Categories"
-                    multiple
-                  >
-                    {categories.map((category) => (
-                      <MenuItem
-                        key={category}
-                        value={category}
-                      >
-                        {category}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                )}
-              />
-            </FormControl>
-          </CardContent>
-          <CardActions>
-            <Button
-              variant="contained"
-              startIcon={<SaveIcon />}
-              type="submit"
-            >
-              <T>Publish</T>
-            </Button>
-            <NavLink to="/">
+                  )}
+                />
+              </FormControl>
+            </CardContent>
+            <CardActions className="">
               <Button
                 variant="contained"
+                startIcon={<SaveIcon />}
+                type="submit"
+                color="primary"
+              >
+                <T>Publish</T>
+              </Button>
+              <Button
+                component={NavLink}
+                to="/"
+                variant="contained"
+                color="secondary"
                 startIcon={<CancelIcon />}
               >
                 <T>Cancel</T>
               </Button>
-            </NavLink>
-          </CardActions>
-        </form>
-      </Card>
-    </Container>
+            </CardActions>
+          </form>
+        </Card>
+      </Container>
+    </div>
   )
 }

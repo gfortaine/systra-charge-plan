@@ -1,22 +1,12 @@
 @use "./color-shades" as *;
-.mapboxgl-ctrl-bottom-right {
+#map-container {
+  flex-grow: 1;
+}
+.map-legend {
+  position: absolute;
+  bottom: 30px;
   right: 10px;
-  bottom: 10px;
-}
-.mapboxgl-popup-content {
-  padding: 20px 40px 20px 20px;
-  color: $white;
-  background-color: $secondary !important;
-}
-.mapboxgl-popup-tip {
-  border-bottom-color: $secondary !important;
-  border-top-color: $secondary !important;
-}
-.mapboxgl-popup-close-button {
-  right: 20px;
-  top: 20px;
-  font-size: 1.5em;
-}
-.mapboxgl-ctrl-attrib-inner > a {
-  color: $secondary !important;
+  height: 300px;
+  width: 200px;
+  padding: 0;
 }

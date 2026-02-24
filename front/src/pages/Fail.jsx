@@ -1,4 +1,4 @@
-import logo from '@static/logo.svg'
+import logo from '@static/logo-v2-dark.png'
 import {
   Card,
   CardContent,

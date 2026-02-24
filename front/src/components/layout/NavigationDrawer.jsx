@@ -15,7 +15,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import Typography from '@mui/material/Typography'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import app_logo from '@static/logo-v1-white.png'
+import app_logo from '@static/logo-v2-dark.png'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from '@src/lioness'
 import useRoutes from '@src/routes.jsx'
@@ -103,7 +103,7 @@ export default function NavigationDrawer() {
   }))
 
   const TopAppBar = (
-    <AppBar position="fixed" open={open}>
+    <AppBar position="fixed" open={open} className="app-toolbar">
       <Toolbar>
         <img src={app_logo} className="app-logo" alt="logo" />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
@@ -115,7 +115,7 @@ export default function NavigationDrawer() {
             aria-label="account of current user"
             aria-controls="menu-appbar"
             aria-haspopup="true"
-            color="inherit"
+            color="secondary"
           >
             <AccountCircle />
           </IconButton>
@@ -129,46 +129,45 @@ export default function NavigationDrawer() {
       {routes.map((route, index) => {
         if (route.isNav) {
           return (
-            <NavLink key={index} to={route.path} onClick={handleDrawerClose}>
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    { route.icon }
-                  </ListItemIcon>
-                  <ListItemText primary={route.title(t)} />
-                </ListItemButton>
-              </ListItem>
-            </NavLink>
+            <ListItem key={index} className="app-menu-item" disablePadding>
+              <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
+                <ListItemIcon className="app-menu-item-icon">
+                  { route.icon }
+                </ListItemIcon>
+                <ListItemText className="app-menu-item-title" primary={route.title(t)} />
+              </ListItemButton>
+            </ListItem>
           )
         }
       })}
     </List>
   )
 
+  let button
+  if (open) {
+    button = (
+      <ListItemButton onClick={handleDrawerClose}>
+        <ListItemIcon>
+          <ChevronLeftIcon color="white" />
+        </ListItemIcon>
+        <ListItemText primary={t('Fold down pane')} />
+      </ListItemButton>
+    )
+  } else {
+    button = (
+      <ListItemButton onClick={handleDrawerOpen}>
+        <MenuIcon />
+      </ListItemButton>
+    )
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       {TopAppBar}
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <ListItem>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawerOpen}
-              edge="start"
-              sx={[
-                { marginRight: 5 },
-                open && { display: 'none' },
-              ]}
-            >
-              <MenuIcon />
-            </IconButton>
-            <ListItemButton onClick={handleDrawerClose}>
-              <ListItemIcon>
-                <ChevronLeftIcon />
-              </ListItemIcon>
-              <ListItemText primary={t('Fold down pane')} />
-            </ListItemButton>
+      <Drawer className="drawer" variant="permanent" open={open}>
+        <DrawerHeader className="drawer-header" disablePadding>
+          <ListItem className="app-menu-item" disablePadding>
+            {button}
           </ListItem>
         </DrawerHeader>
         <Divider />
