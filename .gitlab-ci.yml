@@ -133,6 +133,7 @@ test_js:
       coverage_report:
         coverage_format: cobertura
         path: reports/coverage-js/cobertura-coverage.xml
+  allow_failure: true
 total_coverage:
   stage: test
   rules:

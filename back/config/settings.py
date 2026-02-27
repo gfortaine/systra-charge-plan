@@ -229,7 +229,6 @@ if OIDC_RP_CLIENT_ID:
     OIDC_DJANGO_USERNAME_FUNC = lambda claims: claims['oid']  # noqa: E731
     OIDC_RP_SCOPES = ['openid', 'email', 'profile', 'offline_access']
     OIDC_MIDDLEWARE_LOGIN_REQUIRED_REDIRECT = False
-    # TODO Remove URLs of pages when auth is enabled
     OIDC_MIDDLEWARE_NO_AUTH_URL_PATTERNS = [
         '^/favicon.ico$',
         '^/admin/',

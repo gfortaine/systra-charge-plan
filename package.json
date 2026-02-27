@@ -131,6 +131,11 @@
     "vitest": "^3.1.1",
     "xunit-viewer": "^10.6.1"
   },
+  "resolutions": {
+    "@isaacs/brace-expansion": "^5.0.1",
+    "minimatch": "^10.2.3",
+    "rollup": "^4.59.0"
+  },
   "engines": {
     "node": ">= 22.0.0"
   }
