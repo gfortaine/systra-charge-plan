@@ -2,26 +2,28 @@ import { graphqlUrl } from '@src/config'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
 
-export const apolloClient = new ApolloClient({
-  link: createUploadLink({
-    uri: graphqlUrl,
-    headers: {},
-    credentials: 'include',
-  }),
-  cache: new InMemoryCache({
-    addTypename: false,
-  }),
-  defaultOptions: {
-    query: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'all',
+export function createApolloClient() {
+  return new ApolloClient({
+    link: createUploadLink({
+      uri: graphqlUrl,
+      headers: {},
+      credentials: 'include',
+    }),
+    cache: new InMemoryCache({
+      addTypename: false,
+    }),
+    defaultOptions: {
+      query: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'all',
+      },
+      watchQuery: {
+        fetchPolicy: 'no-cache',
+        errorPolicy: 'ignore',
+      },
     },
-    watchQuery: {
-      fetchPolicy: 'no-cache',
-      errorPolicy: 'ignore',
-    },
-  },
-})
+  })
+}
 
 export async function unwrapGraphqlResponse (rawPromise) {
   return new Promise((resolve, reject) => {
@@ -35,13 +37,16 @@ export async function unwrapGraphqlResponse (rawPromise) {
   })
 }
 
-export const graphqlMixin = {
-  methods: {
-    $graphqlQuery: function (query, variables) {
-      return unwrapGraphqlResponse(this.$apollo.query({ query, variables }))
-    },
-    $graphqlMutate: function (mutation, variables) {
-      return unwrapGraphqlResponse(this.$apollo.mutate({ mutation, variables }))
-    },
-  },
+export async function graphqlQuery (apolloClient, query, variables) {
+  return await unwrapGraphqlResponse(apolloClient.query({ query, variables }))
+}
+export async function graphqlMutate (apolloClient, mutation, variables) {
+  return await unwrapGraphqlResponse(apolloClient.mutate({ mutation, variables }))
+}
+export default function useGraphql() {
+  const apolloClient = createApolloClient()
+  return {
+    graphqlQuery: async (query, variables) => await graphqlQuery(apolloClient, query, variables),
+    graphqlMutate: async (mutation, variables) => await graphqlMutate(apolloClient, mutation, variables),
+  }
 }

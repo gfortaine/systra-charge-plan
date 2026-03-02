@@ -38,7 +38,7 @@ function App() {
             toggleDrawer={toggleDrawer}
           />
           <Routes>
-            {routes.map((route, index) => (
+            {routes.filter(route => route.isNav).map((route, index) => (
               <Route
                 key={index}
                 path={route.path}

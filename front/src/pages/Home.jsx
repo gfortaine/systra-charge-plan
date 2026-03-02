@@ -1,3 +1,4 @@
+import PostList from '@comp/PostList'
 import Paper from '@mui/material/Paper'
 import Button from '@mui/material/Button'
 import logo from '@static/logo.svg'
@@ -31,7 +32,7 @@ export default function Home() {
         </div>
       </Paper>
       <Paper elevation="5">
-        TEST
+        <PostList />
       </Paper>
     </div>
   )

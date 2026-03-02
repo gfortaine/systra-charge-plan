@@ -25,6 +25,13 @@ const routes = [
     isNav: true,
   },
   {
+    title: 'Post',
+    path: '/post/:id',
+    element: <AddPost />,
+    icon: <PostAddIcon />,
+    isNav: false,
+  },
+  {
     title: 'Map',
     path: '/map',
     element: <MapPage />,
@@ -53,5 +60,21 @@ const routes = [
     isNav: false,
   },
 ]
+
+routes.replacePathParams = function(path, params) {
+  let path2 = path
+  if (!params) {
+    params = {}
+  }
+  path.matchAll(new RegExp(':([^/]+)', 'g')).forEach(m => {
+    if (params[m[1]] !== undefined) {
+      path2.replace(m[0], String(params[m[1]]))
+    }
+  })
+  return path2
+}
+routes.byTitle = function(title) {
+  return this.find(route => route.title == title)
+}.bind(routes)
 
 export default routes

@@ -48,6 +48,7 @@ export default [
       '@stylistic/multiline-ternary': 'off',
       '@stylistic/semi': 'error',
       '@stylistic/space-before-function-paren': 'off',
+      '@stylistic/jsx-one-expression-per-line': ['error', { allow: 'non-jsx' }],
       'comma-dangle': ['warn', 'always-multiline'],
       'curly': 'error',
       'max-len': ['warn', { code: 120 }],
