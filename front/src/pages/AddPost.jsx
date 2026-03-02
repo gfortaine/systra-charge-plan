@@ -15,9 +15,12 @@ import CancelIcon from '@mui/icons-material/Cancel'
 import SaveIcon from '@mui/icons-material/Save'
 import { useForm, Controller } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
+import { T } from '@src/lioness'
 import './AddPost.css'
+import { useTranslation } from '@src/lioness'
 
 export default function AddPost() {
+  const { t } = useTranslation()
   const { control, handleSubmit } = useForm({
     defaultValues: {
       title: '',
@@ -49,7 +52,7 @@ export default function AddPost() {
   return (
     <Container>
       <Card>
-        <CardHeader title="Add a post" />
+        <CardHeader title={t('Add a post')} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent>
             <FormControl>
@@ -113,14 +116,14 @@ export default function AddPost() {
               startIcon={<SaveIcon />}
               type="submit"
             >
-              Publish
+              <T>Publish</T>
             </Button>
             <NavLink to="/">
               <Button
                 variant="contained"
                 startIcon={<CancelIcon />}
               >
-                Cancel
+                <T>Cancel</T>
               </Button>
             </NavLink>
           </CardActions>

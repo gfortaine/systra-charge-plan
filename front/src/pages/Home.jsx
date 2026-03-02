@@ -3,19 +3,20 @@ import Button from '@mui/material/Button'
 import logo from '@static/logo.svg'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import { NavLink } from 'react-router-dom'
+import { T } from '@src/lioness'
 
 export default function Home() {
   return (
     <div className="view">
       <Paper elevation="5">
         <div>
-          Welcome to
+          <T>Welcome to</T>
         </div>
         <div>
           Myapp
         </div>
         <p>
-          Select a blog post in the list, or create a new one!
+          <T>Select a blog post in the list, or create a new one!</T>
         </p>
         <NavLink to="/add-post">
           <Button
@@ -23,7 +24,7 @@ export default function Home() {
             startIcon={<PostAddIcon />}
             component="a"
           >
-            Create a new blog post
+            <T>Create a new blog post</T>
           </Button>
         </NavLink>
         <div>

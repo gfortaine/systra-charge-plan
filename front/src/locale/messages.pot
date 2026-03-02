@@ -1,0 +1,36 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: myapp 1.0.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"POT-Creation-Date: Tue Feb 24 2026 11:45:23 GMT+0100 (heure normale d’Europe "
+"centrale)\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: front/src/components/layout/NavigationDrawer.jsx:
+msgid "Fold down pane"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "Add a post"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "Publish"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "Cancel"
+msgstr ""
+
+#: front/src/pages/Home.jsx:
+msgid "Welcome to"
+msgstr ""
+
+#: front/src/pages/Home.jsx:
+msgid "Select a blog post in the list, or create a new one!"
+msgstr ""
+
+#: front/src/pages/Home.jsx:
+msgid "Create a new blog post"
+msgstr ""

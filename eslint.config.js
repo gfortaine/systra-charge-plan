@@ -17,6 +17,7 @@ export default [
       'back',
       'reports',
       'docker',
+      'front/src/lioness',
     ],
   },
   eslint.configs.recommended,

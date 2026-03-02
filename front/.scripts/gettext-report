@@ -1,8 +1,8 @@
 #!/bin/sh
 POT_FILE="front/src/locale/messages.pot"
 $(dirname "$0")/gettext-extract >/dev/null
-DEFAULT_LANG=$(jq -r '.default' front/locales.json)
-AVAILABLE_LANGS=$(jq -r '.languages|keys[]' front/locales.json | grep -v "^$DEFAULT_LANG")
+DEFAULT_LANG=$(jq -r '.default' front/src/locales.json)
+AVAILABLE_LANGS=$(jq -r '.languages|keys[]' front/src/locales.json | grep -v "^$DEFAULT_LANG")
 echo '__________________________________________________'
 msg_ko=
 for lang in $AVAILABLE_LANGS; do
