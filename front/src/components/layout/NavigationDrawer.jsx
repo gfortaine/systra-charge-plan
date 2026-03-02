@@ -108,17 +108,17 @@ export default function NavigationDrawer() {
         <img src={app_logo} className="app-logo" alt="logo" />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
         <div>
-          <NavLink to="/user">
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </NavLink>
+          <IconButton
+            component={NavLink}
+            to="/user"
+            size="large"
+            aria-label="account of current user"
+            aria-controls="menu-appbar"
+            aria-haspopup="true"
+            color="inherit"
+          >
+            <AccountCircle />
+          </IconButton>
         </div>
       </Toolbar>
     </AppBar>

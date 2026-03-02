@@ -18,15 +18,14 @@ export default function Home() {
         <p>
           <T>Select a blog post in the list, or create a new one!</T>
         </p>
-        <NavLink to="/add-post">
-          <Button
-            variant="contained"
-            startIcon={<PostAddIcon />}
-            component="a"
-          >
-            <T>Create a new blog post</T>
-          </Button>
-        </NavLink>
+        <Button
+          variant="contained"
+          startIcon={<PostAddIcon />}
+          component={NavLink}
+          to="/add-post"
+        >
+          <T>Create a new blog post</T>
+        </Button>
         <div>
           <img src={logo} className="react-logo" alt="logo" />
         </div>
