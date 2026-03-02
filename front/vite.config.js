@@ -1,5 +1,6 @@
-import viteReact from '@vitejs/plugin-react'
 import DjVitePlugin from 'djvite'
+import react from '@vitejs/plugin-react'
+import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
 import path from 'path'
 import { env } from 'process'
 import { defineConfig } from 'vite'
@@ -20,7 +21,8 @@ export default defineConfig({
   },
   plugins: [
     DjVitePlugin({ verbose: true, manifestPath: 'front/vite.manifest.json' }),
-    viteReact(),
+    react(),
+    reactScopedCssPlugin(),
   ],
   resolve: {
     alias: {
