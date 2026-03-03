@@ -10,13 +10,13 @@ import translations from './translations.json'
 
 // import AppToolbar from '@comp/layout/AppToolbar'
 import NavigationDrawer from '@comp/layout/NavigationDrawer'
-import routes from '@src/routes.jsx'
+import useRoutes from '@src/routes.jsx'
 import './App.css'
 
 function App() {
   const bestLanguage = selectBestLanguage(navigator.languages, Object.keys(LANGUAGES), DEFAULT_LANGUAGE)
   const gettextAdapter = createNodeGettextAdapter()
-
+  const { routes } = useRoutes()
   const [open, setOpen] = useState(false)
   const toggleDrawer = (newState) => () => {
     setOpen(newState)
@@ -38,7 +38,7 @@ function App() {
             toggleDrawer={toggleDrawer}
           />
           <Routes>
-            {routes.filter(route => route.isNav).map((route, index) => (
+            {routes.map((route, index) => (
               <Route
                 key={index}
                 path={route.path}

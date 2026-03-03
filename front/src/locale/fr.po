@@ -1,21 +1,46 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "POT-Creation-Date: Mon Feb 23 2026 12:26:04 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Cyrille Pontvieux <cpontvieux@systra.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.8\n"
 
 #: front/src/components/layout/NavigationDrawer.jsx:
 msgid "Fold down pane"
 msgstr "Replier le panneau"
+
+#: front/src/components/PostCard.jsx:
+#: front/src/pages/AddPost.jsx:
+msgid "Cancel"
+msgstr "Annuler"
+
+#: front/src/components/PostCard.jsx:
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: front/src/components/PostCard.jsx:
+msgid "Published by"
+msgstr "Publié par"
+
+#: front/src/components/PostCard.jsx:
+msgid "Delete a blog post"
+msgstr "Supprimer un billet"
+
+#: front/src/components/PostList.jsx:
+msgid "Search"
+msgstr "Rechercher"
+
+#: front/src/components/PostList.jsx:
+msgid "keyword"
+msgstr "mot-clé"
 
 #: front/src/pages/AddPost.jsx:
 msgid "Add a post"
@@ -24,10 +49,6 @@ msgstr "Ajouter un billet"
 #: front/src/pages/AddPost.jsx:
 msgid "Publish"
 msgstr "Publier"
-
-#: front/src/pages/AddPost.jsx:
-msgid "Cancel"
-msgstr "Annuler"
 
 #: front/src/pages/Home.jsx:
 msgid "Welcome to"
@@ -42,3 +63,31 @@ msgstr ""
 #: front/src/pages/Home.jsx:
 msgid "Create a new blog post"
 msgstr "Créer un nouveau billet de blog"
+
+#: front/src/routes.jsx:
+msgid "Home"
+msgstr "Page d’accueil"
+
+#: front/src/routes.jsx:
+msgid "Add Post"
+msgstr "Ajouter un billet"
+
+#: front/src/routes.jsx:
+msgid "Post"
+msgstr "Billet"
+
+#: front/src/routes.jsx:
+msgid "Map"
+msgstr "Carte"
+
+#: front/src/routes.jsx:
+msgid "Pickers"
+msgstr "Sélecteurs"
+
+#: front/src/routes.jsx:
+msgid "User"
+msgstr "Utilisateur"
+
+#: front/src/routes.jsx:
+msgid "Fail"
+msgstr "Échec"

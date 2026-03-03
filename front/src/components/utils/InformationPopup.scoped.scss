@@ -1,0 +1,21 @@
+.header {
+  color: $secondary !important;
+  padding: 20px !important;
+}
+.text {
+  color: $secondary !important;
+  padding: 0 20px !important
+}
+.actions {
+  color: $secondary !important;
+  padding: 20px !important;
+  display: flex;
+  justify-content: flex-end;
+  .button {
+    margin-right: 20px;
+    margin-left: 0 !important;
+  }
+  .button:last-child {
+    margin-right: 0;
+  }
+}

@@ -11,6 +11,31 @@ msgstr ""
 msgid "Fold down pane"
 msgstr "Fold down pane"
 
+#: front/src/components/PostCard.jsx:
+#: front/src/pages/AddPost.jsx:
+msgid "Cancel"
+msgstr "Cancel"
+
+#: front/src/components/PostCard.jsx:
+msgid "Confirm"
+msgstr "Confirm"
+
+#: front/src/components/PostCard.jsx:
+msgid "Published by"
+msgstr "Published by"
+
+#: front/src/components/PostCard.jsx:
+msgid "Delete a blog post"
+msgstr "Delete a blog post"
+
+#: front/src/components/PostList.jsx:
+msgid "Search"
+msgstr "Search"
+
+#: front/src/components/PostList.jsx:
+msgid "keyword"
+msgstr "keyword"
+
 #: front/src/pages/AddPost.jsx:
 msgid "Add a post"
 msgstr "Add a post"
@@ -18,10 +43,6 @@ msgstr "Add a post"
 #: front/src/pages/AddPost.jsx:
 msgid "Publish"
 msgstr "Publish"
-
-#: front/src/pages/AddPost.jsx:
-msgid "Cancel"
-msgstr "Cancel"
 
 #: front/src/pages/Home.jsx:
 msgid "Welcome to"
@@ -34,3 +55,31 @@ msgstr "Select a blog post in the list, or create a new one!"
 #: front/src/pages/Home.jsx:
 msgid "Create a new blog post"
 msgstr "Create a new blog post"
+
+#: front/src/routes.jsx:
+msgid "Home"
+msgstr "Home"
+
+#: front/src/routes.jsx:
+msgid "Add Post"
+msgstr "Add Post"
+
+#: front/src/routes.jsx:
+msgid "Post"
+msgstr "Post"
+
+#: front/src/routes.jsx:
+msgid "Map"
+msgstr "Map"
+
+#: front/src/routes.jsx:
+msgid "Pickers"
+msgstr "Pickers"
+
+#: front/src/routes.jsx:
+msgid "User"
+msgstr "User"
+
+#: front/src/routes.jsx:
+msgid "Fail"
+msgstr "Fail"

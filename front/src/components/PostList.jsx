@@ -1,7 +1,6 @@
-import './PostList.scoped.scss'
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import routes from '@src/routes'
+import useRoutes from '@src/routes'
 import useGraphql from '@src/utils/graphql'
 import { getAllPostsQuery } from '@src/queries'
 import { deletePostMutation } from '@src/mutations'
@@ -9,87 +8,64 @@ import { TextField, IconButton, InputAdornment, Box } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Close'
 import PostCard from './PostCard'
+import { useTranslation } from '@src/lioness'
+import './PostList.scoped.scss'
 
 export default function PostList({
-  providedPosts = null,
   search = '',
-  onRefreshRequired = () => {},
   onSearchTermChanged = () => {},
 }) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
-  const postRoute = routes.byTitle('Post')
+  const { PostRoute } = useRoutes()
   const { graphqlQuery, graphqlMutate } = useGraphql()
   const [posts, setPosts] = useState([])
-  const hasFetchedRef = useRef(false)
   const [searchTerm, setSearchTerm] = useState(search)
   const [hasPrimaryColoredIcon, setHasPrimaryColoredIcon] = useState(false)
-  const loadData = useCallback(async () => {
-    if (providedPosts) {
-      onRefreshRequired()
-      return
-    } else if (hasFetchedRef.current) {
-      return
-    } else {
-      hasFetchedRef.current = true
-      const { allPosts } = await graphqlQuery(
-        getAllPostsQuery, { search: searchTerm },
-      ).catch(console.error)
+  const fetchPosts = useCallback(async (search) => {
+    try {
+      const { allPosts } = await graphqlQuery(getAllPostsQuery, { search })
       setPosts(allPosts)
+    } catch (err) {
+      console.error(err)
     }
-  }, [providedPosts, searchTerm, graphqlQuery, onRefreshRequired])
+  }, [graphqlQuery])
   useEffect(() => {
-    loadData()
-  }, [loadData])
-  useEffect(() => {
-    if (providedPosts != null) {
-      setPosts(providedPosts.slice())
-    }
-  }, [providedPosts])
-  useEffect(() => {
-    if (search != null) {
-      setSearchTerm(search)
-    }
-  }, [search])
-  const isSearchTermNotEmpty = !!searchTerm
-  async function onSearch(keyword) {
-    if (keyword !== undefined) {
-      setSearchTerm(keyword)
-    }
-    onSearchTermChanged(searchTerm)
-    await loadData()
+    fetchPosts(searchTerm)
+  }, [fetchPosts, searchTerm])
+  async function handleSearchChange(e) {
+    const keyword = e?.target?.value ?? ''
+    setSearchTerm(keyword)
+    onSearchTermChanged(keyword)
   }
-  async function onClearSearch() {
-    await onSearch('')
+  async function handleClear() {
+    await handleSearchChange(null)
   }
   async function onEnterPost(post) {
     await navigate({
-      pathname: routes.replacePathParams(postRoute.path, { id: post.id }),
+      pathname: PostRoute.replaceParams({ id: post.id }),
     })
   }
   async function onDeletePost(post) {
     try {
       await graphqlMutate(deletePostMutation, { id: post.id })
-      await loadData()
+      await fetchPosts(searchTerm)
     } catch(e) {
       console.error(e)
     }
   }
+  const isSearchTermNotEmpty = !!searchTerm
   return (
     <Box className="posts">
       <TextField
         value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
+        onChange={handleSearchChange}
         className="search"
-        label="Search"
-        placeholder="keyword"
+        label={t('Search')}
+        placeholder={t('keyword')}
         variant="standard"
         fullWidth
         color={hasPrimaryColoredIcon ? 'primary' : 'default'}
-        onKeyDown={e => {
-          if (e.key == 'Enter') {
-            onSearch(searchTerm)
-          }
-        }}
         onFocus={() => setHasPrimaryColoredIcon(true)}
         onBlur={() => setHasPrimaryColoredIcon(false)}
         slotProps={{
@@ -104,7 +80,7 @@ export default function PostList({
                 <IconButton
                   onClick={e => {
                     e.stopPropagation() // avoid input get the event
-                    onClearSearch()
+                    handleClear()
                   }}
                 >
                   <ClearIcon color={hasPrimaryColoredIcon ? 'primary' : 'default'} />
@@ -118,7 +94,7 @@ export default function PostList({
         {posts.map(post => (
           <PostCard
             key={post.id}
-            item={post}
+            post={post}
             onEnterPost={() => onEnterPost(post)}
             onDeletePost={() => onDeletePost(post)}
           />

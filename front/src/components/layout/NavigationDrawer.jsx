@@ -18,8 +18,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import app_logo from '@static/logo-v1-white.png'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from '@src/lioness'
-
-import routes from '@src/routes.jsx'
+import useRoutes from '@src/routes.jsx'
 
 const drawerWidth = 240
 
@@ -80,6 +79,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function NavigationDrawer() {
   const { t } = useTranslation()
+  const { routes } = useRoutes()
   const [open, setOpen] = React.useState(false)
 
   const handleDrawerOpen = () => {
@@ -135,7 +135,7 @@ export default function NavigationDrawer() {
                   <ListItemIcon>
                     { route.icon }
                   </ListItemIcon>
-                  <ListItemText primary={route.title} />
+                  <ListItemText primary={route.title(t)} />
                 </ListItemButton>
               </ListItem>
             </NavLink>

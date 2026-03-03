@@ -1,6 +1,7 @@
 import { graphqlUrl } from '@src/config'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
+import { useMemo, useCallback } from 'react'
 
 export function createApolloClient() {
   return new ApolloClient({
@@ -44,9 +45,18 @@ export async function graphqlMutate (apolloClient, mutation, variables) {
   return await unwrapGraphqlResponse(apolloClient.mutate({ mutation, variables }))
 }
 export default function useGraphql() {
-  const apolloClient = createApolloClient()
+  // created only once per component lifetime
+  const apolloClient = useMemo(() => createApolloClient(), [])
+  const graphqlQueryStable = useCallback(
+    async (query, variables) => await graphqlQuery(apolloClient, query, variables),
+    [apolloClient],
+  )
+  const graphqlMutateStable = useCallback(
+    async (mutation, variables) => await graphqlMutate(apolloClient, mutation, variables),
+    [apolloClient],
+  )
   return {
-    graphqlQuery: async (query, variables) => await graphqlQuery(apolloClient, query, variables),
-    graphqlMutate: async (mutation, variables) => await graphqlMutate(apolloClient, mutation, variables),
+    graphqlQuery: graphqlQueryStable,
+    graphqlMutate: graphqlMutateStable,
   }
 }
