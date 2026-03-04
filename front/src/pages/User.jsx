@@ -4,7 +4,7 @@ import {
   Container,
 } from '@mui/material'
 
-export default function Fail() {
+export default function User() {
   return (
     <Container className="view">
       <Card>
