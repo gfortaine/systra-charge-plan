@@ -33,6 +33,11 @@ export default [
       '**/*.cjs',
       '**/*.jsx',
     ],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     languageOptions: {
       parserOptions: {
         ecmaVersion: 'latest', // default

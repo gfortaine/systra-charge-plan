@@ -1,5 +1,6 @@
 @use "./sds-design-system/color-shades" as *;
-/* stylelint-disable selector-class-pattern */
+
+/* stylelint-disable selector-class-pattern -- MUI class */
 .v-application--wrap {
   flex-direction: row;
 }

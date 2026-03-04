@@ -1,6 +1,11 @@
 @use "./color-shades" as *;
 body {
-  font-family: Roboto, sans-serif;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   font-size: 1rem; // 16px
   height: 100vh;
 }
@@ -19,4 +24,8 @@ body::-webkit-scrollbar {
   background-clip: padding-box;
   background-color: $secondary;
   border-radius: 8px;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }

@@ -7,7 +7,7 @@ import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker'
 
 export default function Pickers() {
   return (
-    <div className="pickers">
+    <div className="view">
       <LocalizationProvider dateAdapter={AdapterMoment}>
         <Card className="pickers-card">
           <CardContent>

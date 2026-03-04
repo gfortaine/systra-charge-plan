@@ -1,7 +1,9 @@
 import Home from '@page/Home'
 import AddPost from '@page/AddPost'
+import Category from './pages/Category'
 import MapPage from '@page/MapPage'
 import Pickers from '@page/Pickers'
+import User from '@page/User'
 import HomeIcon from '@mui/icons-material/Home'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
@@ -45,11 +47,18 @@ export default function useRoutes() {
     UserRoute: {
       title: t => t('User'),
       path: '/user',
+      element: <User />,
       isNav: false,
     },
     FailRoute: {
       title: t => t('Fail'),
       path: '/fail',
+      isNav: false,
+    },
+    CategoryRoute: {
+      title: t => t('Category'),
+      path: '/category/:id',
+      element: <Category />,
       isNav: false,
     },
   }

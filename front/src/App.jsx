@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { Box } from '@mui/material'
+
+/* Router and routes */
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import useRoutes from '@src/routes.jsx'
 
 /* i18n */
 import { selectBestLanguage } from './utils/i18n'
@@ -8,12 +10,14 @@ import { createNodeGettextAdapter, LionessProvider } from '@src/lioness'
 import { LANGUAGES, DEFAULT_LANGUAGE } from './constants'
 import translations from './translations.json'
 
-// import AppToolbar from '@comp/layout/AppToolbar'
 import NavigationDrawer from '@comp/layout/NavigationDrawer'
-import useRoutes from '@src/routes.jsx'
-import './App.css'
+import { Box } from '@mui/material'
 
-function App() {
+// Theming
+import { ThemeProvider } from '@mui/material/styles'
+import theme from '@src/theme.js'
+
+export default function App() {
   const bestLanguage = selectBestLanguage(navigator.languages, Object.keys(LANGUAGES), DEFAULT_LANGUAGE)
   const gettextAdapter = createNodeGettextAdapter()
   const { routes } = useRoutes()
@@ -28,28 +32,20 @@ function App() {
       messages={translations}
       locale={bestLanguage}
     >
-      <div className="app">
-        {/* <AppToolbar
-          onClickOpenDrawer={toggleDrawer}
-        /> */}
-        <Box className="container">
-          <NavigationDrawer
-            open={open}
-            toggleDrawer={toggleDrawer}
-          />
-          <Routes>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                element={route.element}
-              />
-            ))}
-          </Routes>
-        </Box>
-      </div>
+      <ThemeProvider theme={theme}>
+        <Router>
+          <div className="app">
+            <Box className="container">
+              <NavigationDrawer open={open} toggleDrawer={toggleDrawer} />
+              <Routes>
+                {routes.map((route, index) => (
+                  <Route key={index} path={route.path} element={route.element} />
+                ))}
+              </Routes>
+            </Box>
+          </div>
+        </Router>
+      </ThemeProvider>
     </LionessProvider>
   )
 }
-
-export default App
