@@ -1,5 +1,6 @@
 import Home from '@page/Home'
 import AddPost from '@page/AddPost'
+import Category from './pages/Category'
 import MapPage from '@page/MapPage'
 import Pickers from '@page/Pickers'
 import User from '@page/User'
@@ -52,6 +53,12 @@ export default function useRoutes() {
     FailRoute: {
       title: t => t('Fail'),
       path: '/fail',
+      isNav: false,
+    },
+    CategoryRoute: {
+      title: t => t('Category'),
+      path: '/category/:id',
+      element: <Category />,
       isNav: false,
     },
   }
