@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { Routes, Route } from 'react-router-dom'
-import { Box } from '@mui/material'
+
+/* Router and routes */
+import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
+import useRoutes from '@src/routes.jsx'
 
 /* i18n */
 import { selectBestLanguage } from './utils/i18n'
@@ -9,13 +11,13 @@ import { LANGUAGES, DEFAULT_LANGUAGE } from './constants'
 import translations from './translations.json'
 
 import NavigationDrawer from '@comp/layout/NavigationDrawer'
-import useRoutes from '@src/routes.jsx'
+import { Box } from '@mui/material'
 
 // Theming
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '@src/theme.js'
 
-function App() {
+export default function App() {
   const bestLanguage = selectBestLanguage(navigator.languages, Object.keys(LANGUAGES), DEFAULT_LANGUAGE)
   const gettextAdapter = createNodeGettextAdapter()
   const { routes } = useRoutes()
@@ -31,26 +33,19 @@ function App() {
       locale={bestLanguage}
     >
       <ThemeProvider theme={theme}>
-        <div className="app">
-          <Box className="container">
-            <NavigationDrawer
-              open={open}
-              toggleDrawer={toggleDrawer}
-            />
-            <Routes>
-              {routes.map((route, index) => (
-                <Route
-                  key={index}
-                  path={route.path}
-                  element={route.element}
-                />
-              ))}
-            </Routes>
-          </Box>
-        </div>
+        <Router>
+          <div className="app">
+            <Box className="container">
+              <NavigationDrawer open={open} toggleDrawer={toggleDrawer} />
+              <Routes>
+                {routes.map((route, index) => (
+                  <Route key={index} path={route.path} element={route.element} />
+                ))}
+              </Routes>
+            </Box>
+          </div>
+        </Router>
       </ThemeProvider>
     </LionessProvider>
   )
 }
-
-export default App
