@@ -150,7 +150,12 @@ export default function NavigationDrawer() {
             )
           } else {
             return (
-              <ListItem key={index} className="app-menu-item" sx={{ position: 'absolute', bottom: 0 }} disablePadding>
+              <ListItem
+                key={index}
+                className="app-menu-item"
+                sx={{ position: 'absolute', bottom: '1em' }}
+                disablePadding
+              >
                 <ListItemButton onClick={handleLogout}>
                   <ListItemIcon className="app-menu-item-icon">
                     { route.icon }
