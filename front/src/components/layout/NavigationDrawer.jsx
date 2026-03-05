@@ -1,19 +1,22 @@
 import { useState } from 'react'
 import { styled } from '@mui/material/styles'
-import Box from '@mui/material/Box'
+import {
+  Box,
+  ClickAwayListener,
+  Toolbar,
+  List,
+  Divider,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
-import Toolbar from '@mui/material/Toolbar'
-import List from '@mui/material/List'
-import Divider from '@mui/material/Divider'
-import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
-import Typography from '@mui/material/Typography'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import app_logo from '@static/logo-v2-dark.png'
 import { NavLink } from 'react-router-dom'
@@ -90,6 +93,10 @@ export default function NavigationDrawer() {
   }
 
   const handleDrawerClose = () => {
+    setOpen(false)
+  }
+
+  const handleClickAway = () => {
     setOpen(false)
   }
 
@@ -191,15 +198,17 @@ export default function NavigationDrawer() {
   return (
     <Box sx={{ display: 'flex' }}>
       {TopAppBar}
-      <Drawer className="drawer" variant="permanent" open={open}>
-        <DrawerHeader className="drawer-header" disablePadding>
-          <ListItem className="app-menu-item" disablePadding>
-            {button}
-          </ListItem>
-        </DrawerHeader>
-        <Divider />
-        {DrawerList}
-      </Drawer>
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <Drawer className="drawer" variant="permanent" open={open}>
+          <DrawerHeader className="drawer-header" disablePadding>
+            <ListItem className="app-menu-item" disablePadding>
+              {button}
+            </ListItem>
+          </DrawerHeader>
+          <Divider />
+          {DrawerList}
+        </Drawer>
+      </ClickAwayListener>
     </Box>
   )
 }
