@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"POT-Creation-Date: Thu Mar 05 2026 13:22:30 GMT+0100 (heure normale d’Europe "
+"POT-Creation-Date: Fri Mar 06 2026 11:14:02 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -53,6 +53,44 @@ msgid "Add a post"
 msgstr ""
 
 #: front/src/pages/AddPost.jsx:
+msgid "Title"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:
+msgid "Author"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:
+msgid "Categories"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "You can select several categories."
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "Text"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "Language"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "English"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "French"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "Other"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
 msgid "Publish"
 msgstr ""
 
@@ -99,6 +137,10 @@ msgstr ""
 
 #: front/src/routes.jsx:
 msgid "Category"
+msgstr ""
+
+#: front/src/routes.jsx:
+msgid "Data grid and charts"
 msgstr ""
 
 #: front/src/routes.jsx:
