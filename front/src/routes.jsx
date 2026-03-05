@@ -2,6 +2,7 @@ import LoginPage from '@page/Login'
 import HomePage from '@page/Home'
 import AddPostPage from '@page/AddPost'
 import CategoryPage from '@page/Category'
+import DataGridDemo from '@page/DataGridDemo'
 import MapPage from '@page/MapPage'
 import PickersPage from '@page/Pickers'
 import UserPage from '@page/User'
@@ -13,6 +14,7 @@ import {
   Logout,
   Map,
   PostAdd,
+  TableView,
 } from '@mui/icons-material'
 
 export default function useRoutes() {
@@ -76,6 +78,17 @@ export default function useRoutes() {
       ),
       isNav: false,
     },
+    DatagridRoute: {
+      title: t => t('Data grid and charts'),
+      path: '/data',
+      element: (
+        <AuthRequired>
+          <DataGridDemo />
+        </AuthRequired>
+      ),
+      icon: <TableView />,
+      isNav: true,
+    },
     MapRoute: {
       title: t => t('Map'),
       path: '/map',
@@ -90,7 +103,11 @@ export default function useRoutes() {
     PickersRoute: {
       title: t => t('Pickers'),
       path: '/pickers',
-      element: <PickersPage />,
+      element: (
+        <AuthRequired>
+          <PickersPage />
+        </AuthRequired>
+      ),
       icon: <CalendarMonth />,
       isNav: true,
     },

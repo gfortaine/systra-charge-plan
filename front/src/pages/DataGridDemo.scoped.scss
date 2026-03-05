@@ -1,0 +1,10 @@
+.view {
+  flex-direction: column;
+}
+.charts-paper {
+  display: flex;
+  flex-direction: row;
+}
+.grid-paper {
+  overflow-y: auto;
+}
