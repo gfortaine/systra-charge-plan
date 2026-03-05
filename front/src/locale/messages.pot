@@ -2,10 +2,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"POT-Creation-Date: Wed Mar 04 2026 08:39:27 GMT+0100 (heure normale d’Europe "
+"POT-Creation-Date: Thu Mar 05 2026 10:33:36 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: front/src/components/home/WelcomePanel.jsx:
+msgid "Welcome to"
+msgstr ""
+
+#: front/src/components/home/WelcomePanel.jsx:
+msgid "Select a blog post in the list, or create a new one!"
+msgstr ""
+
+#: front/src/components/home/WelcomePanel.jsx:
+msgid "Create a new blog post"
+msgstr ""
 
 #: front/src/components/layout/NavigationDrawer.jsx:
 msgid "Fold down pane"
@@ -44,16 +56,20 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
-#: front/src/pages/Home.jsx:
-msgid "Welcome to"
+#: front/src/pages/MapPage.jsx:
+msgid "Pk:"
 msgstr ""
 
-#: front/src/pages/Home.jsx:
-msgid "Select a blog post in the list, or create a new one!"
+#: front/src/pages/MapPage.jsx:
+msgid "Legend"
 msgstr ""
 
-#: front/src/pages/Home.jsx:
-msgid "Create a new blog post"
+#: front/src/pages/MapPage.jsx:
+msgid "Markers"
+msgstr ""
+
+#: front/src/pages/MapPage.jsx:
+msgid "Line"
 msgstr ""
 
 #: front/src/routes.jsx:
@@ -82,4 +98,8 @@ msgstr ""
 
 #: front/src/routes.jsx:
 msgid "Fail"
+msgstr ""
+
+#: front/src/routes.jsx:
+msgid "Category"
 msgstr ""
