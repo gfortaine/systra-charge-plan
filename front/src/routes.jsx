@@ -1,53 +1,27 @@
-import Home from '@page/Home'
-import AddPost from '@page/AddPost'
-import Category from './pages/Category'
+import LoginPage from '@page/Login'
+import HomePage from '@page/Home'
+import AddPostPage from '@page/AddPost'
+import CategoryPage from '@page/Category'
 import MapPage from '@page/MapPage'
-import Pickers from '@page/Pickers'
-import User from '@page/User'
-import HomeIcon from '@mui/icons-material/Home'
-import PostAddIcon from '@mui/icons-material/PostAdd'
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
-import MapIcon from '@mui/icons-material/Map'
+import PickersPage from '@page/Pickers'
+import UserPage from '@page/User'
+import { AuthRequired } from '@src/utils/AuthRequired'
+import {
+  CalendarMonth,
+  Home,
+  Login,
+  Logout,
+  Map,
+  PostAdd,
+} from '@mui/icons-material'
 
 export default function useRoutes() {
   const routes = {
-    HomeRoute: {
-      title: t => t('Home'),
-      path: '/',
-      element: <Home />,
-      icon: <HomeIcon />,
-      isNav: true,
-    },
-    AddPostRoute: {
-      title: t => t('Add Post'),
-      path: '/add-post',
-      element: <AddPost />,
-      icon: <PostAddIcon />,
-      isNav: true,
-    },
-    PostRoute: {
-      title: t => t('Post'),
-      path: '/post/:id',
-      isNav: false,
-    },
-    MapRoute: {
-      title: t => t('Map'),
-      path: '/map',
-      element: <MapPage />,
-      icon: <MapIcon />,
-      isNav: true,
-    },
-    PickersRoute: {
-      title: t => t('Pickers'),
-      path: '/pickers',
-      element: <Pickers />,
-      icon: <CalendarMonthIcon />,
-      isNav: true,
-    },
-    UserRoute: {
-      title: t => t('User'),
-      path: '/user',
-      element: <User />,
+    LoginRoute: {
+      title: t => t('Login'),
+      path: '/login',
+      element: <LoginPage />,
+      icon: <Login />,
       isNav: false,
     },
     FailRoute: {
@@ -55,11 +29,76 @@ export default function useRoutes() {
       path: '/fail',
       isNav: false,
     },
+    UserRoute: {
+      title: t => t('User'),
+      path: '/user',
+      element: (
+        <AuthRequired>
+          <UserPage />
+        </AuthRequired>
+      ),
+      isNav: false,
+    },
+    HomeRoute: {
+      title: t => t('Home'),
+      path: '/',
+      element: (
+        <AuthRequired>
+          <HomePage />
+        </AuthRequired>
+      ),
+      icon: <Home />,
+      isNav: true,
+    },
+    AddPostRoute: {
+      title: t => t('Add Post'),
+      path: '/add-post',
+      element: (
+        <AuthRequired>
+          <AddPostPage />
+        </AuthRequired>
+      ),
+      icon: <PostAdd />,
+      isNav: true,
+    },
+    PostRoute: {
+      title: t => t('Post'),
+      path: '/post/:id',
+      isNav: false,
+    },
     CategoryRoute: {
       title: t => t('Category'),
       path: '/category/:id',
-      element: <Category />,
+      element: (
+        <AuthRequired>
+          <CategoryPage />
+        </AuthRequired>
+      ),
       isNav: false,
+    },
+    MapRoute: {
+      title: t => t('Map'),
+      path: '/map',
+      element: (
+        <AuthRequired>
+          <MapPage />
+        </AuthRequired>
+      ),
+      icon: <Map />,
+      isNav: true,
+    },
+    PickersRoute: {
+      title: t => t('Pickers'),
+      path: '/pickers',
+      element: <PickersPage />,
+      icon: <CalendarMonth />,
+      isNav: true,
+    },
+    LogoutRoute: {
+      title: t => t('Logout'),
+      path: '/logout', // not used
+      icon: <Logout />,
+      isNav: true,
     },
   }
   function replacePathParams(path, params) {
@@ -75,7 +114,7 @@ export default function useRoutes() {
     return path2
   }
   Object.values(routes).forEach(route => {
-    route.replaceParams = function(params) {
+    route.pathParams = function(params) {
       return replacePathParams(this.path, params)
     }.bind(route)
   })

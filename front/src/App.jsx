@@ -3,6 +3,7 @@ import { useState } from 'react'
 /* Router and routes */
 import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
 import useRoutes from '@src/routes.jsx'
+import { AuthProvider } from '@src/utils/AuthProvider'
 
 /* i18n */
 import { selectBestLanguage } from './utils/i18n'
@@ -33,18 +34,20 @@ export default function App() {
       locale={bestLanguage}
     >
       <ThemeProvider theme={theme}>
-        <Router>
-          <div className="app">
-            <Box className="container">
-              <NavigationDrawer open={open} toggleDrawer={toggleDrawer} />
-              <Routes>
-                {routes.map((route, index) => (
-                  <Route key={index} path={route.path} element={route.element} />
-                ))}
-              </Routes>
-            </Box>
-          </div>
-        </Router>
+        <AuthProvider>
+          <Router>
+            <div className="app">
+              <Box className="container">
+                <NavigationDrawer open={open} toggleDrawer={toggleDrawer} />
+                <Routes>
+                  {routes.map((route, index) => (
+                    <Route key={index} path={route.path} element={route.element} />
+                  ))}
+                </Routes>
+              </Box>
+            </div>
+          </Router>
+        </AuthProvider>
       </ThemeProvider>
     </LionessProvider>
   )

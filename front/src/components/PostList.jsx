@@ -43,7 +43,7 @@ export default function PostList({
   }
   async function onEnterPost(post) {
     await navigate({
-      pathname: PostRoute.replaceParams({ id: post.id }),
+      pathname: PostRoute.pathParams({ id: post.id }),
     })
   }
   async function onDeletePost(post) {

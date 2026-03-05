@@ -56,6 +56,11 @@ msgstr "Add a post"
 msgid "Publish"
 msgstr "Publish"
 
+#: front/src/pages/Login.jsx:
+#: front/src/routes.jsx:
+msgid "Login"
+msgstr "Login"
+
 #: front/src/pages/MapPage.jsx:
 msgid "Pk:"
 msgstr "Pk:"
@@ -73,6 +78,14 @@ msgid "Line"
 msgstr "Line"
 
 #: front/src/routes.jsx:
+msgid "Fail"
+msgstr "Fail"
+
+#: front/src/routes.jsx:
+msgid "User"
+msgstr "User"
+
+#: front/src/routes.jsx:
 msgid "Home"
 msgstr "Home"
 
@@ -85,6 +98,10 @@ msgid "Post"
 msgstr "Post"
 
 #: front/src/routes.jsx:
+msgid "Category"
+msgstr "Category"
+
+#: front/src/routes.jsx:
 msgid "Map"
 msgstr "Map"
 
@@ -93,13 +110,5 @@ msgid "Pickers"
 msgstr "Pickers"
 
 #: front/src/routes.jsx:
-msgid "User"
-msgstr "User"
-
-#: front/src/routes.jsx:
-msgid "Fail"
-msgstr "Fail"
-
-#: front/src/routes.jsx:
-msgid "Category"
-msgstr "Category"
+msgid "Logout"
+msgstr "Logout"
