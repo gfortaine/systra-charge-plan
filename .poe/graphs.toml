@@ -1,5 +1,5 @@
 [tasks.graphs]
-help = "Run all graph scripts (Vue, Django)"
+help = "Run all graph scripts (React, Django)"
 args = [{ name = "OPTION", positional = true, multiple = true }]
 sequence = [
   "comps_graph ${OPTION}",
@@ -7,25 +7,9 @@ sequence = [
 ]
 
 [tasks.comps_graph]
-help = "Create Vue components graph"
+help = "Create React components graph"
 args = [{ name = "OPTION", help="None to update file, else `show` or `dot`", required=false, positional=true, default="None" }]
-shell = """
-mkdir -p docs
-cmd="dot -Tpng -odocs/comps_graph.png"
-if [ ${OPTION} = "show" ]; then
-  cmd="dot -Tx11"
-elif [ ${OPTION} = "dot" ]; then
-  cmd="cat"
-fi
-(
-  echo "digraph {"
-  for v in $(find front/src -name '*.vue'); do
-    c=$(basename $v .vue)
-    sed -rn "/components: \\{/,/\\}/{/[{}]/d;s/[ ,]+//g;p}" "$v" | xargs -i@ echo "$c -> @"
-  done
-  echo "}"
-) | $cmd
-"""
+cmd = "./front/.scripts/comps_graph"
 
 [tasks.models_graph]
 help = "Create django model graph"
