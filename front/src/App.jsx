@@ -1,28 +1,23 @@
 import { I18nProvider } from '@src/utils/I18nProvider'
-import { ThemeProvider } from '@mui/material/styles'
-import useTheme from '@src/theme'
+import { ThemeProvider } from '@src/theme'
 import { AuthProvider } from '@src/utils/AuthProvider'
 import { BrowserRouter as Router } from 'react-router-dom'
-import DefaultLayout from '@src/layout/DefaultLayout'
+import AllRoutes from '@src/utils/AllRoutes'
+import FullLayout from '@src/layout/FullLayout'
+import '@scss/main.scss'
 
 export default function App() {
-  const MyThemeProvider = ({ children }) => {
-    const theme = useTheme()
-    return (
-      <ThemeProvider theme={theme}>
-        {children}
-      </ThemeProvider>
-    )
-  }
   return (
     <I18nProvider>
-      <MyThemeProvider>
+      <ThemeProvider>
         <AuthProvider>
           <Router>
-            <DefaultLayout />
+            <FullLayout>
+              <AllRoutes />
+            </FullLayout>
           </Router>
         </AuthProvider>
-      </MyThemeProvider>
+      </ThemeProvider>
     </I18nProvider>
   )
 }

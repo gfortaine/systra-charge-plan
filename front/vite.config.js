@@ -21,7 +21,6 @@ const chunksMap = (() => {
   map['vendor-all'] = 'node_modules'
   return map
 })()
-console.log(chunksMap)
 
 // https://vitejs.dev/config/
 export default defineConfig({
