@@ -3,7 +3,7 @@ import { ThemeProvider } from '@mui/material/styles'
 import useTheme from '@src/theme'
 import { AuthProvider } from '@src/utils/AuthProvider'
 import { BrowserRouter as Router } from 'react-router-dom'
-import DefaultLayout from '@comp/layout/DefaultLayout'
+import DefaultLayout from '@src/layout/DefaultLayout'
 
 export default function App() {
   const MyThemeProvider = ({ children }) => {

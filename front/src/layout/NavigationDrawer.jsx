@@ -1,30 +1,21 @@
 import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import {
-  Box,
-  Button,
   ClickAwayListener,
   Divider,
-  IconButton,
   List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Stack,
-  Toolbar,
-  Typography,
 } from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
-import MuiAppBar from '@mui/material/AppBar'
 import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import app_logo from '@static/logo-v2-dark.png'
 import { NavLink } from 'react-router-dom'
 import useRoutes from '@src/routes.jsx'
 import { useAuth, useAuthContext } from '@src/utils/auth'
-import { useI18n, languages } from '@src/utils/i18n'
+import { useI18n } from '@src/utils/i18n'
 
 const drawerWidth = 240
 
@@ -84,15 +75,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 export default function NavigationDrawer() {
-  const { routes, UserRoute, LogoutRoute } = useRoutes()
+  const { routes, LogoutRoute } = useRoutes()
   const { logout: logoutUser } = useAuthContext()
   const { logout } = useAuth()
-  const { t, locale: currentLocale, setLocale } = useI18n()
+  const { t } = useI18n()
   const [open, setOpen] = useState(false)
-
-  const handleLocaleChange = (locale) => {
-    setLocale(locale)
-  }
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -111,50 +98,6 @@ export default function NavigationDrawer() {
     logoutUser()
     logout()
   }
-
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-  })(({ theme }) => ({
-    zIndex: theme.zIndex.drawer - 200,
-    width: '100%',
-    paddingLeft: '64px',
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  }))
-
-  const TopAppBar = (
-    <AppBar position="fixed" open={open} className="app-toolbar">
-      <Toolbar>
-        <img src={app_logo} className="app-logo" alt="logo" />
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
-        <Stack direction="row">
-          {Object.entries(languages).map(([locale, title]) => (
-            <Button
-              key={locale}
-              variant={locale == currentLocale ? 'contained' : 'text'}
-              title={title}
-              onClick={() => handleLocaleChange(locale)}
-            >
-              {locale}
-            </Button>
-          ))}
-          <IconButton
-            component={NavLink}
-            to={UserRoute.path}
-            size="large"
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            color="secondary"
-          >
-            <AccountCircle />
-          </IconButton>
-        </Stack>
-      </Toolbar>
-    </AppBar>
-  )
 
   const DrawerList = (
     <List sx={{ height: '100%' }}>
@@ -212,19 +155,16 @@ export default function NavigationDrawer() {
   }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      {TopAppBar}
-      <ClickAwayListener onClickAway={handleClickAway}>
-        <Drawer className="drawer" variant="permanent" open={open}>
-          <DrawerHeader className="drawer-header" disablePadding>
-            <ListItem className="app-menu-item" disablePadding>
-              {button}
-            </ListItem>
-          </DrawerHeader>
-          <Divider />
-          {DrawerList}
-        </Drawer>
-      </ClickAwayListener>
-    </Box>
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Drawer className="drawer" variant="permanent" open={open}>
+        <DrawerHeader className="drawer-header" disablePadding>
+          <ListItem className="app-menu-item" disablePadding>
+            {button}
+          </ListItem>
+        </DrawerHeader>
+        <Divider />
+        {DrawerList}
+      </Drawer>
+    </ClickAwayListener>
   )
 }

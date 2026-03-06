@@ -19,10 +19,6 @@ msgstr "Select a blog post in the list, or create a new one!"
 msgid "Create a new blog post"
 msgstr "Create a new blog post"
 
-#: front/src/components/layout/NavigationDrawer.jsx:
-msgid "Fold down pane"
-msgstr "Fold down pane"
-
 #: front/src/components/PostCard.jsx:
 #: front/src/pages/AddPost.jsx:
 msgid "Cancel"
@@ -47,6 +43,10 @@ msgstr "Search"
 #: front/src/components/PostList.jsx:
 msgid "keyword"
 msgstr "keyword"
+
+#: front/src/layout/NavigationDrawer.jsx:
+msgid "Fold down pane"
+msgstr "Fold down pane"
 
 #: front/src/pages/AddPost.jsx:
 msgid "Add a post"

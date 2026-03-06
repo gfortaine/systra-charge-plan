@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"POT-Creation-Date: Fri Mar 06 2026 12:25:13 GMT+0100 (heure normale d’Europe "
+"POT-Creation-Date: Fri Mar 06 2026 13:05:40 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -17,10 +17,6 @@ msgstr ""
 
 #: front/src/components/home/WelcomePanel.jsx:
 msgid "Create a new blog post"
-msgstr ""
-
-#: front/src/components/layout/NavigationDrawer.jsx:
-msgid "Fold down pane"
 msgstr ""
 
 #: front/src/components/PostCard.jsx:
@@ -46,6 +42,10 @@ msgstr ""
 
 #: front/src/components/PostList.jsx:
 msgid "keyword"
+msgstr ""
+
+#: front/src/layout/NavigationDrawer.jsx:
+msgid "Fold down pane"
 msgstr ""
 
 #: front/src/pages/AddPost.jsx:
