@@ -71,7 +71,7 @@ export default defineConfig({
       provider: 'istanbul',
       enabled: true,
       include: ['front/src/**'],
-      extension: ['js', 'vue'],
+      extension: ['js', 'jsx'],
       reportsDirectory: './reports/coverage-js',
       reporter: ['cobertura', 'clover', 'text', 'text-summary', 'html'],
       reportOnFailure: true,
