@@ -236,12 +236,8 @@ if OIDC_RP_CLIENT_ID:
         '^/$',
         '^/login$',
         '^/__debug__/',
-        '^/add-post',
-        '^/map',
-        '^/pickers',
-        '^/graphql/',
     ]
-    # OIDC_MIDDLEWARE_API_URL_PATTERNS = ['^/graphql/']
+    OIDC_MIDDLEWARE_API_URL_PATTERNS = ['^/graphql/']
     OIDC_MIDDLEWARE_SESSION_TIMEOUT_SECONDS = SESSION_COOKIE_AGE - 3600  # 30 days minus 1 hour
 
 # Password validation

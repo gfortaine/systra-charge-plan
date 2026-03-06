@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"POT-Creation-Date: Thu Mar 05 2026 10:33:36 GMT+0100 (heure normale d’Europe "
+"POT-Creation-Date: Thu Mar 05 2026 13:22:30 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -56,6 +56,11 @@ msgstr ""
 msgid "Publish"
 msgstr ""
 
+#: front/src/pages/Login.jsx:
+#: front/src/routes.jsx:
+msgid "Login"
+msgstr ""
+
 #: front/src/pages/MapPage.jsx:
 msgid "Pk:"
 msgstr ""
@@ -73,6 +78,14 @@ msgid "Line"
 msgstr ""
 
 #: front/src/routes.jsx:
+msgid "Fail"
+msgstr ""
+
+#: front/src/routes.jsx:
+msgid "User"
+msgstr ""
+
+#: front/src/routes.jsx:
 msgid "Home"
 msgstr ""
 
@@ -85,6 +98,10 @@ msgid "Post"
 msgstr ""
 
 #: front/src/routes.jsx:
+msgid "Category"
+msgstr ""
+
+#: front/src/routes.jsx:
 msgid "Map"
 msgstr ""
 
@@ -93,13 +110,5 @@ msgid "Pickers"
 msgstr ""
 
 #: front/src/routes.jsx:
-msgid "User"
-msgstr ""
-
-#: front/src/routes.jsx:
-msgid "Fail"
-msgstr ""
-
-#: front/src/routes.jsx:
-msgid "Category"
+msgid "Logout"
 msgstr ""

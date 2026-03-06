@@ -63,6 +63,10 @@ msgstr "Ajouter un billet"
 msgid "Publish"
 msgstr "Publier"
 
+#: front/src/pages/Login.jsx: front/src/routes.jsx:
+msgid "Login"
+msgstr "Se connecter"
+
 #: front/src/pages/MapPage.jsx:
 msgid "Pk:"
 msgstr "Pk :"
@@ -80,6 +84,14 @@ msgid "Line"
 msgstr "Ligne"
 
 #: front/src/routes.jsx:
+msgid "Fail"
+msgstr "Échec"
+
+#: front/src/routes.jsx:
+msgid "User"
+msgstr "Utilisateur"
+
+#: front/src/routes.jsx:
 msgid "Home"
 msgstr "Page d’accueil"
 
@@ -92,6 +104,10 @@ msgid "Post"
 msgstr "Billet"
 
 #: front/src/routes.jsx:
+msgid "Category"
+msgstr "Catégorie"
+
+#: front/src/routes.jsx:
 msgid "Map"
 msgstr "Carte"
 
@@ -100,13 +116,5 @@ msgid "Pickers"
 msgstr "Sélecteurs"
 
 #: front/src/routes.jsx:
-msgid "User"
-msgstr "Utilisateur"
-
-#: front/src/routes.jsx:
-msgid "Fail"
-msgstr "Échec"
-
-#: front/src/routes.jsx:
-msgid "Category"
-msgstr "Catégorie"
+msgid "Logout"
+msgstr "Se déconnecter"

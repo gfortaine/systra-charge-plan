@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
@@ -19,6 +19,7 @@ import app_logo from '@static/logo-v2-dark.png'
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from '@src/lioness'
 import useRoutes from '@src/routes.jsx'
+import { useAuth, useAuthContext } from '@src/utils/auth'
 
 const drawerWidth = 240
 
@@ -80,7 +81,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function NavigationDrawer() {
   const { t } = useTranslation()
   const { routes } = useRoutes()
-  const [open, setOpen] = React.useState(false)
+  const { logout: logoutUser } = useAuthContext()
+  const { logout } = useAuth()
+  const [open, setOpen] = useState(false)
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -88,6 +91,12 @@ export default function NavigationDrawer() {
 
   const handleDrawerClose = () => {
     setOpen(false)
+  }
+
+  const handleLogout = () => {
+    setOpen(false)
+    logoutUser()
+    logout()
   }
 
   const AppBar = styled(MuiAppBar, {
@@ -125,19 +134,37 @@ export default function NavigationDrawer() {
   )
 
   const DrawerList = (
-    <List>
+    <List sx={{ height: '100%' }}>
       {routes.map((route, index) => {
         if (route.isNav) {
-          return (
-            <ListItem key={index} className="app-menu-item" disablePadding>
-              <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
-                <ListItemIcon className="app-menu-item-icon">
-                  { route.icon }
-                </ListItemIcon>
-                <ListItemText className="app-menu-item-title" primary={route.title(t)} />
-              </ListItemButton>
-            </ListItem>
-          )
+          if (route.path != '/logout') {
+            return (
+              <ListItem key={index} className="app-menu-item" disablePadding>
+                <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
+                  <ListItemIcon className="app-menu-item-icon">
+                    { route.icon }
+                  </ListItemIcon>
+                  <ListItemText className="app-menu-item-title" primary={route.title(t)} />
+                </ListItemButton>
+              </ListItem>
+            )
+          } else {
+            return (
+              <ListItem
+                key={index}
+                className="app-menu-item"
+                sx={{ position: 'absolute', bottom: '1em' }}
+                disablePadding
+              >
+                <ListItemButton onClick={handleLogout}>
+                  <ListItemIcon className="app-menu-item-icon">
+                    { route.icon }
+                  </ListItemIcon>
+                  <ListItemText className="app-menu-item-title" primary={route.title(t)} />
+                </ListItemButton>
+              </ListItem>
+            )
+          }
         }
       })}
     </List>
