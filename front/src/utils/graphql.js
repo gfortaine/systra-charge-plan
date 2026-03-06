@@ -1,11 +1,11 @@
 import { graphqlUrl } from '@src/config'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
-import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
+import UploadHttpLink from 'apollo-upload-client/UploadHttpLink.mjs'
 import { useMemo, useCallback } from 'react'
 
 export function createApolloClient() {
   return new ApolloClient({
-    link: createUploadLink({
+    link: new UploadHttpLink({
       uri: graphqlUrl,
       headers: {},
       credentials: 'include',

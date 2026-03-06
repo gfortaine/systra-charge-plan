@@ -70,8 +70,11 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       enabled: true,
-      include: ['front/src/**'],
-      extension: ['js', 'jsx'],
+      include: ['front/src/**/*.{js,jsx}'],
+      exclude: [
+        'front/src/locale/**',
+        'front/src/lioness/**',
+      ],
       reportsDirectory: './reports/coverage-js',
       reporter: ['cobertura', 'clover', 'text', 'text-summary', 'html'],
       reportOnFailure: true,

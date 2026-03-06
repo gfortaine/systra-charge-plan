@@ -57,12 +57,8 @@ const rows = [
 ]
 
 export default function DataGridDemo() {
-  const ageRange = [...new Set(rows.map(item => {
-    return item.age ? item.age : 'Unknown'
-  }))].sort()
-
+  const ageRange = [...new Set(rows.map(item => item.age ? item.age : 'Unknown'))].sort()
   const ageRepartition = new Map(ageRange.map(age => [age, 0]))
-
   ageRepartition.keys().forEach(age => {
     if (age === 'Unknown') {
       ageRepartition.set('Unknown', rows.filter(item => item.age === null).length)
@@ -107,7 +103,7 @@ export default function DataGridDemo() {
           height={200}
         />
       </Paper>
-      <Paper elevation="5" className="grid-paper">
+      <Paper elevation="5" className="grid-paper" sx={{ display: 'flex', flexDirection: 'column' }}>
         <DataGrid
           rows={rows}
           columns={columns}
