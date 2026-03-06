@@ -8,14 +8,14 @@ import { TextField, IconButton, InputAdornment, Box } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import ClearIcon from '@mui/icons-material/Close'
 import PostCard from './PostCard'
-import { useTranslation } from '@src/lioness'
+import { useI18n } from '@src/utils/i18n'
 import './PostList.scoped.scss'
 
 export default function PostList({
   search = '',
   onSearchTermChanged = () => {},
 }) {
-  const { t } = useTranslation()
+  const { t } = useI18n()
   const navigate = useNavigate()
   const { PostRoute } = useRoutes()
   const { graphqlQuery, graphqlMutate } = useGraphql()

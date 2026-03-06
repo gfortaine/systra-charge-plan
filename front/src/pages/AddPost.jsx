@@ -23,17 +23,15 @@ import {
   Cancel,
   Save,
 } from '@mui/icons-material'
-import { useForm, Controller } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
-import { T } from '@src/lioness'
-import { useTranslation } from '@src/lioness'
-import './AddPost.scoped.scss'
-
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
+import { useForm, Controller } from 'react-hook-form'
+import { NavLink } from 'react-router-dom'
+import { T, useI18n } from '@src/utils/i18n'
+import './AddPost.scoped.scss'
 
 export default function AddPost() {
-  const { t } = useTranslation()
+  const { t } = useI18n()
   const { control, handleSubmit } = useForm({
     defaultValues: {
       title: '',

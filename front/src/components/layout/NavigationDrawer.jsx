@@ -22,7 +22,6 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import app_logo from '@static/logo-v2-dark.png'
 import { NavLink } from 'react-router-dom'
-import { useTranslation } from '@src/lioness'
 import useRoutes from '@src/routes.jsx'
 import { useAuth, useAuthContext } from '@src/utils/auth'
 import { useI18n, languages } from '@src/utils/i18n'
@@ -85,11 +84,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 export default function NavigationDrawer() {
-  const { t } = useTranslation()
   const { routes, UserRoute, LogoutRoute } = useRoutes()
   const { logout: logoutUser } = useAuthContext()
   const { logout } = useAuth()
-  const { locale: currentLocale, setLocale } = useI18n()
+  const { t, locale: currentLocale, setLocale } = useI18n()
   const [open, setOpen] = useState(false)
 
   const handleLocaleChange = (locale) => {
