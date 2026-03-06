@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
 "POT-Creation-Date: Mon Feb 23 2026 12:26:04 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Cyrille Pontvieux <cpontvieux@systra.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.8\n"
 
 #: front/src/components/home/WelcomePanel.jsx:
@@ -27,8 +27,7 @@ msgstr ""
 msgid "Create a new blog post"
 msgstr "Créer un nouveau billet de blog"
 
-#: front/src/components/PostCard.jsx:
-#: front/src/pages/AddPost.jsx:
+#: front/src/components/PostCard.jsx: front/src/pages/AddPost.jsx:
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -57,27 +56,29 @@ msgid "Fold down pane"
 msgstr "Replier le panneau"
 
 #: front/src/pages/AddPost.jsx:
-msgid "Add a post"
-msgstr "Ajouter un billet"
-
-#: front/src/pages/AddPost.jsx:
 msgid "Title must be, at least, 3 characters long."
 msgstr "Le titre doit avoir une longueur d'au moins 3 caractères."
-
-#: front/src/pages/AddPost.jsx:
-msgid "Title"
-msgstr "Titre"
 
 #: front/src/pages/AddPost.jsx:
 msgid "You must select an author."
 msgstr "Vous devez sélectionner un auteur."
 
 #: front/src/pages/AddPost.jsx:
+msgid "You must chose a language."
+msgstr "Vous devez choisir une langue."
+
+#: front/src/pages/AddPost.jsx:
+msgid "Add a post"
+msgstr "Ajouter un billet"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Title"
+msgstr "Titre"
+
 #: front/src/pages/AddPost.jsx:
 msgid "Author"
 msgstr "Auteur"
 
-#: front/src/pages/AddPost.jsx:
 #: front/src/pages/AddPost.jsx:
 msgid "Categories"
 msgstr "Catégories"
@@ -85,10 +86,6 @@ msgstr "Catégories"
 #: front/src/pages/AddPost.jsx:
 msgid "Text"
 msgstr "Texte"
-
-#: front/src/pages/AddPost.jsx:
-msgid "You must chose a language."
-msgstr "Vous devez choisir une langue."
 
 #: front/src/pages/AddPost.jsx:
 msgid "Language"
@@ -110,10 +107,17 @@ msgstr "Autre"
 msgid "Publish"
 msgstr "Publier"
 
-#: front/src/pages/Login.jsx:
-#: front/src/routes.jsx:
+#: front/src/pages/Login.jsx: front/src/routes.jsx:
 msgid "Login"
 msgstr "Se connecter"
+
+#: front/src/pages/Login.jsx:
+msgid ""
+"You must be logged in to have access to this application. Please click on the "
+"button below to do so."
+msgstr ""
+"L'accès à cette application nécessite une authentification, cliquez sur le "
+"bouton ci-dessous pour vous connecter."
 
 #: front/src/pages/MapPage.jsx:
 msgid "Pk:"

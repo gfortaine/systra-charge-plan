@@ -49,20 +49,24 @@ msgid "Fold down pane"
 msgstr "Fold down pane"
 
 #: front/src/pages/AddPost.jsx:
-msgid "Add a post"
-msgstr "Add a post"
-
-#: front/src/pages/AddPost.jsx:
 msgid "Title must be, at least, 3 characters long."
 msgstr "Title must be, at least, 3 characters long."
 
 #: front/src/pages/AddPost.jsx:
-msgid "Title"
-msgstr "Title"
-
-#: front/src/pages/AddPost.jsx:
 msgid "You must select an author."
 msgstr "You must select an author."
+
+#: front/src/pages/AddPost.jsx:
+msgid "You must chose a language."
+msgstr "You must chose a language."
+
+#: front/src/pages/AddPost.jsx:
+msgid "Add a post"
+msgstr "Add a post"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Title"
+msgstr "Title"
 
 #: front/src/pages/AddPost.jsx:
 #: front/src/pages/AddPost.jsx:
@@ -77,10 +81,6 @@ msgstr "Categories"
 #: front/src/pages/AddPost.jsx:
 msgid "Text"
 msgstr "Text"
-
-#: front/src/pages/AddPost.jsx:
-msgid "You must chose a language."
-msgstr "You must chose a language."
 
 #: front/src/pages/AddPost.jsx:
 msgid "Language"
@@ -103,9 +103,18 @@ msgid "Publish"
 msgstr "Publish"
 
 #: front/src/pages/Login.jsx:
+#: front/src/pages/Login.jsx:
 #: front/src/routes.jsx:
 msgid "Login"
 msgstr "Login"
+
+#: front/src/pages/Login.jsx:
+msgid ""
+"You must be logged in to have access to this application. Please click on the "
+"button below to do so."
+msgstr ""
+"You must be logged in to have access to this application. Please click on the "
+"button below to do so."
 
 #: front/src/pages/MapPage.jsx:
 msgid "Pk:"
