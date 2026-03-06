@@ -10,7 +10,7 @@ fi
   echo "digraph {"
   for v in $(find front/src \( -name '*.js*' -a \! -name '*.json' -a \! -path 'front/src/lioness/*' \)); do
     c=$(basename $v|sed -E 's/\..+$//')
-    sed -En '/from '"'"'(@src|@page|@comp|\.\/)[^.]+(.[jt]sx?)?'"'"'/{s|.*'"'"'.+/([^.]+)(\..+)?'"'"'.*|\1|;p}' "$v" | xargs -i@ echo "\"$c\" -> \"@\""
+    sed -En '/from '"'"'(@src|@page|@comp|@scss|\.\/)[^.]+(.[jt]sx?)?'"'"'/{s|.*'"'"'.+/([^.]+)(\..+)?'"'"'.*|\1|;p}' "$v" | xargs -i@ echo "\"$c\" -> \"@\""
   done
   echo "}"
 ) | $cmd

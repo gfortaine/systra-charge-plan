@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 import colors from '@scss/sds-design-system/color-shades'
 import * as muiLocales from '@mui/material/locale'
 import { useI18n } from '@src/utils/i18n'
@@ -59,13 +59,4 @@ export function useTheme() {
     }, muiLocale)
   }, [muiLocale])
   return theme
-}
-
-export const ThemeProvider = ({ children }) => {
-  const theme = useTheme()
-  return (
-    <MuiThemeProvider theme={theme}>
-      {children}
-    </MuiThemeProvider>
-  )
 }
