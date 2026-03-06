@@ -32,7 +32,7 @@ import './AddPost.scoped.scss'
 
 export default function AddPost() {
   const { t } = useI18n()
-  const { control, handleSubmit } = useForm({
+  const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       title: '',
       author: '',
@@ -42,12 +42,7 @@ export default function AddPost() {
     },
   })
 
-  const onSubmit = (data) => {
-    console.log({ data })
-    if (data.title.length < 3) {
-      alert('Title must be, at least, 3 characters long.')
-    }
-  }
+  const onSubmit = (data) => console.log({ data })
 
   const names = [
     'Oliver Hansen',
@@ -68,6 +63,12 @@ export default function AddPost() {
     'News',
   ]
 
+  const titleRules = {
+    validate: value => (value.length > 3) || t('Title must be, at least, 3 characters long.'),
+  }
+  const authorRules = { required: t('You must select an author.') }
+  const languageRules = { required: t('You must chose a language.') }
+
   return (
     <div className="view">
       <Card className="add-post-card">
@@ -78,6 +79,7 @@ export default function AddPost() {
               <Controller
                 name="title"
                 control={control}
+                rules={titleRules}
                 render={({ field }) => (
                   <TextField
                     {...field}
@@ -86,11 +88,13 @@ export default function AddPost() {
                   />
                 )}
               />
+              <FormHelperText className="error-msg">{errors.title?.message}</FormHelperText>
             </FormControl>
             <FormControl>
               <Controller
                 name="author"
                 control={control}
+                rules={authorRules}
                 render={({ field }) => (
                   <>
                     <InputLabel id="author-label">
@@ -113,6 +117,7 @@ export default function AddPost() {
                   </>
                 )}
               />
+              <FormHelperText className="error-msg">{errors.author?.message}</FormHelperText>
             </FormControl>
             <FormControl>
               <Controller
@@ -152,9 +157,6 @@ export default function AddPost() {
                         )
                       })}
                     </Select>
-                    <FormHelperText>
-                      <T>You can select several categories.</T>
-                    </FormHelperText>
                   </>
                 )}
               />
@@ -180,6 +182,7 @@ export default function AddPost() {
                 name="language"
                 control={control}
                 defaultValue=""
+                rules={languageRules}
                 render={({ field }) => (
                   <>
                     <FormLabel id="language-radio-label">
@@ -197,6 +200,7 @@ export default function AddPost() {
                   </>
                 )}
               />
+              <FormHelperText className="error-msg">{errors.language?.message}</FormHelperText>
             </FormControl>
           </CardContent>
           <CardActions>

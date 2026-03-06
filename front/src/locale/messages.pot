@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"POT-Creation-Date: Fri Mar 06 2026 13:05:40 GMT+0100 (heure normale d’Europe "
+"POT-Creation-Date: Fri Mar 06 2026 16:37:14 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -53,7 +53,15 @@ msgid "Add a post"
 msgstr ""
 
 #: front/src/pages/AddPost.jsx:
+msgid "Title must be, at least, 3 characters long."
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
 msgid "Title"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:
+msgid "You must select an author."
 msgstr ""
 
 #: front/src/pages/AddPost.jsx:
@@ -67,11 +75,11 @@ msgid "Categories"
 msgstr ""
 
 #: front/src/pages/AddPost.jsx:
-msgid "You can select several categories."
+msgid "Text"
 msgstr ""
 
 #: front/src/pages/AddPost.jsx:
-msgid "Text"
+msgid "You must chose a language."
 msgstr ""
 
 #: front/src/pages/AddPost.jsx:

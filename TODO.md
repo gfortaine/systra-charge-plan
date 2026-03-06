@@ -1,6 +1,6 @@
 # Todo list
 
-- [ ] Form field control
+- [x] Form field control
 - [ ] Login page
 - [ ] User page
 - [ ] AddPost linked to backend data (authors, categories)

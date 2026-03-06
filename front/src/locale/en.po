@@ -53,8 +53,16 @@ msgid "Add a post"
 msgstr "Add a post"
 
 #: front/src/pages/AddPost.jsx:
+msgid "Title must be, at least, 3 characters long."
+msgstr "Title must be, at least, 3 characters long."
+
+#: front/src/pages/AddPost.jsx:
 msgid "Title"
 msgstr "Title"
+
+#: front/src/pages/AddPost.jsx:
+msgid "You must select an author."
+msgstr "You must select an author."
 
 #: front/src/pages/AddPost.jsx:
 #: front/src/pages/AddPost.jsx:
@@ -67,12 +75,12 @@ msgid "Categories"
 msgstr "Categories"
 
 #: front/src/pages/AddPost.jsx:
-msgid "You can select several categories."
-msgstr "You can select several categories."
-
-#: front/src/pages/AddPost.jsx:
 msgid "Text"
 msgstr "Text"
+
+#: front/src/pages/AddPost.jsx:
+msgid "You must chose a language."
+msgstr "You must chose a language."
 
 #: front/src/pages/AddPost.jsx:
 msgid "Language"
