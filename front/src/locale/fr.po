@@ -60,6 +60,42 @@ msgid "Add a post"
 msgstr "Ajouter un billet"
 
 #: front/src/pages/AddPost.jsx:
+msgid "Title"
+msgstr "Titre"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Author"
+msgstr "Auteur"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Categories"
+msgstr "Catégories"
+
+#: front/src/pages/AddPost.jsx:
+msgid "You can select several categories."
+msgstr "Vous pouvez sélectionner plusieurs catégories."
+
+#: front/src/pages/AddPost.jsx:
+msgid "Text"
+msgstr "Texte"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Language"
+msgstr "Langue"
+
+#: front/src/pages/AddPost.jsx:
+msgid "English"
+msgstr "Anglais"
+
+#: front/src/pages/AddPost.jsx:
+msgid "French"
+msgstr "Français"
+
+#: front/src/pages/AddPost.jsx:
+msgid "Other"
+msgstr "Autre"
+
+#: front/src/pages/AddPost.jsx:
 msgid "Publish"
 msgstr "Publier"
 
@@ -106,6 +142,10 @@ msgstr "Billet"
 #: front/src/routes.jsx:
 msgid "Category"
 msgstr "Catégorie"
+
+#: front/src/routes.jsx:
+msgid "Data grid and charts"
+msgstr "Tableau de données et graphes"
 
 #: front/src/routes.jsx:
 msgid "Map"
