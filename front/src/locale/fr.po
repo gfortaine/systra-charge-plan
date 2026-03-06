@@ -1,16 +1,16 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: myapp 1.0.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "POT-Creation-Date: Mon Feb 23 2026 12:26:04 GMT+0100 (heure normale d’Europe "
 "centrale)\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Cyrille Pontvieux <cpontvieux@systra.com>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.8\n"
 
 #: front/src/components/home/WelcomePanel.jsx:
@@ -27,7 +27,8 @@ msgstr ""
 msgid "Create a new blog post"
 msgstr "Créer un nouveau billet de blog"
 
-#: front/src/components/PostCard.jsx: front/src/pages/AddPost.jsx:
+#: front/src/components/PostCard.jsx:
+#: front/src/pages/AddPost.jsx:
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -76,9 +77,11 @@ msgid "Title"
 msgstr "Titre"
 
 #: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:
 msgid "Author"
 msgstr "Auteur"
 
+#: front/src/pages/AddPost.jsx:
 #: front/src/pages/AddPost.jsx:
 msgid "Categories"
 msgstr "Catégories"
@@ -107,7 +110,9 @@ msgstr "Autre"
 msgid "Publish"
 msgstr "Publier"
 
-#: front/src/pages/Login.jsx: front/src/routes.jsx:
+#: front/src/pages/Login.jsx:
+#: front/src/pages/Login.jsx:
+#: front/src/routes.jsx:
 msgid "Login"
 msgstr "Se connecter"
 

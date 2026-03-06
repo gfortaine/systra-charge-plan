@@ -2,7 +2,7 @@
 
 - [x] Form field control
 - [x] Login page
-- [ ] User page
+- [/] User page
 - [ ] AddPost linked to backend data (authors, categories)
 - [ ] AddPost that add a post to the backend
 - [ ] File upload test
