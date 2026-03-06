@@ -1,5 +1,5 @@
 import { I18nProvider } from '@src/utils/I18nProvider'
-import { ThemeProvider } from '@src/theme'
+import { ThemeProvider } from '@src/utils/ThemeProvider'
 import { AuthProvider } from '@src/utils/AuthProvider'
 import { BrowserRouter as Router } from 'react-router-dom'
 import AllRoutes from '@src/utils/AllRoutes'

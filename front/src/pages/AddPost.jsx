@@ -42,7 +42,12 @@ export default function AddPost() {
     },
   })
 
-  const onSubmit = (data) => console.log({ data })
+  const onSubmit = (data) => {
+    console.log({ data })
+    if (data.title.length < 3) {
+      alert('Title must be, at least, 3 characters long.')
+    }
+  }
 
   const names = [
     'Oliver Hansen',
