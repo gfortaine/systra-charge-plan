@@ -3,7 +3,7 @@ import {
   Button,
 } from '@mui/material'
 import { useAuth } from '@src/utils/auth'
-import { T } from '@src/lioness'
+import { T } from '@src/utils/i18n'
 
 export default function Login() {
   const { login } = useAuth()

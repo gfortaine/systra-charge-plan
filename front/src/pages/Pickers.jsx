@@ -1,9 +1,10 @@
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { Paper } from '@mui/material'
+import { Alert, Paper } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker'
+import { T } from '@src/utils/i18n'
 import './Pickers.scoped.scss'
 
 export default function Pickers() {
@@ -16,6 +17,11 @@ export default function Pickers() {
         </Paper>
         <Paper className="pickers-paper">
           <StaticTimePicker />
+        </Paper>
+        <Paper>
+          <Alert severity="warning" onClose={() => {}}>
+            <T>This Alert displays the default close icon.</T>
+          </Alert>
         </Paper>
       </LocalizationProvider>
     </div>

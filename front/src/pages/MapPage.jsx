@@ -15,13 +15,13 @@ import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import pkPoints from '@static/markers.json'
 import line from '@static/line.json'
 import colorShades from '@scss/sds-design-system/color-shades'
-import { useTranslation, T } from '@src/lioness'
+import { useI18n, T } from '@src/utils/i18n'
 import { mapboxPublicKey } from '@src/config'
 import './MapPage.scoped.scss'
 import './MapPage.scss'
 
 export default function MapPage() {
-  const { t } = useTranslation()
+  const { t } = useI18n()
   const mapRef = useRef() // Mapbox instance
   const mapContainerRef = useRef() // DOM element for Mapbox
   const [showPanel, setShowPanel] = useState(false)

@@ -6,6 +6,22 @@ import { env } from 'process'
 import { defineConfig } from 'vite'
 
 const django_server = `http://localhost:${env.DJANGO_PORT || '8000'}`
+const chunksMap = (() => {
+  const map = {}
+  map['config'] = 'front/src/config.js'
+  Object.entries({
+    react: ['react', 'react-dom', 'react-router', 'react-hook-form'],
+    mui: ['@mui'],
+    mapbox: ['@mapboxql', 'mapbox-gl'],
+  }).forEach(([big, depIds]) => {
+    depIds.forEach(depId => {
+      map[depId] = `vendor-${big}`
+    })
+  })
+  map['vendor-all'] = 'node_modules'
+  return map
+})()
+console.log(chunksMap)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -70,16 +86,10 @@ export default defineConfig({
       output: {
         compact: true,
         manualChunks: (id) => {
-          if (id.includes('front/src/config.js')) {
-            return 'config'
-          }
-          for (const big of ['@vue', 'vuetify', '@fortawesome']) {
-            if (id.includes(`node_modules/${big}`)) {
-              return `vendor-${big.replace('@', '')}`
+          for (const [chunk, depId] of Object.entries(chunksMap)) {
+            if (id.includes(depId)) {
+              return chunk
             }
-          }
-          if (id.includes('node_modules')) {
-            return 'vendor-all'
           }
         },
       },

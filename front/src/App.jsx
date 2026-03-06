@@ -1,54 +1,28 @@
-import { useState } from 'react'
-
-/* Router and routes */
-import { Routes, Route, BrowserRouter as Router } from 'react-router-dom'
-import useRoutes from '@src/routes.jsx'
-import { AuthProvider } from '@src/utils/AuthProvider'
-
-/* i18n */
-import { selectBestLanguage } from './utils/i18n'
-import { createNodeGettextAdapter, LionessProvider } from '@src/lioness'
-import { LANGUAGES, DEFAULT_LANGUAGE } from './constants'
-import translations from './translations.json'
-
-import NavigationDrawer from '@comp/layout/NavigationDrawer'
-import { Box } from '@mui/material'
-
-// Theming
+import { I18nProvider } from '@src/utils/I18nProvider'
 import { ThemeProvider } from '@mui/material/styles'
-import theme from '@src/theme.js'
+import useTheme from '@src/theme'
+import { AuthProvider } from '@src/utils/AuthProvider'
+import { BrowserRouter as Router } from 'react-router-dom'
+import DefaultLayout from '@comp/layout/DefaultLayout'
 
 export default function App() {
-  const bestLanguage = selectBestLanguage(navigator.languages, Object.keys(LANGUAGES), DEFAULT_LANGUAGE)
-  const gettextAdapter = createNodeGettextAdapter()
-  const { routes } = useRoutes()
-  const [open, setOpen] = useState(false)
-  const toggleDrawer = (newState) => () => {
-    setOpen(newState)
-  }
-
-  return (
-    <LionessProvider
-      adapter={gettextAdapter}
-      messages={translations}
-      locale={bestLanguage}
-    >
+  const MyThemeProvider = ({ children }) => {
+    const theme = useTheme()
+    return (
       <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
+    )
+  }
+  return (
+    <I18nProvider>
+      <MyThemeProvider>
         <AuthProvider>
           <Router>
-            <div className="app">
-              <Box className="container">
-                <NavigationDrawer open={open} toggleDrawer={toggleDrawer} />
-                <Routes>
-                  {routes.map((route, index) => (
-                    <Route key={index} path={route.path} element={route.element} />
-                  ))}
-                </Routes>
-              </Box>
-            </div>
+            <DefaultLayout />
           </Router>
         </AuthProvider>
-      </ThemeProvider>
-    </LionessProvider>
+      </MyThemeProvider>
+    </I18nProvider>
   )
 }

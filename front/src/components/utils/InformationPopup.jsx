@@ -1,5 +1,5 @@
 import { useState, createContext, useContext } from 'react'
-import { T, useTranslation } from '@src/lioness'
+import { T, useI18n } from '@src/utils/i18n'
 import Dialog from '@mui/material/Dialog'
 import DialogTitle from '@mui/material/DialogTitle'
 import { Button, Card, CardActions, CardContent, CardHeader } from '@mui/material'
@@ -27,7 +27,7 @@ function InformationPopup({
   onButton = (_button, ..._params) => {},
   onSubmit = (_isValid, ..._params) => {},
 }) {
-  const { t } = useTranslation()
+  const { t } = useI18n()
   const { isValid } = useFormValidity()
   function isButtonDisabled(button) {
     return button.type === 'submit' && !isValid

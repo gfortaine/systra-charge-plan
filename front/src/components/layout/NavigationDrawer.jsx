@@ -2,15 +2,17 @@ import { useState } from 'react'
 import { styled } from '@mui/material/styles'
 import {
   Box,
+  Button,
   ClickAwayListener,
-  Toolbar,
-  List,
   Divider,
   IconButton,
+  List,
   ListItem,
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Stack,
+  Toolbar,
   Typography,
 } from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
@@ -20,9 +22,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import app_logo from '@static/logo-v2-dark.png'
 import { NavLink } from 'react-router-dom'
-import { useTranslation } from '@src/lioness'
 import useRoutes from '@src/routes.jsx'
 import { useAuth, useAuthContext } from '@src/utils/auth'
+import { useI18n, languages } from '@src/utils/i18n'
 
 const drawerWidth = 240
 
@@ -82,11 +84,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 )
 
 export default function NavigationDrawer() {
-  const { t } = useTranslation()
-  const { routes } = useRoutes()
+  const { routes, UserRoute, LogoutRoute } = useRoutes()
   const { logout: logoutUser } = useAuthContext()
   const { logout } = useAuth()
+  const { t, locale: currentLocale, setLocale } = useI18n()
   const [open, setOpen] = useState(false)
+
+  const handleLocaleChange = (locale) => {
+    setLocale(locale)
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -123,10 +129,20 @@ export default function NavigationDrawer() {
       <Toolbar>
         <img src={app_logo} className="app-logo" alt="logo" />
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
-        <div>
+        <Stack direction="row">
+          {Object.entries(languages).map(([locale, title]) => (
+            <Button
+              key={locale}
+              variant={locale == currentLocale ? 'contained' : 'text'}
+              title={title}
+              onClick={() => handleLocaleChange(locale)}
+            >
+              {locale}
+            </Button>
+          ))}
           <IconButton
             component={NavLink}
-            to="/user"
+            to={UserRoute.path}
             size="large"
             aria-label="account of current user"
             aria-controls="menu-appbar"
@@ -135,7 +151,7 @@ export default function NavigationDrawer() {
           >
             <AccountCircle />
           </IconButton>
-        </div>
+        </Stack>
       </Toolbar>
     </AppBar>
   )
@@ -144,7 +160,7 @@ export default function NavigationDrawer() {
     <List sx={{ height: '100%' }}>
       {routes.map((route, index) => {
         if (route.isNav) {
-          if (route.path != '/logout') {
+          if (route != LogoutRoute) {
             return (
               <ListItem key={index} className="app-menu-item" disablePadding>
                 <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>

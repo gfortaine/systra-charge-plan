@@ -1,4 +1,4 @@
-import { T, useTranslation } from '@src/lioness'
+import { T, useI18n } from '@src/utils/i18n'
 import { useState } from 'react'
 import { Chip, Stack, Button } from '@mui/material'
 import CancelIcon from '@mui/icons-material/Cancel'
@@ -12,7 +12,7 @@ export default function PostCard({
   onEnterPost = () => {},
   onDeletePost = () => {},
 }) {
-  const { t } = useTranslation()
+  const { t } = useI18n()
   const categoryNames = post.categories?.map(cat => cat.name) ?? []
   const authorName = post.author?.fullName ?? ''
   const publicationDate = new Date(post.pubdate)

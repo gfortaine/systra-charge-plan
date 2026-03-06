@@ -115,6 +115,10 @@ msgstr "Markers"
 msgid "Line"
 msgstr "Line"
 
+#: front/src/pages/Pickers.jsx:
+msgid "This Alert displays the default close icon."
+msgstr "This Alert displays the default close icon."
+
 #: front/src/routes.jsx:
 msgid "Fail"
 msgstr "Fail"

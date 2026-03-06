@@ -133,7 +133,7 @@ export function verifyApp(app) {
     }
   }
 }
-export function getDefaultExport(app) {
+export default function getDefaultExport(app) {
   if (!app) {
     app = { ...defaultApp }
   } else {
@@ -150,30 +150,5 @@ export function getDefaultExport(app) {
     sds,
     ...Object.fromEntries(Object.entries(sds).map(([key, value]) => [`sds_${key}`, value])),
     ...app,
-  }
-}
-export function getVuetifyExport(app) {
-  if (!app) {
-    app = { ...defaultApp }
-  } else {
-    verifyApp(app)
-  }
-  return {
-    white: neutrals.white,
-    ultralightgrey: neutrals.grey_ultralight,
-    lightgrey: neutrals.grey_light,
-    mediumgrey: neutrals.grey_medium,
-    darkgrey: neutrals.grey_dark,
-    black: neutrals.black,
-    main: app.main,
-    primary: app.primary,
-    primarylight: app.primary_light,
-    primarydark: app.primary_dark,
-    secondary: app.secondary,
-    secondarylight: app.secondary_light,
-    secondarydark: app.secondary_dark,
-    success: app.success,
-    warning: app.warning,
-    error: app.error,
   }
 }

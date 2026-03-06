@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import logo from '@static/icon_circle.png'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import { NavLink } from 'react-router-dom'
-import { T } from '@src/lioness'
+import { T } from '@src/utils/i18n'
 
 export default function WelcomePanel() {
   return (
