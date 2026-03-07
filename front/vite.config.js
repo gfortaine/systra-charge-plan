@@ -47,6 +47,7 @@ export default defineConfig({
       '@scss': path.resolve('./front/src/scss'),
       '@static': path.resolve('./front/static'),
       '@test': path.resolve('./front/tests'),
+      'lioness': path.resolve('./front/src/lioness'),
     },
   },
   css: {
@@ -73,7 +74,6 @@ export default defineConfig({
       include: ['front/src/**/*.{js,jsx}'],
       exclude: [
         'front/src/locale/**',
-        'front/src/lioness/**',
       ],
       reportsDirectory: './reports/coverage-js',
       reporter: ['cobertura', 'clover', 'text', 'text-summary', 'html'],

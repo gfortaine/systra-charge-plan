@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react'
 import { LANGUAGES, DEFAULT_LANGUAGE } from '@src/constants'
-import { useTranslation } from '@src/lioness'
-export { T } from '@src/lioness'
+import { useTranslation } from 'lioness'
+export { T } from 'lioness'
 
 export * as translations from '@src/translations.json'
 

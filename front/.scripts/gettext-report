@@ -1,8 +1,12 @@
 #!/bin/sh
-POT_FILE="front/src/locale/messages.pot"
+LOCALE_DIR=./front/src/locale
+POT_FILE="$LOCALE_DIR/messages.pot"
+# force to update POT/PO files
 $(dirname "$0")/gettext-extract >/dev/null
-DEFAULT_LANG=$(jq -r '.default' front/src/locales.json)
-AVAILABLE_LANGS=$(jq -r '.languages|keys[]' front/src/locales.json | grep -v "^$DEFAULT_LANG")
+# define DEFAULT_LANG and AVAILABLE_LANGS env vars
+eval $(
+  node -e 'const locales = require("./front/src/locales.json"); console.log("DEFAULT_LANG=" + locales.default); console.log("AVAILABLE_LANGS=\"" + Object.keys(locales.languages).join(" ") + "\"")'
+)
 echo '__________________________________________________'
 msg_ko=
 for lang in $AVAILABLE_LANGS; do

@@ -1,7 +1,0 @@
-export { createNodeGettextAdapter } from './adapters/createNodeGettextAdapter.js';
-export { LionessProvider } from './components/LionessProvider.js';
-export { T } from './components/T.js';
-export { interpolate } from './interpolate.js';
-export { useTranslation } from './useTranslation.js';
-export { withTranslation } from './withTranslation.js';
-//# sourceMappingURL=index.js.map

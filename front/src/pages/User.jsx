@@ -8,12 +8,11 @@ import { useAuthContext } from '@src/utils/auth'
 
 export default function User() {
   const { user } = useAuthContext()
-
   return (
     <Container className="view">
       <Card>
         <CardContent>
-          <T one="Hello {{fullName}} ({{email}})!" fullName={user.fullName} email={user.email} />
+          <T one="Hello {{ fullName }} ({{ email }})!" fullName={user.fullName} email={user.email} />
         </CardContent>
       </Card>
     </Container>

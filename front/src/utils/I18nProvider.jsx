@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { createNodeGettextAdapter, LionessProvider } from '@src/lioness'
+import { createNodeGettextAdapter, LionessProvider } from 'lioness'
 import { I18nContext, bestLanguage, translations } from './i18n'
 
 export const I18nProvider = ({ children, defaultLocale = undefined }) => {

@@ -63,7 +63,7 @@ export default function PostCard({
         </span>
         <span className="author">{ authorName }</span>
         <span className="publication-date">
-          <T one="on {{localeDate}} at {{localTime}}" localeDate={localeDate} localeTime={localeTime} />
+          <T one="on {{ localeDate }} at {{ localTime }}" localeDate={localeDate} localeTime={localeTime} />
         </span>
       </div>
       <div className="actions">
@@ -91,7 +91,7 @@ export default function PostCard({
       >
         <div>
           <T
-            one="You are about to delete the blog post « {{post}} ». Do you really want to take that action?"
+            one="You are about to delete the blog post « {{ post }} ». Do you really want to take that action?"
             post={post.title}
           />
         </div>

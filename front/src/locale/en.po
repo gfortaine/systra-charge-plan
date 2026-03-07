@@ -1,177 +1,188 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: myapp 1.0.0\n"
+"Language: en\n"
 "Content-Type: text/plain; charset=utf-8\n"
-"POT-Creation-Date: Mon Feb 23 2026 12:26:04 GMT+0100 (heure normale d’Europe "
-"centrale)\n"
+"POT-Creation-Date: \n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: front/src/components/home/WelcomePanel.jsx:
+#: front/src/components/home/WelcomePanel.jsx:12
 msgid "Welcome to"
 msgstr "Welcome to"
 
-#: front/src/components/home/WelcomePanel.jsx:
+#: front/src/components/home/WelcomePanel.jsx:18
 msgid "Select a blog post in the list, or create a new one!"
 msgstr "Select a blog post in the list, or create a new one!"
 
-#: front/src/components/home/WelcomePanel.jsx:
+#: front/src/components/home/WelcomePanel.jsx:28
 msgid "Create a new blog post"
 msgstr "Create a new blog post"
 
-#: front/src/components/PostCard.jsx:
-#: front/src/pages/AddPost.jsx:
+#: front/src/components/PostCard.jsx:26 front/src/pages/AddPost.jsx:224
 msgid "Cancel"
 msgstr "Cancel"
 
-#: front/src/components/PostCard.jsx:
+#: front/src/components/PostCard.jsx:31
 msgid "Confirm"
 msgstr "Confirm"
 
-#: front/src/components/PostCard.jsx:
+#: front/src/components/PostCard.jsx:62
 msgid "Published by"
 msgstr "Published by"
 
-#: front/src/components/PostCard.jsx:
+#: front/src/components/PostCard.jsx:66
+msgid "on {{ localeDate }} at {{ localTime }}"
+msgstr "on {{ localeDate }} at {{ localTime }}"
+
+#: front/src/components/PostCard.jsx:87
 msgid "Delete a blog post"
 msgstr "Delete a blog post"
 
-#: front/src/components/PostList.jsx:
+#: front/src/components/PostCard.jsx:93
+msgid ""
+"You are about to delete the blog post « {{ post }} ». Do you really want to "
+"take that action?"
+msgstr ""
+"You are about to delete the blog post « {{ post }} ». Do you really want to "
+"take that action?"
+
+#: front/src/components/PostList.jsx:64
 msgid "Search"
 msgstr "Search"
 
-#: front/src/components/PostList.jsx:
+#: front/src/components/PostList.jsx:65
 msgid "keyword"
 msgstr "keyword"
 
-#: front/src/layout/NavigationDrawer.jsx:
+#: front/src/layout/NavigationDrawer.jsx:146
 msgid "Fold down pane"
 msgstr "Fold down pane"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:69
 msgid "Title must be, at least, 3 characters long."
 msgstr "Title must be, at least, 3 characters long."
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:71
 msgid "You must select an author."
 msgstr "You must select an author."
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:72
 msgid "You must chose a language."
 msgstr "You must chose a language."
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:77
 msgid "Add a post"
 msgstr "Add a post"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:89
 msgid "Title"
 msgstr "Title"
 
-#: front/src/pages/AddPost.jsx:
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:103 front/src/pages/AddPost.jsx:108
 msgid "Author"
 msgstr "Author"
 
-#: front/src/pages/AddPost.jsx:
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:132 front/src/pages/AddPost.jsx:137
 msgid "Categories"
 msgstr "Categories"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:175
 msgid "Text"
 msgstr "Text"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:191
 msgid "Language"
 msgstr "Language"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:198
 msgid "English"
 msgstr "English"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:199
 msgid "French"
 msgstr "French"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:200
 msgid "Other"
 msgstr "Other"
 
-#: front/src/pages/AddPost.jsx:
+#: front/src/pages/AddPost.jsx:215
 msgid "Publish"
 msgstr "Publish"
 
-#: front/src/pages/Login.jsx:
-#: front/src/pages/Login.jsx:
-#: front/src/routes.jsx:
+#: front/src/pages/Login.jsx:26 front/src/pages/Login.jsx:42
+#: front/src/routes.jsx:23
 msgid "Login"
 msgstr "Login"
 
-#: front/src/pages/Login.jsx:
+#: front/src/pages/Login.jsx:34
 msgid ""
-"You must be logged in to have access to this application. Please click on the "
-"button below to do so."
+"You must be logged in to have access to this application. Please click on "
+"the button below to do so."
 msgstr ""
-"You must be logged in to have access to this application. Please click on the "
-"button below to do so."
+"You must be logged in to have access to this application. Please click on "
+"the button below to do so."
 
-#: front/src/pages/MapPage.jsx:
+#: front/src/pages/MapPage.jsx:52
 msgid "Pk:"
 msgstr "Pk:"
 
-#: front/src/pages/MapPage.jsx:
+#: front/src/pages/MapPage.jsx:125
 msgid "Legend"
 msgstr "Legend"
 
-#: front/src/pages/MapPage.jsx:
+#: front/src/pages/MapPage.jsx:129
 msgid "Markers"
 msgstr "Markers"
 
-#: front/src/pages/MapPage.jsx:
+#: front/src/pages/MapPage.jsx:133
 msgid "Line"
 msgstr "Line"
 
-#: front/src/pages/Pickers.jsx:
+#: front/src/pages/Pickers.jsx:23
 msgid "This Alert displays the default close icon."
 msgstr "This Alert displays the default close icon."
 
-#: front/src/routes.jsx:
+#: front/src/pages/User.jsx:15
+msgid "Hello {{ fullName }} ({{ email }})!"
+msgstr "Hello {{ fullName }} ({{ email }})!"
+
+#: front/src/routes.jsx:30
 msgid "Fail"
 msgstr "Fail"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:35
 msgid "User"
 msgstr "User"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:45
 msgid "Home"
 msgstr "Home"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:56
 msgid "Add Post"
 msgstr "Add Post"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:67
 msgid "Post"
 msgstr "Post"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:72
 msgid "Category"
 msgstr "Category"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:82
 msgid "Data grid and charts"
 msgstr "Data grid and charts"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:93
 msgid "Map"
 msgstr "Map"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:104
 msgid "Pickers"
 msgstr "Pickers"
 
-#: front/src/routes.jsx:
+#: front/src/routes.jsx:115
 msgid "Logout"
 msgstr "Logout"

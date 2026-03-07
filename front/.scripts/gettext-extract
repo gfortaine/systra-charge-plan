@@ -1,19 +1,27 @@
 #!/bin/sh
+CFG_FILE=./front/lioness.cfg.js
+GLOB_FILES='./front/src/**/{*.js,*.jsx,*.ts,*.tsx}'
+LOCALE_DIR=./front/src/locale
+POT_FILE="$LOCALE_DIR/messages.pot"
+# define DEFAULT_LANG and AVAILABLE_LANGS env vars
 eval $(
   node -e 'const locales = require("./front/src/locales.json"); console.log("DEFAULT_LANG=" + locales.default); console.log("AVAILABLE_LANGS=\"" + Object.keys(locales.languages).join(" ") + "\"")'
 )
+yarn run -s \
+  react-gettext-parser \
+  --config "$CFG_FILE" \
+  --header 'pot-creation-date:' \
+  --output "$POT_FILE" \
+  "$GLOB_FILES"
 for lang in $AVAILABLE_LANGS; do
-  PO_FILE=./front/src/locale/$lang.po
-  [ -f $PO_FILE ] || touch $PO_FILE
+  PO_FILE="$LOCALE_DIR/$lang.po"
+  echo "$PO_FILE"
+  if [ "$lang" = "$DEFAULT_LANG" ]; then
+    msgen "$POT_FILE" "--lang=$DEFAULT_LANG" -o "$PO_FILE"
+  else
+    if [ ! -f "$PO_FILE" ]; then
+      msginit -i "$POT_FILE" --no-translator -l $lang -o "$PO_FILE"
+    fi
+    msgmerge --backup=none -U "$PO_FILE" "$POT_FILE"
+  fi
 done
-yarn run -s \
-  gettext-utils export-strings \
-  './front/src/**/{*.js,*.jsx,*.ts,*.tsx}' \
-  ./front/src/locale/messages.pot \
-  --default-locale=$DEFAULT_LANG \
-  --po-files-path ./front/src/locale/
-yarn run -s \
-  gettext-utils merge-translations \
-  ./front/src/locale \
-  ./front/src/locale/messages.pot \
-  --default-locale=$DEFAULT_LANG \
