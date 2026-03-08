@@ -15,9 +15,6 @@ export default function Login() {
   const { login } = useAuth()
   const { t } = useI18n()
 
-  function handleLogin() {
-    login()
-  }
   return (
     <div className="view">
       <Container className="login-container">
@@ -37,7 +34,7 @@ export default function Login() {
             <Button
               variant="contained"
               color="primary"
-              onClick={handleLogin}
+              onClick={login}
             >
               <T>Login</T>
             </Button>
