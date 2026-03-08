@@ -1,10 +1,16 @@
-import { useState, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { createNodeGettextAdapter, LionessProvider } from 'lioness'
 import { I18nContext, bestLanguage, translations } from './i18n'
 
 export const I18nProvider = ({ children, defaultLocale = undefined }) => {
   const initialeLocale = defaultLocale ?? bestLanguage
-  const [locale, setLocale] = useState(initialeLocale)
+  const [locale, setLocale] = useState(() => {
+    const storedLocale = localStorage.getItem('locale')
+    return storedLocale || initialeLocale
+  })
+  useEffect(() => {
+    localStorage.setItem('locale', locale)
+  }, [locale]) // each time the locale change
   const adapter = useMemo(() => createNodeGettextAdapter(), [])
   return (
     <>
