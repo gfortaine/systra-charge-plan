@@ -26,7 +26,7 @@ msgstr ""
 msgid "Create a new blog post"
 msgstr "Créer un nouveau billet de blog"
 
-#: front/src/components/PostCard.jsx:26 front/src/pages/AddPost.jsx:224
+#: front/src/components/PostCard.jsx:26 front/src/pages/AddPost.jsx:239
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -34,20 +34,15 @@ msgstr "Annuler"
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: front/src/components/PostCard.jsx:62
-msgid "Published by"
-msgstr "Publié par"
+#: front/src/components/PostCard.jsx:61
+msgid "Published by {{ authorName }} on {{ localeDate }} at {{ localeTime }}"
+msgstr "Publié par {{ authorName }} le {{ localeDate }} à {{ localeTime }}"
 
-#: front/src/components/PostCard.jsx:66
-msgid "on {{ localeDate }} at {{ localTime }}"
-msgstr "le {{ localeDate }} à {{ localTime }}"
-
-#: front/src/components/PostCard.jsx:87
+#: front/src/components/PostCard.jsx:86
 msgid "Delete a blog post"
 msgstr "Supprimer un billet"
 
-#: front/src/components/PostCard.jsx:93
-#, fuzzy
+#: front/src/components/PostCard.jsx:92
 msgid ""
 "You are about to delete the blog post « {{ post }} ». Do you really want to "
 "take that action?"
@@ -55,11 +50,11 @@ msgstr ""
 "Vous êtes sur le point de supprimer le billet de blog « {{ post }} ». Voulez-"
 "vous vraiment faire cette action ?"
 
-#: front/src/components/PostList.jsx:64
+#: front/src/components/PostList.jsx:65
 msgid "Search"
 msgstr "Rechercher"
 
-#: front/src/components/PostList.jsx:65
+#: front/src/components/PostList.jsx:66
 msgid "keyword"
 msgstr "mot-clé"
 
@@ -67,55 +62,55 @@ msgstr "mot-clé"
 msgid "Fold down pane"
 msgstr "Replier le panneau"
 
-#: front/src/pages/AddPost.jsx:69
+#: front/src/pages/AddPost.jsx:81
 msgid "Title must be, at least, 3 characters long."
 msgstr "Le titre doit avoir une longueur d'au moins 3 caractères."
 
-#: front/src/pages/AddPost.jsx:71
+#: front/src/pages/AddPost.jsx:83
 msgid "You must select an author."
 msgstr "Vous devez sélectionner un auteur."
 
-#: front/src/pages/AddPost.jsx:72
+#: front/src/pages/AddPost.jsx:84
 msgid "You must chose a language."
 msgstr "Vous devez choisir une langue."
 
-#: front/src/pages/AddPost.jsx:77
+#: front/src/pages/AddPost.jsx:92
 msgid "Add a post"
 msgstr "Ajouter un billet"
 
-#: front/src/pages/AddPost.jsx:89
+#: front/src/pages/AddPost.jsx:104
 msgid "Title"
 msgstr "Titre"
 
-#: front/src/pages/AddPost.jsx:103 front/src/pages/AddPost.jsx:108
+#: front/src/pages/AddPost.jsx:118 front/src/pages/AddPost.jsx:123
 msgid "Author"
 msgstr "Auteur"
 
-#: front/src/pages/AddPost.jsx:132 front/src/pages/AddPost.jsx:137
+#: front/src/pages/AddPost.jsx:147 front/src/pages/AddPost.jsx:152
 msgid "Categories"
 msgstr "Catégories"
 
-#: front/src/pages/AddPost.jsx:175
+#: front/src/pages/AddPost.jsx:190
 msgid "Text"
 msgstr "Texte"
 
-#: front/src/pages/AddPost.jsx:191
+#: front/src/pages/AddPost.jsx:206
 msgid "Language"
 msgstr "Langue"
 
-#: front/src/pages/AddPost.jsx:198
+#: front/src/pages/AddPost.jsx:213
 msgid "English"
 msgstr "Anglais"
 
-#: front/src/pages/AddPost.jsx:199
+#: front/src/pages/AddPost.jsx:214
 msgid "French"
 msgstr "Français"
 
-#: front/src/pages/AddPost.jsx:200
+#: front/src/pages/AddPost.jsx:215
 msgid "Other"
 msgstr "Autre"
 
-#: front/src/pages/AddPost.jsx:215
+#: front/src/pages/AddPost.jsx:230
 msgid "Publish"
 msgstr "Publier"
 
@@ -195,6 +190,9 @@ msgstr "Sélecteurs"
 #: front/src/routes.jsx:115
 msgid "Logout"
 msgstr "Se déconnecter"
+
+#~ msgid "Published by"
+#~ msgstr "Publié par"
 
 #~ msgid "Something to {{ action }}"
 #~ msgstr "Un truc à {{ action }}"

@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
   }, [checkAuth, setUser])
   const logout = useCallback(() => setUser(null), [setUser])
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     login()
   }, [login]) // once on mount
   return (

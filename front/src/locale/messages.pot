@@ -18,7 +18,7 @@ msgid "Create a new blog post"
 msgstr ""
 
 #: front/src/components/PostCard.jsx:26
-#: front/src/pages/AddPost.jsx:224
+#: front/src/pages/AddPost.jsx:239
 msgid "Cancel"
 msgstr ""
 
@@ -26,29 +26,25 @@ msgstr ""
 msgid "Confirm"
 msgstr ""
 
-#: front/src/components/PostCard.jsx:62
-msgid "Published by"
+#: front/src/components/PostCard.jsx:61
+msgid "Published by {{ authorName }} on {{ localeDate }} at {{ localeTime }}"
 msgstr ""
 
-#: front/src/components/PostCard.jsx:66
-msgid "on {{ localeDate }} at {{ localTime }}"
-msgstr ""
-
-#: front/src/components/PostCard.jsx:87
+#: front/src/components/PostCard.jsx:86
 msgid "Delete a blog post"
 msgstr ""
 
-#: front/src/components/PostCard.jsx:93
+#: front/src/components/PostCard.jsx:92
 msgid ""
 "You are about to delete the blog post « {{ post }} ». Do you really want to "
 "take that action?"
 msgstr ""
 
-#: front/src/components/PostList.jsx:64
+#: front/src/components/PostList.jsx:65
 msgid "Search"
 msgstr ""
 
-#: front/src/components/PostList.jsx:65
+#: front/src/components/PostList.jsx:66
 msgid "keyword"
 msgstr ""
 
@@ -56,57 +52,57 @@ msgstr ""
 msgid "Fold down pane"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:69
+#: front/src/pages/AddPost.jsx:81
 msgid "Title must be, at least, 3 characters long."
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:71
+#: front/src/pages/AddPost.jsx:83
 msgid "You must select an author."
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:72
+#: front/src/pages/AddPost.jsx:84
 msgid "You must chose a language."
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:77
+#: front/src/pages/AddPost.jsx:92
 msgid "Add a post"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:89
+#: front/src/pages/AddPost.jsx:104
 msgid "Title"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:103
-#: front/src/pages/AddPost.jsx:108
+#: front/src/pages/AddPost.jsx:118
+#: front/src/pages/AddPost.jsx:123
 msgid "Author"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:132
-#: front/src/pages/AddPost.jsx:137
+#: front/src/pages/AddPost.jsx:147
+#: front/src/pages/AddPost.jsx:152
 msgid "Categories"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:175
+#: front/src/pages/AddPost.jsx:190
 msgid "Text"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:191
+#: front/src/pages/AddPost.jsx:206
 msgid "Language"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:198
+#: front/src/pages/AddPost.jsx:213
 msgid "English"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:199
+#: front/src/pages/AddPost.jsx:214
 msgid "French"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:200
+#: front/src/pages/AddPost.jsx:215
 msgid "Other"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:215
+#: front/src/pages/AddPost.jsx:230
 msgid "Publish"
 msgstr ""
 

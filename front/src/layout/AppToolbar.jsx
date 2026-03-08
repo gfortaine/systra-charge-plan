@@ -13,6 +13,18 @@ import useRoutes from '@src/routes.jsx'
 import { useI18n, languages } from '@src/utils/i18n'
 import app_logo from '@static/logo-v2-dark.png'
 
+const MyAppBar = styled(AppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme }) => ({
+  zIndex: theme.zIndex.drawer - 200,
+  width: '100%',
+  paddingLeft: '64px',
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+}))
+
 export default function AppToolbar() {
   const { UserRoute } = useRoutes()
   const { locale: currentLocale, setLocale } = useI18n()
@@ -20,18 +32,6 @@ export default function AppToolbar() {
   const handleLocaleChange = (locale) => {
     setLocale(locale)
   }
-
-  const MyAppBar = styled(AppBar, {
-    shouldForwardProp: (prop) => prop !== 'open',
-  })(({ theme }) => ({
-    zIndex: theme.zIndex.drawer - 200,
-    width: '100%',
-    paddingLeft: '64px',
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  }))
 
   return (
     <MyAppBar position="fixed" className="app-toolbar">

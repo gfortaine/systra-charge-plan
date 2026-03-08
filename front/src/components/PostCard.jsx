@@ -58,13 +58,12 @@ export default function PostCard({
         )}
       </div>
       <div className="author-date">
-        <span>
-          <T>Published by</T>
-        </span>
-        <span className="author">{ authorName }</span>
-        <span className="publication-date">
-          <T one="on {{ localeDate }} at {{ localTime }}" localeDate={localeDate} localeTime={localeTime} />
-        </span>
+        <T
+          one="Published by {{ authorName }} on {{ localeDate }} at {{ localeTime }}"
+          authorName={<span className="author">{ authorName }</span>}
+          localeDate={localeDate}
+          localeTime={localeTime}
+        />
       </div>
       <div className="actions">
         <Button

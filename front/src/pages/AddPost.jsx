@@ -1,3 +1,4 @@
+import { useState, useCallback, useEffect } from 'react'
 import TextField from '@mui/material/TextField'
 import {
   Button,
@@ -26,12 +27,47 @@ import {
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import { useForm, Controller } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
+import useRoutes from '@src/routes'
 import { T, useI18n } from '@src/utils/i18n'
+import useGraphql from '@src/utils/graphql'
+import { getAllUsersAndCategoriesQuery } from '@src/queries'
+import { createPostMutation } from '@src/mutations'
 import './AddPost.scoped.scss'
 
 export default function AddPost() {
   const { t } = useI18n()
+  const navigate = useNavigate()
+  const { HomeRoute } = useRoutes()
+  const { graphqlQuery, graphqlMutate } = useGraphql()
+  const [users, setUsers] = useState([])
+  const [categories, setCategories] = useState([])
+  const fetchData = useCallback(async () => {
+    try {
+      const { allUsers, allCategories } = await graphqlQuery(getAllUsersAndCategoriesQuery)
+      setUsers(allUsers)
+      setCategories(allCategories)
+    } catch (err) {
+      console.error(err)
+    }
+  }, [graphqlQuery])
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchData()
+  }, [fetchData])
+  const addPost = useCallback(async (data) => {
+    const variables = {
+      ...data,
+      author: { id: data.author }, // data.author is an id
+    }
+    try {
+      await graphqlMutate(createPostMutation, variables)
+      navigate({ pathname: HomeRoute.path })
+    } catch (err) {
+      console.error(err)
+    }
+  }, [graphqlMutate, navigate, HomeRoute])
+
   const { control, handleSubmit, formState: { errors } } = useForm({
     defaultValues: {
       title: '',
@@ -41,33 +77,14 @@ export default function AddPost() {
       language: '',
     },
   })
-
-  const onSubmit = (data) => console.log({ data })
-
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-  ]
-
-  const categories = [
-    'Travel',
-    'Arts',
-    'News',
-  ]
-
   const titleRules = {
     validate: value => (value.length > 3) || t('Title must be, at least, 3 characters long.'),
   }
   const authorRules = { required: t('You must select an author.') }
   const languageRules = { required: t('You must chose a language.') }
+  const onSubmit = async (data) => {
+    await addPost(data)
+  }
 
   return (
     <div className="view">
@@ -105,12 +122,12 @@ export default function AddPost() {
                       labelId="author-label"
                       label={t('Author')}
                     >
-                      {names.map((name) => (
+                      {users.map(user => (
                         <MenuItem
-                          key={name}
-                          value={name}
+                          key={user.id}
+                          value={user.id}
                         >
-                          {name}
+                          {user.fullName}
                         </MenuItem>
                       ))}
                     </Select>
@@ -137,22 +154,22 @@ export default function AddPost() {
                       input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
                       renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                          {selected.map((value) => (
-                            <Chip key={value} label={value} />
+                          {selected.map(cat_id => (
+                            <Chip key={cat_id} label={categories.find(cat => cat.id == cat_id).name} />
                           ))}
                         </Box>
                       )}
                     >
                       {categories.map(category => {
-                        const selected = field.value.includes(category)
+                        const selected = field.value.includes(category.id)
                         const SelectionIcon = selected ? CheckBoxIcon : CheckBoxOutlineBlankIcon
                         return (
-                          <MenuItem key={category} value={category}>
+                          <MenuItem key={category.id} value={category.id}>
                             <SelectionIcon
                               fontSize="small"
                               style={{ marginRight: 8, padding: 9, boxSizing: 'content-box' }}
                             />
-                            <ListItemText primary={category} />
+                            <ListItemText primary={category.name} />
                           </MenuItem>
                         )
                       })}

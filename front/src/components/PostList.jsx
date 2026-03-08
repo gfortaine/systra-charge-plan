@@ -22,15 +22,16 @@ export default function PostList({
   const [posts, setPosts] = useState([])
   const [searchTerm, setSearchTerm] = useState(search)
   const [hasPrimaryColoredIcon, setHasPrimaryColoredIcon] = useState(false)
-  const fetchPosts = useCallback(async (search) => {
+  const fetchPosts = useCallback(async (term) => {
     try {
-      const { allPosts } = await graphqlQuery(getAllPostsQuery, { search })
+      const { allPosts } = await graphqlQuery(getAllPostsQuery, { search: term })
       setPosts(allPosts)
     } catch (err) {
       console.error(err)
     }
   }, [graphqlQuery])
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     fetchPosts(searchTerm)
   }, [fetchPosts, searchTerm])
   async function handleSearchChange(e) {
@@ -41,8 +42,8 @@ export default function PostList({
   async function handleClear() {
     await handleSearchChange(null)
   }
-  async function onEnterPost(post) {
-    await navigate({
+  function onEnterPost(post) {
+    navigate({
       pathname: PostRoute.pathParams({ id: post.id }),
     })
   }

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { createTheme } from '@mui/material/styles'
 import colors from '@scss/sds-design-system/color-shades'
 import * as muiLocales from '@mui/material/locale'
@@ -6,7 +6,6 @@ import { useI18n } from '@src/utils/i18n'
 
 export function useTheme() {
   const { locale } = useI18n()
-  const [muiLocale, setMuiLocale] = useState()
   const findMuiLocale = useCallback((locale) => {
     for (const [muiKey, muiLocale] of Object.entries(muiLocales)) {
       if (muiKey.startsWith(locale)) {
@@ -15,9 +14,7 @@ export function useTheme() {
     }
     return muiLocales.enUS
   }, [])
-  useEffect(() => {
-    setMuiLocale(findMuiLocale(locale))
-  }, [findMuiLocale, setMuiLocale, locale])
+  const muiLocale = findMuiLocale(locale)
   const theme = useMemo(() => {
     return createTheme({
       palette: {

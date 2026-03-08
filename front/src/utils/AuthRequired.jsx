@@ -4,7 +4,8 @@ import { useAuthContext } from './auth'
 import useRoutes from '@src/routes'
 
 export const AuthRequired = ({ children }) => {
-  const { user, login } = useAuthContext()
+  const authContext = useAuthContext()
+  const { user, login } = authContext || { user: {}, login: () => ({}) }
   const [authOk, setAuthOk] = useState(null)
   const location = useLocation()
   const { LoginRoute } = useRoutes()
