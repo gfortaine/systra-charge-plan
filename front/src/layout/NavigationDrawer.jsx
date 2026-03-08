@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import { NavLink } from 'react-router-dom'
 import useRoutes from '@src/routes.jsx'
-import { useAuth, useAuthContext } from '@src/utils/auth'
+import { useAuth } from '@src/utils/auth'
 import { useI18n } from '@src/utils/i18n'
 
 const drawerWidth = 240
@@ -76,7 +76,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function NavigationDrawer() {
   const { routes, LogoutRoute } = useRoutes()
-  const { logout: logoutUser } = useAuthContext()
   const { logout } = useAuth()
   const { t } = useI18n()
   const [open, setOpen] = useState(false)
@@ -95,7 +94,6 @@ export default function NavigationDrawer() {
 
   const handleLogout = () => {
     setOpen(false)
-    logoutUser()
     logout()
   }
 

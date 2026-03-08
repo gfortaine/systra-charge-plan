@@ -1,27 +1,14 @@
-import { useState, useEffect } from 'react'
 import { Navigate, useLocation } from 'react-router-dom'
-import { useAuthContext } from './auth'
 import useRoutes from '@src/routes'
+import { useAuth } from './auth'
 
 export const AuthRequired = ({ children }) => {
-  const authContext = useAuthContext()
-  const { user, login } = authContext || { user: {}, login: () => ({}) }
-  const [authOk, setAuthOk] = useState(null)
+  const { user } = useAuth()
   const location = useLocation()
   const { LoginRoute } = useRoutes()
-  useEffect(() => {
-    if (!user) {
-      (async () => {
-        const user = await login()
-        setAuthOk(!!user)
-      })()
-    }
-  }, [login, user])
-  if (user || authOk) {
+  if (user) {
     return children // render the site
-  } else if (authOk === false) { // redirect to login page
+  } else { // redirect to login page
     return (<Navigate to={LoginRoute.path} state={{ from: location }} replace />)
-  } else { // authOk is still null, wait for it
-    return null
   }
 }
