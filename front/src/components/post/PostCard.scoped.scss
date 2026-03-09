@@ -1,0 +1,22 @@
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 1ch;
+  .header .title {
+    font-size: 1.4rem;
+  }
+  .author-date {
+    font-weight: 300;
+    .author {
+      font-weight: 700;
+    }
+  }
+  .actions {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+  }
+  .actions button + button {
+    margin-left: '20px';
+  }
+}

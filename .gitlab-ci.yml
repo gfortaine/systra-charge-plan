@@ -1,12 +1,12 @@
 include:
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/python-ci.yml'
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/javascript-ci.yml'
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/security-ci.yml'
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/secret-ci.yml'
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/linter-ci.yml'
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/tag-ci.yml'
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/publish-ci.yml'
-  - remote: 'https://gitlab.com/systra/qeto/infra/gitlab-ci-templates/raw/master/deploy-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/python-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/javascript-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/security-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/secret-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/linter-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/tag-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/publish-ci.yml'
+  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/deploy-ci.yml'
 stages:
   - test
   - release
@@ -70,11 +70,11 @@ i18n_js:
   needs:
     - pre_js
   before_script:
-    - apt-get update && apt-get install -y gettext jq
+    - apt-get update && apt-get install -y gettext
     - !reference [.js_22, before_script]
   script:
     - |
-      [ -d front/src/locales.json ] || exit 0
+      [ -d front/src/i18n/locales.json ] || exit 0
       yarn run i18n-report
 test_py:
   extends:
@@ -86,9 +86,9 @@ test_py:
   rules:
     - if: $CI_COMMIT_BRANCH
   image:
-    name: registry.gitlab.com/systra/qeto/docker/ci/python-postgres:3.13-17
+    name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python-postgres:3.13-17
     # for sqlite:
-    # name: registry.gitlab.com/systra/qeto/docker/ci/python:3.13
+    # name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python:3.13
   variables:
     DJANGO_DB_TYPE: postgresql
     # DJANGO_DB_TYPE: sqlite
@@ -114,10 +114,12 @@ test_js:
     - if: $CI_COMMIT_BRANCH
   before_script:
     - |
+      set -e
+      apt-get update && apt-get install -y gettext
       [ -d reports ] && rm -rf reports; mkdir -p reports
       [ -d build ] && rm -rf build; mkdir -p build
-      yarn run pre
     - !reference [.js_22, before_script]
+    - yarn run pre
   script:
     - |
       set -e

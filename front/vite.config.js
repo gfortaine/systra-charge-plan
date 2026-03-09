@@ -1,11 +1,26 @@
-import viteReact from "@vitejs/plugin-react"
-import { tanstackRouter } from "@tanstack/router-plugin/vite"
-import DjVitePlugin from 'djvite'
 import path from 'path'
 import { env } from 'process'
+import react from '@vitejs/plugin-react'
+import DjVitePlugin from 'djvite'
+import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
 import { defineConfig } from 'vite'
 
 const django_server = `http://localhost:${env.DJANGO_PORT || '8000'}`
+const chunksMap = (() => {
+  const map = {}
+  map['config'] = 'front/src/config.js'
+  Object.entries({
+    react: ['react', 'react-dom', 'react-router', 'react-hook-form'],
+    mui: ['@mui'],
+    mapbox: ['@mapboxql', 'mapbox-gl'],
+  }).forEach(([big, depIds]) => {
+    depIds.forEach(depId => {
+      map[depId] = `vendor-${big}`
+    })
+  })
+  map['vendor-all'] = 'node_modules'
+  return map
+})()
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,27 +36,24 @@ export default defineConfig({
   },
   plugins: [
     DjVitePlugin({ verbose: true, manifestPath: 'front/vite.manifest.json' }),
-    tanstackRouter({
-      target: 'react',
-      autoCodeSplitting: true,
-      routesDirectory: './src/routes',
-    }),
-    viteReact(),
+    react(),
+    reactScopedCssPlugin(),
   ],
   resolve: {
     alias: {
       '@src': path.resolve('./front/src'),
       '@page': path.resolve('./front/src/pages'),
       '@comp': path.resolve('./front/src/components'),
-      '@scss': path.resolve('./front/src/scss'),
+      '@scss': path.resolve('./front/src/theme/scss'),
       '@static': path.resolve('./front/static'),
       '@test': path.resolve('./front/tests'),
+      'lioness': path.resolve('./front/src/i18n/lioness'),
     },
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@use "@scss/sds-design-system/color-shades" as *;\n',
+        additionalData: '@use "@scss/color-shades" as *;\n',
       },
     },
   },
@@ -59,8 +71,10 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       enabled: true,
-      include: ['front/src/**'],
-      extension: ['js', 'vue'],
+      include: ['front/src/**/*.{js,jsx}'],
+      exclude: [
+        'front/src/i18n/locale/**',
+      ],
       reportsDirectory: './reports/coverage-js',
       reporter: ['cobertura', 'clover', 'text', 'text-summary', 'html'],
       reportOnFailure: true,
@@ -74,16 +88,10 @@ export default defineConfig({
       output: {
         compact: true,
         manualChunks: (id) => {
-          if (id.includes('front/src/config.js')) {
-            return 'config'
-          }
-          for (const big of ['@vue', 'vuetify', '@fortawesome']) {
-            if (id.includes(`node_modules/${big}`)) {
-              return `vendor-${big.replace('@', '')}`
+          for (const [chunk, depId] of Object.entries(chunksMap)) {
+            if (id.includes(depId)) {
+              return chunk
             }
-          }
-          if (id.includes('node_modules')) {
-            return 'vendor-all'
           }
         },
       },

@@ -289,6 +289,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 DJVITE = {
     'DEV_MODE': DJANGO_VITE_DEV_MODE,
     'VITE_MANIFEST_PATH': BASE_DIR.parent / 'front' / 'vite.manifest.json',
+    'MODULE_EXTS': ['.js', '.jsx'],
 }
 STATICFILES_DIRS = []
 if (dist_path := BASE_DIR.parent / 'front' / 'dist').exists():

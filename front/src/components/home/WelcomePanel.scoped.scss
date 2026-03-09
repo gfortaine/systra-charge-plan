@@ -1,0 +1,42 @@
+.welcome-panel {
+  max-width: 40%;
+  overflow: auto;
+  padding: 40px;
+  position: relative;
+}
+.welcome-title {
+  font-size: 3rem; // 48px
+  font-weight: 700; // bold
+  z-index: 10;
+}
+.welcome-subtitle {
+  font-size: 2rem;
+  z-index: 10;
+}
+.welcome-btn {
+  z-index: 10;
+}
+.welcome-icon {
+  position: absolute;
+  z-index: 1;
+  opacity: 0.6;
+  right: 50px;
+  bottom: 28px;
+  font-size: 25rem;
+  height: 300px;
+}
+
+@media (width <= 1000px), (height <= 850px) {
+  .welcome-panel {
+    width: max-content;
+  }
+  .welcome-subtitle {
+    font-size: 1rem;
+  }
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.view .MuiPaper-root {
+  padding: 20px;
+  flex-grow: 1;
+}

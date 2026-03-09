@@ -25,10 +25,10 @@ for f in \
   .gitignore \
   .dockerignore \
   $(find .poe -type f) \
-  $(find . -type f name '*.*js') \
-  $(find . -type f name '*.jsx') \
-  $(find . -type f name '*.py') \
-  leaks.toml
+  $(find . -type f -name '*.*js') \
+  $(find . -type f -name '*.jsx') \
+  $(find . -type f -name '*.py') \
+  leaks.toml \
 ; do
   sed -ri -e "s/myapp/$name/g" -e "s/Myapp/$uname/g" "$f"
 done

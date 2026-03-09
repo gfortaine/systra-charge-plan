@@ -50,11 +50,11 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate"
-Repository = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate"
-"Bug Tracker" = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/-/issues"
-"Merge Requests" = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/-/merge_requests"
-Changelog = "https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/-/blob/master/CHANGELOG.md"
+Homepage = "https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate"
+Repository = "https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate"
+"Bug Tracker" = "https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/-/issues"
+"Merge Requests" = "https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/-/merge_requests"
+Changelog = "https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/-/blob/master/CHANGELOG.md"
 
 [dependency-groups]
 dev = [

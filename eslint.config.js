@@ -1,9 +1,10 @@
 import eslint from '@eslint/js'
-import globals from 'globals'
+import stylistic from '@stylistic/eslint-plugin'
+import importPlugin from 'eslint-plugin-import'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import stylistic from '@stylistic/eslint-plugin'
+import globals from 'globals'
 
 export default [
   {
@@ -20,9 +21,10 @@ export default [
     ],
   },
   eslint.configs.recommended,
+  importPlugin.flatConfigs['react'],
   reactPlugin.configs.flat['recommended'],
   reactPlugin.configs.flat['jsx-runtime'],
-  reactHooks.configs['recommended-latest'],
+  reactHooks.configs.flat['recommended-latest'],
   reactRefresh.configs.vite,
   stylistic.configs['recommended'],
   {
@@ -32,6 +34,11 @@ export default [
       '**/*.cjs',
       '**/*.jsx',
     ],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
     languageOptions: {
       parserOptions: {
         ecmaVersion: 'latest', // default
@@ -41,12 +48,49 @@ export default [
       globals: globals.browser,
     },
     rules: {
+      'import/extensions': [
+        'error',
+        {
+          js: 'never',
+          jsx: 'never',
+          mjs: 'always',
+          json: 'always',
+          css: 'always',
+          scss: 'always',
+        },
+      ],
+      'import/newline-after-import': 'error',
+      'import/order': [
+        'error',
+        {
+          'groups': ['builtin', 'external', 'internal', 'parent', 'sibling'],
+          'pathGroups': [
+            {
+              pattern: '{react,react/*,react-*,react-*/*}',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '@{src,page,comp,scss,static,test}/**',
+              group: 'internal',
+            },
+          ],
+          'pathGroupsExcludedImportTypes': [],
+          'newlines-between': 'never',
+          'alphabetize': {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+          'named': true,
+        },
+      ],
       '@stylistic/arrow-parens': 'off',
       '@stylistic/brace-style': 'off',
       '@stylistic/indent': ['error', 2],
       '@stylistic/multiline-ternary': 'off',
       '@stylistic/semi': 'error',
       '@stylistic/space-before-function-paren': 'off',
+      '@stylistic/jsx-one-expression-per-line': ['error', { allow: 'non-jsx' }],
       'comma-dangle': ['warn', 'always-multiline'],
       'curly': 'error',
       'max-len': ['warn', { code: 120 }],
@@ -70,6 +114,7 @@ export default [
         },
       ],
       'quote-props': ['warn', 'as-needed', { unnecessary: false }],
+      'react/prop-types': 'off',
     },
   },
 ]

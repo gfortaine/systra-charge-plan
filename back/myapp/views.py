@@ -7,6 +7,8 @@ from django.shortcuts import render
 
 from .utils.version import version
 
+from django.conf import settings
+
 
 def get_version(request: HttpRequest) -> JsonResponse:
     return JsonResponse({
@@ -15,4 +17,6 @@ def get_version(request: HttpRequest) -> JsonResponse:
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request, "index.html", {})
+    return render(request, "index.html", {
+        'DEV_MODE': settings.DJVITE['DEV_MODE'],
+    })

@@ -1,11 +1,11 @@
 # syntax = docker/dockerfile:1
-FROM registry.gitlab.com/systra/qeto/docker/python-gunicorn-nginx:3.13 AS base
+FROM registry.gitlab.com/systracorp/hq/infra/docker/python-gunicorn-nginx:3.13 AS base
 LABEL maintainer="Cyrille Pontvieux <cpontvieux@systra.com>"
 EXPOSE 80
 USER root
 # Install system dependencies
 # https://docs.gunicorn.org/en/stable/design.html
-# https://gitlab.com/systra/qeto/docker/-/blob/master/python-gunicorn-nginx/3.13/gunicorn-conf.py
+# https://gitlab.com/systracorp/hq/infra/docker/-/blob/master/python-gunicorn-nginx/3.13/gunicorn-conf.py
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=C.UTF-8 \
     GUNICORN_CHDIR=/var/www/myapp/back \

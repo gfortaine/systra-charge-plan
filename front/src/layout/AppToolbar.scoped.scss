@@ -1,0 +1,13 @@
+@use "@scss/color-shades" as *;
+.app-toolbar {
+  background-color: $white !important;
+}
+.app-logo {
+  height: 40px;
+}
+.project-name {
+  flex-grow: 1;
+  font-size: 1.3em;
+  color: $primary;
+  padding: 0 1em;
+}

@@ -1,5 +1,5 @@
 # syntax = docker/dockerfile:1
-FROM registry.gitlab.com/systra/qeto/docker/python-gunicorn-nginx:3.13
+FROM registry.gitlab.com/systracorp/hq/infra/docker/python-gunicorn-nginx:3.13
 USER root
 ENV NODE_VERSION=22.22.0 \
     NODE_SHA256=c33c39ed9c80deddde77c960d00119918b9e352426fd604ba41638d6526a4744 \

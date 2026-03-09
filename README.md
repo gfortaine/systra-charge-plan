@@ -24,9 +24,9 @@
 [django-image]: https://img.shields.io/badge/django-5.2-blue?style=flat&labelColor=blueviolet&logo=django&logoColor=white
 [node-image]: https://img.shields.io/badge/Node%20js-22-blue?style=flat&logo=nodedotjs&logoColor=white
 [react-image]: https://img.shields.io/badge/React-19-blue?style=flat&logo=reactjs
-[latest-commit-url]: https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/-/commits/master
-[pipeline-image]: https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/badges/master/pipeline.svg?ignore_skipped=true
-[coverage-image]: https://gitlab.com/systra/qeto/boilerplates/django-react-boilerplate/badges/master/coverage.svg
+[latest-commit-url]: https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/-/commits/master
+[pipeline-image]: https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/badges/master/pipeline.svg?ignore_skipped=true
+[coverage-image]: https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/badges/master/coverage.svg
 [license-image]: https://img.shields.io/badge/license-MIT-darkgreen?style=flat&labelColor=gray
 
 
@@ -66,15 +66,14 @@ This project regroups all the common code you may need to start a new Django + R
 - Unit testing with Pytest
 - All the common interfaces (header, left navigation drawer, notifications, snackbar, ...).
 - A login page
-- A home page with classic project management
+- A home page with blog post management
 - A map page with a left expansible drawer and classic use of [**Mapbox GL**](https://docs.mapbox.com/mapbox-gl-js/api/)
 - A router
 - A store
 - A translation module
-- A stepper
 - Examples of components (time and date pickers, data tables, radio buttons, file upload interface...)
+- Icons with [**MaterialIcons**](https://mui.com/material-ui/material-icons/#search-material-icons)
 - Unit testing with [**Vitest**](https://vitest.dev/)
-- Icons with [**FontAwesome**](https://fontawesome.com/)
 
 [//]: # (End of Boilerplate doc)
 
@@ -213,7 +212,7 @@ You can adjust your configuration in `front/src/config.js` file.
 
 ## Internationalization (i18n)
 
-Use `$gettext` in the template or script sections of your `.jsx` files.
+Use `t` or `<T>` in your `.jsx` files.
 
 For more information: https://github.com/alexanderwallin/lioness
 

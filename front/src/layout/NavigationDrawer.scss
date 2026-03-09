@@ -1,0 +1,27 @@
+@use "@scss/color-shades" as *;
+.drawer > * {
+  background-color: $secondary !important;
+}
+.drawer-header {
+  border-bottom: 1px solid $white;
+  color: $white;
+}
+.app-menu-item {
+  padding: 0 !important;
+  justify-content: flex-start !important;
+  flex: 0;
+}
+.app-menu-item-title {
+  color: $white;
+}
+.app-menu-item:hover {
+  background-color: $secondary-light;
+  .icon,
+  .app-menu-item-title {
+    color: $secondary;
+  }
+}
+.app-menu-item-icon > * {
+  opacity: 1 !important;
+  color: $white;
+}
