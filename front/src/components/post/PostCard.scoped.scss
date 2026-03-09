@@ -11,6 +11,11 @@
       font-weight: 700;
     }
   }
+  .actions {
+    display: flex;
+    gap: 1em;
+    justify-content: flex-end;
+  }
   .actions button + button {
     margin-left: '20px';
   }

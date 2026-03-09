@@ -23,6 +23,7 @@ msgid "Edit"
 msgstr ""
 
 #: front/src/components/post/Comment.jsx:55
+#: front/src/components/post/PostCard.jsx:75
 #: front/src/pages/Post.jsx:257
 msgid "Delete"
 msgstr ""
@@ -61,11 +62,15 @@ msgstr ""
 msgid "Published by {{ authorName }} on {{ localeDate }} at {{ localeTime }}"
 msgstr ""
 
-#: front/src/components/post/PostCard.jsx:85
+#: front/src/components/post/PostCard.jsx:84
+msgid "Open"
+msgstr ""
+
+#: front/src/components/post/PostCard.jsx:89
 msgid "Delete a blog post"
 msgstr ""
 
-#: front/src/components/post/PostCard.jsx:91
+#: front/src/components/post/PostCard.jsx:95
 msgid ""
 "You are about to delete the blog post « {{ post }} ». Do you really want to "
 "take that action?"

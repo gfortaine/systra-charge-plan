@@ -66,19 +66,23 @@ export default function PostCard({
       </div>
       <div className="actions">
         <Button
-          variant="text"
-          size="small"
-          color="secondary"
+          variant="outlined"
+          size="large"
+          color="error"
           startIcon={(<DeleteIcon />)}
           onClick={showDeletePostDialog}
-        />
+        >
+          <T>Delete</T>
+        </Button>
         <Button
-          variant="text"
-          size="small"
-          color="secondary"
+          variant="contained"
+          size="large"
+          color="primary"
           startIcon={(<EnterIcon />)}
           onClick={enterPost}
-        />
+        >
+          <T>Open</T>
+        </Button>
       </div>
       <InformationPopup
         open={deletePostDialogShown}
