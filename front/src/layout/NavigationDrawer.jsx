@@ -16,7 +16,7 @@ import { styled } from '@mui/material/styles'
 import { useAuth } from '@src/auth'
 import { useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
-import './NavigationDrawer.scoped.scss'
+import './NavigationDrawer.scss'
 
 const drawerWidth = 240
 

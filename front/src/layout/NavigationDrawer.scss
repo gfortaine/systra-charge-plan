@@ -1,7 +1,5 @@
 @use "@scss/color-shades" as *;
-
-/* stylelint-disable selector-class-pattern -- MUI class */
-.drawer > div.MuiPaper-root {
+.drawer > * {
   background-color: $secondary !important;
 }
 .drawer-header {
