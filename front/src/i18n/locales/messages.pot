@@ -76,11 +76,11 @@ msgid ""
 "take that action?"
 msgstr ""
 
-#: front/src/components/post/PostList.jsx:64
+#: front/src/components/post/PostList.jsx:68
 msgid "Search"
 msgstr ""
 
-#: front/src/components/post/PostList.jsx:65
+#: front/src/components/post/PostList.jsx:69
 msgid "keyword"
 msgstr ""
 

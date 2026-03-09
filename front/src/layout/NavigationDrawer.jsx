@@ -18,7 +18,7 @@ import { useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 import './NavigationDrawer.scss'
 
-const drawerWidth = 240
+const drawerWidth = 320
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
@@ -106,7 +106,7 @@ export default function NavigationDrawer() {
             return (
               <ListItem key={index} className="app-menu-item" disablePadding>
                 <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
-                  <ListItemIcon className="app-menu-item-icon">
+                  <ListItemIcon className="app-menu-item-icon" title={route.title(t)}>
                     { route.icon }
                   </ListItemIcon>
                   <ListItemText className="app-menu-item-title" primary={route.title(t)} />
@@ -122,7 +122,7 @@ export default function NavigationDrawer() {
                 disablePadding
               >
                 <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon className="app-menu-item-icon">
+                  <ListItemIcon className="app-menu-item-icon" title={route.title(t)}>
                     { route.icon }
                   </ListItemIcon>
                   <ListItemText className="app-menu-item-title" primary={route.title(t)} />

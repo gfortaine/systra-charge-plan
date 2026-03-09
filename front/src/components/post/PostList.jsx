@@ -11,10 +11,13 @@ import useRoutes from '@src/routes'
 import PostCard from './PostCard'
 import './PostList.scoped.scss'
 
+const defaultPostParams = {}
+const defaultPostAnswerResolver = answer => answer.allPosts
+
 export default function PostList({
   postsQuery = getAllPostsQuery,
-  postsParams = {},
-  postsAnswerResolver = answer => answer.allPosts,
+  postsParams = defaultPostParams,
+  postsAnswerResolver = defaultPostAnswerResolver,
 }) {
   const { t } = useI18n()
   const navigate = useNavigate()
@@ -35,6 +38,7 @@ export default function PostList({
     fetchPosts(searchTerm, setPosts)
   }, [fetchPosts, searchTerm])
   async function handleSearchChange(e) {
+    console.log('handleSearchChange', { e })
     const keyword = e?.target?.value ?? ''
     setSearchTerm(keyword)
   }

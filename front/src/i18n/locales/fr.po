@@ -82,11 +82,11 @@ msgstr ""
 "Vous êtes sur le point de supprimer le billet de blog « {{ post }} ». Voulez-"
 "vous vraiment faire cette action ?"
 
-#: front/src/components/post/PostList.jsx:64
+#: front/src/components/post/PostList.jsx:68
 msgid "Search"
 msgstr "Rechercher"
 
-#: front/src/components/post/PostList.jsx:65
+#: front/src/components/post/PostList.jsx:69
 msgid "keyword"
 msgstr "mot-clé"
 

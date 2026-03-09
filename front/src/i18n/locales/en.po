@@ -74,11 +74,11 @@ msgstr ""
 "You are about to delete the blog post « {{ post }} ». Do you really want to "
 "take that action?"
 
-#: front/src/components/post/PostList.jsx:64
+#: front/src/components/post/PostList.jsx:68
 msgid "Search"
 msgstr "Search"
 
-#: front/src/components/post/PostList.jsx:65
+#: front/src/components/post/PostList.jsx:69
 msgid "keyword"
 msgstr "keyword"
 

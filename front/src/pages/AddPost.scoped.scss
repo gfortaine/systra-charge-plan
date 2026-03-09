@@ -5,6 +5,7 @@
 }
 .add-post-card {
   overflow-y: auto;
+  flex: 1;
 }
 .error-msg {
   color: $error;
