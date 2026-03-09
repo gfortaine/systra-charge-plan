@@ -1,4 +1,11 @@
-import { useState, useEffect, useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import {
+  Add,
+  ArrowBack,
+  Delete,
+  Edit,
+} from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -6,22 +13,15 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import {
-  Add,
-  ArrowBack,
-  Delete,
-  Edit,
-} from '@mui/icons-material'
 import Comment from '@comp/post/Comment'
 import CommentForm from '@comp/post/CommentForm'
 import InformationPopup from '@comp/utils/InformationPopup'
-import { useNavigate, useParams, NavLink } from 'react-router-dom'
-import useRoutes from '@src/routes'
-import useGraphql from '@src/graphql'
-import { getPostQuery } from '@src/graphql/queries'
-import { createCommentMutation, updateCommentMutation, deleteCommentMutation } from '@src/graphql/mutations'
-import { T, useI18n } from '@src/i18n'
 import { backUrl } from '@src/config'
+import useGraphql from '@src/graphql'
+import { createCommentMutation, deleteCommentMutation, updateCommentMutation } from '@src/graphql/mutations'
+import { getPostQuery } from '@src/graphql/queries'
+import { T, useI18n } from '@src/i18n'
+import useRoutes from '@src/routes'
 
 export default function Post() {
   const { id: postId } = useParams()

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
-import locales from './locales.json'
 import { useTranslation } from 'lioness'
+import locales from './locales.json'
 
 export { T } from 'lioness'
 export * as translations from './translations.json'

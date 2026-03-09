@@ -97,7 +97,7 @@
     "djvite": "^1.4.3",
     "eslint": "^9",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^17.21.0",
     "eslint-plugin-promise": "^7.2.1",
     "eslint-plugin-react": "^7.37.0",
@@ -117,7 +117,6 @@
   "resolutions": {
     "@isaacs/brace-expansion": "^5.0.1",
     "immutable": "^5.1.5",
-    "minimatch": "^10.2.3",
     "rollup": "^4.59.0"
   },
   "engines": {

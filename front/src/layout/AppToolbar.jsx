@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom'
+import { AccountCircle } from '@mui/icons-material'
 import {
   AppBar,
   Button,
@@ -7,10 +9,8 @@ import {
   Typography,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { AccountCircle } from '@mui/icons-material'
-import { NavLink } from 'react-router-dom'
+import { languages, useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
-import { useI18n, languages } from '@src/i18n'
 import app_logo from '@static/logo-v2-dark.png'
 import './AppToolbar.scoped.scss'
 

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react'
+import * as muiLocales from '@mui/material/locale'
 import { createTheme } from '@mui/material/styles'
 import colors from '@scss/color-shades'
-import * as muiLocales from '@mui/material/locale'
 import { useI18n } from '@src/i18n'
 
 export function useTheme() {

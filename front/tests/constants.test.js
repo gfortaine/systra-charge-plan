@@ -1,5 +1,5 @@
-import { describe, test, expect } from 'vitest'
-import { LANGUAGES, DEFAULT_LANGUAGE } from '@src/constants'
+import { describe, expect, test } from 'vitest'
+import { DEFAULT_LANGUAGE, LANGUAGES } from '@src/constants'
 
 describe('constants', () => {
   test('well defined', () => {

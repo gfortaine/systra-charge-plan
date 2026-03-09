@@ -1,9 +1,9 @@
 import Paper from '@mui/material/Paper'
-import { DataGrid } from '@mui/x-data-grid'
 import {
   BarChart,
   PieChart,
 } from '@mui/x-charts'
+import { DataGrid } from '@mui/x-data-grid'
 import './DataGridDemo.scoped.scss'
 
 const columns = [

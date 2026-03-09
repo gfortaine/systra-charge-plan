@@ -1,6 +1,6 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createNodeGettextAdapter, LionessProvider } from 'lioness'
-import { I18nContext, bestLanguage, translations } from './'
+import { bestLanguage, I18nContext, translations } from './'
 
 export const I18nProvider = ({ children, defaultLocale = undefined }) => {
   const initialeLocale = defaultLocale ?? bestLanguage

@@ -1,10 +1,10 @@
-import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
-import logo from '@static/icon_circle.png'
-import PostAddIcon from '@mui/icons-material/PostAdd'
 import { NavLink } from 'react-router-dom'
-import useRoutes from '@src/routes'
+import PostAddIcon from '@mui/icons-material/PostAdd'
+import Button from '@mui/material/Button'
+import Paper from '@mui/material/Paper'
 import { T } from '@src/i18n'
+import useRoutes from '@src/routes'
+import logo from '@static/icon_circle.png'
 import './WelcomePanel.scoped.scss'
 
 export default function WelcomePanel() {

@@ -1,8 +1,8 @@
-import DjVitePlugin from 'djvite'
-import react from '@vitejs/plugin-react'
-import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
 import path from 'path'
 import { env } from 'process'
+import react from '@vitejs/plugin-react'
+import DjVitePlugin from 'djvite'
+import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
 import { defineConfig } from 'vite'
 
 const django_server = `http://localhost:${env.DJANGO_PORT || '8000'}`

@@ -1,12 +1,12 @@
 import {
+  Delete,
+  Edit,
+} from '@mui/icons-material'
+import {
   Box,
   Button,
   Typography,
 } from '@mui/material'
-import {
-  Edit,
-  Delete,
-} from '@mui/icons-material'
 import { T, useI18n } from '@src/i18n'
 
 export default function Comment({

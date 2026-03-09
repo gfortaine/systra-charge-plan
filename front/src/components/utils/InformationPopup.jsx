@@ -1,13 +1,13 @@
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
+import CancelIcon from '@mui/icons-material/Cancel'
+import SubmitIcon from '@mui/icons-material/Done'
 import {
   Button,
   Dialog,
-  DialogTitle,
-  DialogContent,
   DialogActions,
+  DialogContent,
+  DialogTitle,
 } from '@mui/material'
-import CancelIcon from '@mui/icons-material/Cancel'
-import SubmitIcon from '@mui/icons-material/Done'
 import { T } from '@src/i18n'
 import { ValidationContext } from './ValidationContext'
 

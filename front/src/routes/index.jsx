@@ -1,13 +1,3 @@
-import LoginPage from '@page/Login'
-import HomePage from '@page/Home'
-import PostPage from '@page/Post'
-import AddPostPage from '@page/AddPost'
-import CategoryPage from '@page/Category'
-import DataGridDemo from '@page/DataGridDemo'
-import MapPage from '@page/MapPage'
-import PickersPage from '@page/Pickers'
-import UserPage from '@page/User'
-import AuthRequired from '@src/auth/AuthRequired'
 import {
   CalendarMonth,
   Home,
@@ -18,6 +8,16 @@ import {
   PostAdd,
   TableView,
 } from '@mui/icons-material'
+import AddPostPage from '@page/AddPost'
+import CategoryPage from '@page/Category'
+import XDataGridDemo from '@page/DataGridDemo'
+import HomePage from '@page/Home'
+import LoginPage from '@page/Login'
+import MapPage from '@page/MapPage'
+import PickersPage from '@page/Pickers'
+import PostPage from '@page/Post'
+import UserPage from '@page/User'
+import AuthRequired from '@src/auth/AuthRequired'
 
 export default function useRoutes() {
   const routes = {
@@ -91,7 +91,7 @@ export default function useRoutes() {
       path: '/data',
       element: (
         <AuthRequired>
-          <DataGridDemo />
+          <XDataGridDemo />
         </AuthRequired>
       ),
       icon: <TableView />,

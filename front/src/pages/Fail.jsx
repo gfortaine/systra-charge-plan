@@ -1,9 +1,9 @@
-import logo from '@static/logo-v2-dark.png'
 import {
   Card,
   CardContent,
   Container,
 } from '@mui/material'
+import logo from '@static/logo-v2-dark.png'
 
 export default function Fail() {
   return (

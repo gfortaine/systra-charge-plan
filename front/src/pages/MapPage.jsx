@@ -1,6 +1,5 @@
-import { useEffect, useCallback, useRef, useState } from 'react'
-import MapboxGL from 'mapbox-gl'
-import 'mapbox-gl/dist/mapbox-gl.css'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import {
   Box,
   Button,
@@ -11,12 +10,13 @@ import {
   Stack,
   Typography,
 } from '@mui/material'
-import { ChevronLeft, ChevronRight } from '@mui/icons-material'
-import pkPoints from '@static/markers.json'
-import line from '@static/line.json'
+import MapboxGL from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
 import colorShades from '@scss/color-shades'
-import { useI18n, T } from '@src/i18n'
 import { mapboxPublicKey } from '@src/config'
+import { T, useI18n } from '@src/i18n'
+import line from '@static/line.json'
+import pkPoints from '@static/markers.json'
 import './MapPage.scoped.scss'
 import './MapPage.scss'
 

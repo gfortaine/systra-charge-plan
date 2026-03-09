@@ -1,9 +1,9 @@
 import gql from 'graphql-tag'
 import {
+  categoryFragment,
   postBasicFragment,
   postFullFragment,
   userFragment,
-  categoryFragment,
 } from './fragments'
 
 export const getAllPostsQuery = gql`

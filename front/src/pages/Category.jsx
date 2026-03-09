@@ -1,18 +1,18 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import {
+  ArrowBack,
+} from '@mui/icons-material'
 import {
   Box,
   Button,
   Typography,
 } from '@mui/material'
-import {
-  ArrowBack,
-} from '@mui/icons-material'
-import { useNavigate, useParams } from 'react-router-dom'
-import useRoutes from '@src/routes'
-import useGraphql from '@src/graphql'
-import { getCategoryQuery, getCategoryPostsQuery } from '@src/graphql/queries'
-import { T } from '@src/i18n'
 import PostList from '@comp/post/PostList'
+import useGraphql from '@src/graphql'
+import { getCategoryPostsQuery, getCategoryQuery } from '@src/graphql/queries'
+import { T } from '@src/i18n'
+import useRoutes from '@src/routes'
 
 export default function Category() {
   const { id: catId } = useParams()

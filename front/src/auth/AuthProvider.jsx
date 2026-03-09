@@ -1,8 +1,8 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import gql from 'graphql-tag'
+import { backUrl, fakeUser } from '@src/config'
 import useGraphql from '@src/graphql'
 import useRoutes from '@src/routes'
-import { backUrl, fakeUser } from '@src/config'
-import gql from 'graphql-tag'
 import { AuthContext } from './'
 
 export const AuthProvider = ({ children }) => {

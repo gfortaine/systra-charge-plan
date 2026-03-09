@@ -1,5 +1,5 @@
 /* global process */
-import { join, isAbsolute } from 'path'
+import { isAbsolute, join } from 'path'
 
 async function load(fileName) {
   try {

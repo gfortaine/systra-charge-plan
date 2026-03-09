@@ -1,9 +1,9 @@
+import { Alert, Paper } from '@mui/material'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
-import { Alert, Paper } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
-import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker'
+import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { T } from '@src/i18n'
 import './Pickers.scoped.scss'
 

@@ -1,14 +1,14 @@
-import { jsx } from 'react/jsx-runtime'
 import {
   Children,
-  Fragment,
   cloneElement,
   createContext,
+  Fragment,
   isValidElement,
   useCallback,
   useContext,
   useEffect,
 } from 'react'
+import { jsx } from 'react/jsx-runtime'
 import Gettext from 'node-gettext'
 
 const variableRegex = /(\{\{\s.+?\s\}\})/gm

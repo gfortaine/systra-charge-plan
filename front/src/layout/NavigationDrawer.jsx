@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import { styled } from '@mui/material/styles'
+import { NavLink } from 'react-router-dom'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import MenuIcon from '@mui/icons-material/Menu'
 import {
   ClickAwayListener,
   Divider,
@@ -10,12 +12,10 @@ import {
   ListItemText,
 } from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
-import MenuIcon from '@mui/icons-material/Menu'
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
-import { NavLink } from 'react-router-dom'
-import useRoutes from '@src/routes'
+import { styled } from '@mui/material/styles'
 import { useAuth } from '@src/auth'
 import { useI18n } from '@src/i18n'
+import useRoutes from '@src/routes'
 import './NavigationDrawer.scoped.scss'
 
 const drawerWidth = 240
