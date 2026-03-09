@@ -1,4 +1,4 @@
 #!/bin/sh
-LOCALE_DIR=./front/src/locale
-JSON_FILE=./front/src/translations.json
-yarn run gettext-utils import-strings "$LOCALE_DIR" "$JSON_FILE"
+LOCALE_DIR=./front/src/i18n/locales
+JSON_FILE=./front/src/i18n/translations.json
+yarn run -s gettext-utils import-strings "$LOCALE_DIR" "$JSON_FILE"

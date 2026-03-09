@@ -4,8 +4,8 @@ import {
   Container,
   Typography,
 } from '@mui/material'
-import { T } from '@src/utils/i18n'
-import { useAuth } from '@src/utils/auth'
+import { T } from '@src/i18n'
+import { useAuth } from '@src/auth'
 
 export default function User() {
   const { user } = useAuth()

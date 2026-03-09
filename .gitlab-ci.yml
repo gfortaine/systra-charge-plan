@@ -74,7 +74,7 @@ i18n_js:
     - !reference [.js_22, before_script]
   script:
     - |
-      [ -d front/src/locales.json ] || exit 0
+      [ -d front/src/i18n/locales.json ] || exit 0
       yarn run i18n-report
 test_py:
   extends:
@@ -114,10 +114,12 @@ test_js:
     - if: $CI_COMMIT_BRANCH
   before_script:
     - |
+      set -e
+      apt-get update && apt-get install -y gettext
       [ -d reports ] && rm -rf reports; mkdir -p reports
       [ -d build ] && rm -rf build; mkdir -p build
-      yarn run pre
     - !reference [.js_22, before_script]
+    - yarn run pre
   script:
     - |
       set -e

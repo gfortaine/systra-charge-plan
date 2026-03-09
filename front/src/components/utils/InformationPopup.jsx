@@ -1,36 +1,51 @@
-import { useState, createContext, useContext } from 'react'
-import { T, useI18n } from '@src/utils/i18n'
-import Dialog from '@mui/material/Dialog'
-import DialogTitle from '@mui/material/DialogTitle'
-import { Button, Card, CardActions, CardContent, CardHeader } from '@mui/material'
-import './InformationPopup.scoped.scss'
+import { useState, useRef } from 'react'
+import {
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from '@mui/material'
+import CancelIcon from '@mui/icons-material/Cancel'
+import SubmitIcon from '@mui/icons-material/Done'
+import { T } from '@src/i18n'
+import { ValidationContext } from './ValidationContext'
 
-const FormValidityContext = createContext({
-  isValid: true,
-  setValidity: () => {},
-})
-const FormValidityProvider = ({ children }) => {
-  const [validMap, setValidMap] = useState({})
-  const setValidity = (id, isValid) => {
-    setValidMap(map => ({ ...map, [id]: isValid }))
-  }
-  const isValid = Object.values(validMap).every(v => !!v)
-  return (<FormValidityContext.Provider value={{ isValid, setValidity }}>{children}</FormValidityContext.Provider>)
-}
-const useFormValidity = () => useContext(FormValidityContext)
-function InformationPopup({
+export default function InformationPopup({
   open,
   title,
-  buttons, /* [{type: button | submit | cancel, label, params: [...], icon, color, class}, ...] */
+  buttons, /* [{type: button | submit | cancel, label, params: [...], icon, color}, ...] */
   children,
   onCancel = () => {},
   onButton = (_button, ..._params) => {},
-  onSubmit = (_isValid, ..._params) => {},
+  onSubmit = () => {},
 }) {
-  const { t } = useI18n()
-  const { isValid } = useFormValidity()
+  const [isValid, setIsValid] = useState(true)
+  const validMap = useRef({})
   function isButtonDisabled(button) {
     return button.type === 'submit' && !isValid
+  }
+  function getButtonColor(button) {
+    let color = button.color
+    if (!color) {
+      if (button.type === 'cancel') {
+        color = 'secondary'
+      } else if (button.type === 'submit') {
+        color = 'primary'
+      }
+    }
+    return color
+  }
+  function getButtonIcon(button) {
+    let icon = button.icon
+    if (!icon) {
+      if (button.type === 'cancel') {
+        icon = <CancelIcon />
+      } else if (button.type === 'submit') {
+        icon = <SubmitIcon />
+      }
+    }
+    return icon
   }
   function onDialogClose() {
     onCancel()
@@ -40,46 +55,54 @@ function InformationPopup({
       onCancel()
     } else if (button.type != 'submit') {
       onButton(button, ...button.params || [])
+    } else {
+      if (isValid) {
+        onSubmit()
+      }
     }
   }
-  function handleSubmitForm() {
-    const button = buttons.find(btn => btn.type === 'submit') || {}
-    onSubmit(isValid, ...button.params || [])
-  }
   return (
-    <Dialog onClose={onDialogClose} open={open}>
-      <DialogTitle>
-        <T>{title}</T>
-      </DialogTitle>
-      <Card>
-        <CardHeader className="header" title={t(title)} />
-        <form onSubmit={handleSubmitForm}>
-          <CardContent className="text">
-            <FormValidityProvider>
-              {children}
-            </FormValidityProvider>
-          </CardContent>
-          <CardActions className="actions">
-            {buttons.map(btn => (
-              <Button
-                key={btn.label}
-                type={['submit'].find(v => v == btn.type) || 'button'} // button or submit
-                variant="contained"
-                className="button"
-                color={btn.color}
-                disabled={isButtonDisabled(btn)}
-                startIcon={btn.icon}
-                onClick={() => onButtonClick(btn)}
-              >
-                <T>{btn.label}</T>
-              </Button>
-            ))}
-          </CardActions>
-        </form>
-      </Card>
-    </Dialog>
+    <ValidationContext.Provider
+      value={{
+        setValid: (name, isValid) => {
+          validMap.current[name] = isValid
+          setIsValid(Object.values(validMap.current).every(valid => valid))
+        },
+      }}
+    >
+      <Dialog onClose={onDialogClose} open={open}>
+        <DialogTitle>
+          <T>{title}</T>
+        </DialogTitle>
+        <DialogContent>
+          <form
+            onSubmit={() => {
+              event.preventDefault()
+              if (isValid) {
+                onSubmit()
+              }
+            }}
+          >
+            {children}
+          </form>
+        </DialogContent>
+        <DialogActions>
+          {buttons.map(btn => (
+            <Button
+              key={btn.label}
+              type={['submit'].find(v => v == btn.type) || 'button'} // button or submit
+              variant="contained"
+              className="button"
+              color={getButtonColor(btn)}
+              disabled={isButtonDisabled(btn)}
+              startIcon={getButtonIcon(btn)}
+              onClick={() => onButtonClick(btn)}
+            >
+              <T>{btn.label}</T>
+            </Button>
+          ))}
+        </DialogActions>
+      </Dialog>
+    </ValidationContext.Provider>
   )
 }
-
-InformationPopup.useFormValidity
-export default InformationPopup

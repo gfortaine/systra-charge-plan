@@ -4,7 +4,7 @@ import { Alert, Paper } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { TimePicker } from '@mui/x-date-pickers/TimePicker'
 import { StaticTimePicker } from '@mui/x-date-pickers/StaticTimePicker'
-import { T } from '@src/utils/i18n'
+import { T } from '@src/i18n'
 import './Pickers.scoped.scss'
 
 export default function Pickers() {

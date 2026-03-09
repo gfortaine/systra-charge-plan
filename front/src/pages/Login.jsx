@@ -6,8 +6,8 @@ import {
   CardHeader,
   Container,
 } from '@mui/material'
-import { useAuth } from '@src/utils/auth'
-import { T, useI18n } from '@src/utils/i18n'
+import { useAuth } from '@src/auth'
+import { T, useI18n } from '@src/i18n'
 import logo from '@static/icon_circle.png'
 import './Login.scoped.scss'
 

@@ -29,10 +29,10 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox'
 import { useForm, Controller } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import useRoutes from '@src/routes'
-import { T, useI18n } from '@src/utils/i18n'
-import useGraphql from '@src/utils/graphql'
-import { getAllUsersAndCategoriesQuery } from '@src/queries'
-import { createPostMutation } from '@src/mutations'
+import { T, useI18n } from '@src/i18n'
+import useGraphql from '@src/graphql'
+import { getAllUsersAndCategoriesQuery } from '@src/graphql/queries'
+import { createPostMutation } from '@src/graphql/mutations'
 import './AddPost.scoped.scss'
 
 export default function AddPost() {
@@ -42,7 +42,7 @@ export default function AddPost() {
   const { graphqlQuery, graphqlMutate } = useGraphql()
   const [users, setUsers] = useState([])
   const [categories, setCategories] = useState([])
-  const fetchData = useCallback(async () => {
+  const fetchData = useCallback(async (setUsers, setCategories) => {
     try {
       const { allUsers, allCategories } = await graphqlQuery(getAllUsersAndCategoriesQuery)
       setUsers(allUsers)
@@ -52,8 +52,7 @@ export default function AddPost() {
     }
   }, [graphqlQuery])
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchData()
+    fetchData(setUsers, setCategories)
   }, [fetchData])
   const addPost = useCallback(async (data) => {
     const variables = {
@@ -151,7 +150,7 @@ export default function AddPost() {
                       labelId="categories-label"
                       label={t('Categories')}
                       multiple
-                      input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+                      input={<OutlinedInput id="select-multiple-chip" label={t('Categories')} />}
                       renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                           {selected.map(cat_id => (
@@ -220,7 +219,16 @@ export default function AddPost() {
               <FormHelperText className="error-msg">{errors.language?.message}</FormHelperText>
             </FormControl>
           </CardContent>
-          <CardActions>
+          <CardActions sx={{ justifyContent: 'flex-end' }}>
+            <Button
+              component={NavLink}
+              to={HomeRoute.path}
+              variant="contained"
+              color="secondary"
+              startIcon={<Cancel />}
+            >
+              <T>Cancel</T>
+            </Button>
             <Button
               variant="contained"
               startIcon={<Save />}
@@ -228,15 +236,6 @@ export default function AddPost() {
               color="primary"
             >
               <T>Publish</T>
-            </Button>
-            <Button
-              component={NavLink}
-              to="/"
-              variant="contained"
-              color="secondary"
-              startIcon={<Cancel />}
-            >
-              <T>Cancel</T>
             </Button>
           </CardActions>
         </form>

@@ -3,9 +3,12 @@ import Button from '@mui/material/Button'
 import logo from '@static/icon_circle.png'
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import { NavLink } from 'react-router-dom'
-import { T } from '@src/utils/i18n'
+import useRoutes from '@src/routes'
+import { T } from '@src/i18n'
+import './WelcomePanel.scoped.scss'
 
 export default function WelcomePanel() {
+  const { AddPostRoute } = useRoutes()
   return (
     <Paper className="welcome-panel" elevation="5">
       <div className="welcome-subtitle">
@@ -19,7 +22,7 @@ export default function WelcomePanel() {
       </p>
       <Button
         component={NavLink}
-        to="/add-post"
+        to={AddPostRoute.path}
         variant="contained"
         startIcon={<PostAddIcon />}
         className="welcome-btn"

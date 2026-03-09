@@ -9,9 +9,10 @@ import {
 import { styled } from '@mui/material/styles'
 import { AccountCircle } from '@mui/icons-material'
 import { NavLink } from 'react-router-dom'
-import useRoutes from '@src/routes.jsx'
-import { useI18n, languages } from '@src/utils/i18n'
+import useRoutes from '@src/routes'
+import { useI18n, languages } from '@src/i18n'
 import app_logo from '@static/logo-v2-dark.png'
+import './AppToolbar.scoped.scss'
 
 const MyAppBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -37,7 +38,9 @@ export default function AppToolbar() {
     <MyAppBar position="fixed" className="app-toolbar">
       <Toolbar>
         <img src={app_logo} className="app-logo" alt="logo" />
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} />
+        <Typography variant="h6" component="div" className="project-name">
+          MyApp
+        </Typography>
         <Stack direction="row">
           {Object.entries(languages).map(([locale, title]) => (
             <Button

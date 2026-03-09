@@ -1,8 +1,8 @@
-import { I18nProvider } from '@src/utils/I18nProvider'
-import { ThemeProvider } from '@src/utils/ThemeProvider'
-import { AuthProvider } from '@src/utils/AuthProvider'
+import { I18nProvider } from '@src/i18n/I18nProvider'
+import { ThemeProvider } from '@src/theme/ThemeProvider'
+import { AuthProvider } from '@src/auth/AuthProvider'
 import { BrowserRouter as Router } from 'react-router-dom'
-import AllRoutes from '@src/utils/AllRoutes'
+import AllRoutes from '@src/routes/AllRoutes'
 import FullLayout from '@src/layout/FullLayout'
 import '@scss/main.scss'
 

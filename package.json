@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "list": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).join(\"\\n\"))'",
-    "clean": "rm -rf front/dist front/src/config.js front/src/translations.json",
+    "clean": "rm -rf front/dist front/src/config.js front/src/i18n/translations.json",
     "pre": "yarn run gen-config; yarn run gen-scss; yarn run i18n-compile",
     "gen-config": "[ -e front/src/config.js ] || sed -E -e \"s|###MAPBOX_PUBLIC_KEY###|${MAPBOX_PUBLIC_KEY}|\" front/src/config.js.dist > front/src/config.js",
     "build": "yarn run pre && vite -c front/vite.config.js build",
@@ -17,7 +17,7 @@
     "lint": "ko=0; yarn run -s jslint || ko=1; yarn run -s csslint || ko=1; [ ! $ko -eq 1 ]",
     "jslint": "eslint .",
     "csslint": "stylelint 'front/src/**/*.{scss,css}'",
-    "gen-scss": "node front/src/scss/sass-js-importer.js ./front/src/scss/sds-design-system/color-shades.js > ./front/src/scss/sds-design-system/color-shades.scss",
+    "gen-scss": "cd front/src/theme/scss && node sass-js-importer.js color-shades.js > color-shades.scss",
     "i18n-extract": "./front/.scripts/gettext-extract",
     "i18n-compile": "./front/.scripts/gettext-compile",
     "i18n-report": "./front/.scripts/gettext-report",

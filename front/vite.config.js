@@ -44,16 +44,16 @@ export default defineConfig({
       '@src': path.resolve('./front/src'),
       '@page': path.resolve('./front/src/pages'),
       '@comp': path.resolve('./front/src/components'),
-      '@scss': path.resolve('./front/src/scss'),
+      '@scss': path.resolve('./front/src/theme/scss'),
       '@static': path.resolve('./front/static'),
       '@test': path.resolve('./front/tests'),
-      'lioness': path.resolve('./front/src/lioness'),
+      'lioness': path.resolve('./front/src/i18n/lioness'),
     },
   },
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@use "@scss/sds-design-system/color-shades" as *;\n',
+        additionalData: '@use "@scss/color-shades" as *;\n',
       },
     },
   },
@@ -73,7 +73,7 @@ export default defineConfig({
       enabled: true,
       include: ['front/src/**/*.{js,jsx}'],
       exclude: [
-        'front/src/locale/**',
+        'front/src/i18n/locale/**',
       ],
       reportsDirectory: './reports/coverage-js',
       reporter: ['cobertura', 'clover', 'text', 'text-summary', 'html'],

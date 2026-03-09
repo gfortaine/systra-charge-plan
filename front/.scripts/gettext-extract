@@ -1,11 +1,11 @@
 #!/bin/sh
 CFG_FILE=./front/lioness.cfg.js
-GLOB_FILES='./front/src/**/{*.js,*.jsx,*.ts,*.tsx}'
-LOCALE_DIR=./front/src/locale
+GLOB_FILES='./front/src/**/{*.js,*.jsx}'
+LOCALE_DIR=./front/src/i18n/locales
 POT_FILE="$LOCALE_DIR/messages.pot"
 # define DEFAULT_LANG and AVAILABLE_LANGS env vars
 eval $(
-  node -e 'const locales = require("./front/src/locales.json"); console.log("DEFAULT_LANG=" + locales.default); console.log("AVAILABLE_LANGS=\"" + Object.keys(locales.languages).join(" ") + "\"")'
+  node -e "const locales = require('./front/src/i18n/locales.json'); console.log('DEFAULT_LANG=' + locales.default); console.log('AVAILABLE_LANGS=\"' + Object.keys(locales.languages).join(' ') + '\"')"
 )
 yarn run -s \
   react-gettext-parser \

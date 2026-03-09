@@ -8,7 +8,7 @@ elif [ "${OPTION}" = "dot" ]; then
 fi
 (
   echo "digraph {"
-  for v in $(find front/src \( -name '*.js*' -a \! -name '*.json' -a \! -path 'front/src/lioness/*' \)); do
+  for v in $(find front/src \( -name '*.js*' -a \! -name '*.json' \)); do
     c=$(basename $v|sed -E 's/\..+$//')
     sed -En '/from '"'"'(@src|@page|@comp|@scss|\.\/)[^.]+(.[jt]sx?)?'"'"'/{s|.*'"'"'.+/([^.]+)(\..+)?'"'"'.*|\1|;p}' "$v" | xargs -i@ echo "\"$c\" -> \"@\""
   done
