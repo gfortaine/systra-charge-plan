@@ -3,10 +3,11 @@ import { Controller, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 import {
   Cancel,
+  CheckBox,
+  CheckBoxOutlineBlank,
+  Close,
   Save,
 } from '@mui/icons-material'
-import CheckBoxIcon from '@mui/icons-material/CheckBox'
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank'
 import {
   Box,
   Button,
@@ -26,8 +27,9 @@ import {
   Radio,
   RadioGroup,
   Select,
+  TextField,
 } from '@mui/material'
-import TextField from '@mui/material/TextField'
+import { MuiFileInput } from 'mui-file-input'
 import useGraphql from '@src/graphql'
 import { createPostMutation } from '@src/graphql/mutations'
 import { getAllUsersAndCategoriesQuery } from '@src/graphql/queries'
@@ -42,6 +44,7 @@ export default function AddPost() {
   const { graphqlQuery, graphqlMutate } = useGraphql()
   const [users, setUsers] = useState([])
   const [categories, setCategories] = useState([])
+  const [imageUrl, setImageUrl] = useState(null)
   const fetchData = useCallback(async (setUsers, setCategories) => {
     try {
       const { allUsers, allCategories } = await graphqlQuery(getAllUsersAndCategoriesQuery)
@@ -54,10 +57,66 @@ export default function AddPost() {
   useEffect(() => {
     fetchData(setUsers, setCategories)
   }, [fetchData])
+  // https://react-hook-form.com/docs/useform
+  const { control, handleSubmit, formState: { errors, isValid } } = useForm({
+    defaultValues: {
+      title: '',
+      author: '',
+      categories: [],
+      imageFile: undefined,
+      text: '',
+      language: '',
+    },
+  })
+  // https://react-hook-form.com/docs/useform/register#options
+  const titleRules = {
+    minLength: { value: 3, message: t('Title must be, at least, {{ num }} characters long.', { num: 3 }) },
+    maxLength: { value: 100, message: t('Title cannot excess {{ num }} characters.', { num: 100 }) },
+  }
+  const authorRules = { required: t('You must select an author.') }
+  const imageRules = {
+    validate: files => {
+      if (!files || !files.length) {
+        return true
+      }
+      const file = files[0]
+      const MB = 1 << 20
+      const maxSizeMb = 2
+      const maxSize = maxSizeMb * MB
+      if (file.size > maxSize) {
+        const unit = t('MB')
+        return t('Files size should be less than {{ size }}', { size: `${maxSizeMb}${unit}` })
+      }
+    },
+  }
+  const languageRules = { required: t('You must chose a language.') }
+  async function onImageChanged(file) {
+    if (file) {
+      await new Promise(resolve => {
+        const imgReader = new FileReader()
+        imgReader.onload = e => {
+          setImageUrl(e.target.result)
+          resolve()
+        }
+        imgReader.readAsDataURL(file)
+      })
+    } else {
+      setImageUrl(null)
+    }
+  }
+  async function onSubmit(data) {
+    await addPost(data)
+  }
   const addPost = useCallback(async (data) => {
+    const authorId = data.author
     const variables = {
-      ...data,
-      author: { id: data.author }, // data.author is an id
+      title: data.title,
+      text: data.text,
+      author: { id: authorId },
+      categories: data.categories,
+    }
+    if (data.imageFile) {
+      variables.image = data.imageFile
     }
     try {
       await graphqlMutate(createPostMutation, variables)
@@ -66,24 +125,6 @@ export default function AddPost() {
       console.error(err)
     }
   }, [graphqlMutate, navigate, HomeRoute])
-
-  const { control, handleSubmit, formState: { errors } } = useForm({
-    defaultValues: {
-      title: '',
-      author: '',
-      categories: [],
-      text: '',
-      language: '',
-    },
-  })
-  const titleRules = {
-    validate: value => (value.length > 3) || t('Title must be, at least, 3 characters long.'),
-  }
-  const authorRules = { required: t('You must select an author.') }
-  const languageRules = { required: t('You must chose a language.') }
-  const onSubmit = async (data) => {
-    await addPost(data)
-  }
 
   return (
     <div className="view">
@@ -99,8 +140,9 @@ export default function AddPost() {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    required
+                    inputProps={{ maxLength: 100 }}
                     label={t('Title')}
+                    required
                   />
                 )}
               />
@@ -161,7 +203,7 @@ export default function AddPost() {
                     >
                       {categories.map(category => {
                         const selected = field.value.includes(category.id)
-                        const SelectionIcon = selected ? CheckBoxIcon : CheckBoxOutlineBlankIcon
+                        const SelectionIcon = selected ? CheckBox : CheckBoxOutlineBlank
                         return (
                           <MenuItem key={category.id} value={category.id}>
                             <SelectionIcon
@@ -176,6 +218,32 @@ export default function AddPost() {
                   </>
                 )}
               />
+            </FormControl>
+            <FormControl>
+              <Controller
+                name="imageFile"
+                control={control}
+                rules={imageRules}
+                render={({ field }) => (
+                  <MuiFileInput
+                    {...field}
+                    label={t('Optional image')}
+                    inputProps={{ accept: 'image/*' }}
+                    clearIconButtonProps={{
+                      title: t('Remove image'),
+                      children: <Close fontSize="small" />,
+                    }}
+                    onChange={e => {
+                      field.onChange(e) // forward to RHF
+                      onImageChanged(e)
+                    }}
+                  />
+                )}
+              />
+              <FormHelperText className="error-msg">{errors.imageFile?.message}</FormHelperText>
+              {imageUrl && (
+                <Box component="img" src={imageUrl} alt="preview" sx={{ ml: 2, maxWidth: 200, maxHeight: 200 }} />
+              )}
             </FormControl>
             <FormControl>
               <Controller
@@ -234,6 +302,7 @@ export default function AddPost() {
               startIcon={<Save />}
               type="submit"
               color="primary"
+              disabled={!isValid}
             >
               <T>Publish</T>
             </Button>
