@@ -7,10 +7,68 @@ elif [ "${OPTION}" = "dot" ]; then
   cmd="cat"
 fi
 (
+  SEARCH_DIR=front/src
+  VITE_FILE=front/vite.config.js
+  IGNORE_LIST=$(cat <<'EOF'
+^i18n($|/.+)
+^graphql($|/.+)
+^routes$
+EOF
+  )
+  ALIASES_MAP=$(sed -E -n \
+    -e "/^ +'@.+': *path.resolve\('(.+)'\),$/{s| +'(.+)':.+'(.+)'.+|\1:\2|; p}" \
+    "$VITE_FILE"
+  )
+  ALIASES=$(echo "$ALIASES_MAP" | cut -d: -f1)
+  ALIASES_REGEX=$(echo "$ALIASES" | tr "\n" "|" | sed 's/|$//')
+  DEP_REGEX="/from '($ALIASES_REGEX|\.)[^.]+(.[jt]sx?)?'/{s|\.[jt]sx?||; s|.*'(.+)'.*|\1|;p}"
+  HERE_DIR="$PWD"
+
+  normalize_comp() {
+    parent_dir="$1"
+    v="$2"
+    # remove extensions
+    v=$(echo "$v" | sed -E 's|\.[^/]+$||')
+    # replace index ref with directory
+    v=$(echo "$v" | sed -E 's|/index||')
+    # unalias path
+    for alias_map in $ALIASES_MAP; do
+      key=$(echo "$alias_map" | cut -d: -f1)
+      value=$(realpath -m "--relative-to=$HERE_DIR" "$(echo "$alias_map" | cut -d: -f2)")
+      v=$(echo "$v" | sed -E "s|$key/|$value/|")
+    done
+    # resolve relative path
+    if echo "$v" | grep -q -F './'; then
+      v=$(cd "$parent_dir"; realpath -m "--relative-to=$HERE_DIR" "$v")
+    fi
+    # remove prefix
+    v=$(echo "$v" | sed -E "s,^(\./)?$SEARCH_DIR/?(\$|.+),\2,")
+    # ensure empty ref is / directory
+    v=$(echo "$v" | sed -E 's|^$|/|')
+    echo "$v"
+  }
+
+  dot_link() {
+    from="$1"
+    to="$2"
+    for ignore in $IGNORE_LIST; do
+      if echo "$from" | grep -q -E "$ignore"; then
+        return
+      fi
+      if echo "$to" | grep -q -E "$ignore"; then
+        return
+      fi
+    done
+    echo "\"$from\" -> \"$to\""
+  }
+
   echo "digraph {"
-  for v in $(find front/src \( -name '*.js*' -a \! -name '*.json' \)); do
-    c=$(basename $v|sed -E 's/\..+$//')
-    sed -En '/from '"'"'(@src|@page|@comp|@scss|\.\/)[^.]+(.[jt]sx?)?'"'"'/{s|.*'"'"'.+/([^.]+)(\..+)?'"'"'.*|\1|;p}' "$v" | xargs -i@ echo "\"$c\" -> \"@\""
+  for f in $(find "$SEARCH_DIR" \( -name '*.[jt]s*' -a \! -name '*.json' \)); do
+    c1=$(normalize_comp "$SEARCH_DIR" "$f")
+    for c2 in $(sed -E -n "$DEP_REGEX" "$f"); do
+      c2=$(normalize_comp "$(dirname "$f")" "$c2")
+      dot_link "$c1" "$c2"
+    done
   done
   echo "}"
 ) | $cmd
