@@ -1,7 +1,13 @@
 #!/bin/bash
 set -e
-PROJECT_NAME=myapp
-POSTGRES_VER=17
+PROJECT_NAME=${CI_PROJECT_NAME:-myapp}
+if [ ${DJANGO_DB_TYPE:-postgresql} = postgresql ]; then
+  POSTGRES_VER=17
+  [ -z "$DB_PORT" ] && DB_PORT=5432
+  [ -z "$DB_HOST" ] && DB_HOST=127.0.0.1
+else # sqlite
+  NO_DB=1
+fi
 PYTEST_ARGS=(
     --metadata "Myapp back Git version" "$(git name-rev --name-only HEAD)"
 )
@@ -63,12 +69,11 @@ run_local_postgres() {
 }
 
 if [ -z "$NO_DB" ]; then
-    [ -z "$DB_PORT" ] && DB_PORT=5432
-    export DB_PORT
-    export DJANGO_DB_HOST=localhost
+    export DJANGO_DB_HOST="${DB_HOST}"
     export DJANGO_DB_PORT="${DB_PORT}"
-    echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h 127.0.0.1 -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1 && NO_DB=1
+    echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h "${DB_HOST}" -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1 && NO_DB=1
     if [ -z "$NO_DB" ]; then
+        export DB_HOST=127.0.0.1
         if [ -z "$NO_DOCKER" ] && which docker >/dev/null; then
             echo "Running postgres $POSTGRES_VER in docker on port $DB_PORT"
             pg_cid=$(run_docker_postgres "$POSTGRES_VER" "$DB_PORT")
@@ -83,10 +88,9 @@ if [ -z "$NO_DB" ]; then
             exit 1
         fi
     fi
-    if ! echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h 127.0.0.1 -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
+    if ! echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h "$DB_HOST" -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
       echo "Postgres database not running, please check your config" >&2
     fi
 fi
 set -x
-# env PYTHONPATH=back pytest "${PYTEST_ARGS[@]}" "$@"
 pytest "${PYTEST_ARGS[@]}" "$@"

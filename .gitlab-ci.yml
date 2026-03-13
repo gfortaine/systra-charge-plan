@@ -86,12 +86,22 @@ test_py:
   rules:
     - if: $CI_COMMIT_BRANCH
   image:
-    name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python-postgres:3.13-17
-    # for sqlite:
-    # name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python:3.13
+    name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python:3.13
+  services: # disable this service for sqlite
+    - name: postgres:17-alpine
+      alias: db
+      variables:
+        POSTGRES_DB: "${CI_PROJECT_NAME}"
+        POSTGRES_USER: "${CI_PROJECT_NAME}"
+        POSTGRES_PASSWORD: "${CI_PROJECT_NAME}"
+        POSTGRES_HOST_AUTH_METHOD: trust
   variables:
     DJANGO_DB_TYPE: postgresql
     # DJANGO_DB_TYPE: sqlite
+    DB_HOST: db
+  before_script:
+    - sudo apt-get install -y postgresql-client
+    - !reference [.python_313, before_script]
   script:
     - uv run poe test
   artifacts:
