@@ -12,50 +12,26 @@ stages:
   - release
   - publish
 
-.pull_cache_only:
-  cache:
-    policy: pull
 security:
   extends: .security
 secret:
   extends: .secret
 
-pre_py:
-  extends: .python_313
-  stage: test
-  rules:
-    - if: $CI_COMMIT_BRANCH
-  script:
-    - '#'
-pre_js:
-  extends: .js_22
-  stage: test
-  rules:
-    - if: $CI_COMMIT_BRANCH
-  script:
-    - '#'
-
 linter_py:
   extends:
     - .linter_py313
-    - .pull_cache_only
-  needs:
-    - pre_py
+  cache: []
 linter_js:
   extends:
     - .linter_js22
-    - .pull_cache_only
-  needs:
-    - pre_js
+  cache: []
 i18n_py:
   extends:
     - .python_313
-    - .pull_cache_only
+  cache: []
   stage: test
   rules:
     - if: $CI_COMMIT_BRANCH
-  needs:
-    - pre_py
   before_script:
     - sudo apt-get update && sudo apt-get install -y gettext
     - !reference [.python_313, before_script]
@@ -66,9 +42,7 @@ i18n_py:
 i18n_js:
   extends:
     - .linter_js22
-    - .pull_cache_only
-  needs:
-    - pre_js
+  cache: []
   before_script:
     - apt-get update && apt-get install -y gettext
     - !reference [.js_22, before_script]
@@ -79,10 +53,8 @@ i18n_js:
 test_py:
   extends:
     - .python_313
-    - .pull_cache_only
+  cache: []
   stage: test
-  needs:
-    - pre_py
   rules:
     - if: $CI_COMMIT_BRANCH
   image:
@@ -116,10 +88,8 @@ test_py:
 test_js:
   extends:
     - .js_22
-    - .pull_cache_only
+  cache: []
   stage: test
-  needs:
-    - pre_js
   rules:
     - if: $CI_COMMIT_BRANCH
   before_script:
