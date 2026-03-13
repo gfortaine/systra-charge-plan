@@ -1,0 +1,14 @@
+# import './PostBasicFields.fragment.graphql'
+query CategoryPosts (
+  $id: ID!
+  $search: String!
+) {
+  category (pk: $id) {
+    id
+    posts (
+      filters: { search: $search }
+    ) {
+      ...PostBasicFields
+    }
+  }
+}

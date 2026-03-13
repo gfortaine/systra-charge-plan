@@ -1,0 +1,19 @@
+# import './PostBasicFields.fragment.graphql'
+# import './UserFields.fragment.graphql'
+fragment PostFullFields on Post {
+  ...PostBasicFields
+  text
+  imageUrl
+  comments (
+    ordering: {
+      date: ASC
+    }
+  ) {
+    id
+    text
+    date
+    author {
+      ...UserFields
+    }
+  }
+}

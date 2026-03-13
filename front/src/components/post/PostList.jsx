@@ -4,8 +4,8 @@ import ClearIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, IconButton, InputAdornment, TextField } from '@mui/material'
 import useGraphql from '@src/graphql'
-import { deletePostMutation } from '@src/graphql/mutations'
-import { getAllPostsQuery } from '@src/graphql/queries'
+import allPostsQuery from '@src/graphql/AllPosts.query.graphql'
+import deletePostMutation from '@src/graphql/DeletePost.mutation.graphql'
 import { useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 import PostCard from './PostCard'
@@ -15,7 +15,7 @@ const defaultPostParams = {}
 const defaultPostAnswerResolver = answer => answer.allPosts
 
 export default function PostList({
-  postsQuery = getAllPostsQuery,
+  postsQuery = allPostsQuery,
   postsParams = defaultPostParams,
   postsAnswerResolver = defaultPostAnswerResolver,
 }) {

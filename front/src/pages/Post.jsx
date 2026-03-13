@@ -18,8 +18,10 @@ import CommentForm from '@comp/post/CommentForm'
 import InformationPopup from '@comp/utils/InformationPopup'
 import { backUrl } from '@src/config'
 import useGraphql from '@src/graphql'
-import { createCommentMutation, deleteCommentMutation, updateCommentMutation } from '@src/graphql/mutations'
-import { getPostQuery } from '@src/graphql/queries'
+import createCommentMutation from '@src/graphql/CreateComment.mutation.graphql'
+import deleteCommentMutation from '@src/graphql/DeleteComment.mutation.graphql'
+import postQuery from '@src/graphql/Post.query.graphql'
+import updateCommentMutation from '@src/graphql/UpdateComment.mutation.graphql'
 import { T, useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 
@@ -33,7 +35,7 @@ export default function Post() {
   const [post, setPost] = useState({})
   const fetchPost = useCallback(async (setPost) => {
     try {
-      const { post } = await graphqlQuery(getPostQuery, { id: postId })
+      const { post } = await graphqlQuery(postQuery, { id: postId })
       setPost(post)
     } catch (err) {
       console.error(err)

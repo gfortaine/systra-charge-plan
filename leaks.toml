@@ -10,3 +10,6 @@ stopwords = [
     'UserPartialInput',
     'strawberry.auto',
 ]
+paths = [
+    'docs/schema.graphql',
+]

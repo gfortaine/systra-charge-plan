@@ -6,7 +6,7 @@ import {
 } from '@mui/material'
 import { useValidation } from '@comp/utils/ValidationContext'
 import useGraphql from '@src/graphql'
-import { getAllUsersQuery } from '@src/graphql/queries'
+import allUsersQuery from '@src/graphql/AllUsers.query.graphql'
 import { useI18n } from '@src/i18n'
 
 export default function CommentForm({
@@ -20,7 +20,7 @@ export default function CommentForm({
   useEffect(() => {
     async function fetchUsers () {
       try {
-        const { allUsers } = await graphqlQuery(getAllUsersQuery)
+        const { allUsers } = await graphqlQuery(allUsersQuery)
         setAvailUsers(allUsers)
       } catch (err) {
         console.error(err)

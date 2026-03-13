@@ -1,0 +1,15 @@
+mutation UpdateComment (
+  $id: ID!
+  $text: String!
+  $authorId: ID!
+) {
+  updateComment(
+    pk: $id
+    data: {
+      text: $text
+      author: { set: $authorId }
+    }
+  ) {
+    id
+  }
+}

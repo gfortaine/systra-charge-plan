@@ -44,4 +44,5 @@ Go through this checklist before the code is reviewed.
 - [ ] **Update the issue in** Redmine
   - Set status to `CODE REVIEW` and update time spent
 - [ ] **Add a clear description of your modifications to the merge request**
-- [ ] **Update components diagram** by running following commands: `poe graphs`
+- [ ] **Update diagrams** by running following commands: `poe graphs`
+- [ ] **Update the graphql schema** by running following commands: `poe gen_schema`

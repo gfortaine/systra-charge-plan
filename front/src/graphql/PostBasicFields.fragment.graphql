@@ -1,0 +1,13 @@
+# import './UserFields.fragment.graphql'
+# import './CategoryFields.fragment.graphql'
+fragment PostBasicFields on Post {
+  id
+  title
+  author {
+    ...UserFields
+  }
+  pubdate
+  categories {
+    ...CategoryFields
+  }
+}

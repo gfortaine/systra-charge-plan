@@ -1,0 +1,4 @@
+[tasks.gen_schema]
+help = "Generate the docs/schema.graphql file"
+cmd = "./back/manage.py export_schema myapp.api.schema"
+capture_stdout = "docs/schema.graphql"

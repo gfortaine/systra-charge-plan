@@ -1,24 +1,32 @@
 import eslint from '@eslint/js'
+import graphqlPlugin from '@graphql-eslint/eslint-plugin'
 import stylistic from '@stylistic/eslint-plugin'
+import { defineConfig, globalIgnores } from 'eslint/config'
 import importPlugin from 'eslint-plugin-import'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import globals from 'globals'
 
-export default [
+export default defineConfig([
+  globalIgnores([
+    '.venv/',
+    '.gitlab-ci-local/',
+    'node_modules/',
+    'front/dist/',
+    'front/static/',
+    'docs/',
+    'build/',
+    'back/',
+    'reports/',
+    'docker/',
+  ]),
   {
-    ignores: [
-      '.venv',
-      '.gitlab-ci-local',
-      'node_modules',
-      'front/dist',
-      'front/static',
-      'build',
-      'back',
-      'reports',
-      'docker',
-    ],
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
   },
   eslint.configs.recommended,
   importPlugin.flatConfigs['react'],
@@ -34,11 +42,6 @@ export default [
       '**/*.cjs',
       '**/*.jsx',
     ],
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
     languageOptions: {
       parserOptions: {
         ecmaVersion: 'latest', // default
@@ -57,6 +60,7 @@ export default [
           json: 'always',
           css: 'always',
           scss: 'always',
+          graphql: 'always',
         },
       ],
       'import/newline-after-import': 'error',
@@ -117,4 +121,32 @@ export default [
       'react/prop-types': 'off',
     },
   },
-]
+  {
+    files: ['front/**/*.graphql'],
+    languageOptions: {
+      parser: graphqlPlugin.parser,
+      parserOptions: {
+        graphQLConfig: {
+          schema: import.meta.dirname + '/docs/schema.graphql',
+          documents: import.meta.dirname + '/front/src/graphql/**/*.graphql',
+        },
+      },
+    },
+    plugins: {
+      '@graphql-eslint': graphqlPlugin,
+    },
+    rules: {
+      ...graphqlPlugin.configs['flat/operations-recommended'].rules,
+      '@graphql-eslint/match-document-filename': [
+        'error',
+        {
+          fileExtension: '.graphql',
+          fragment: { style: 'PascalCase', suffix: '.fragment' },
+          query: { style: 'PascalCase', suffix: '.query' },
+          mutation: { style: 'PascalCase', suffix: '.mutation' },
+        },
+      ],
+      '@graphql-eslint/require-import-fragment': 'error',
+    },
+  },
+])

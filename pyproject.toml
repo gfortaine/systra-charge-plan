@@ -94,6 +94,7 @@ include = [
     ".poe/graphs.toml",
     ".poe/i18n.toml",
     ".poe/linters.toml",
+    ".poe/schema.toml",
     ".poe/secret.toml",
     ".poe/server.toml",
     ".poe/tests.toml",

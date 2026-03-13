@@ -1,0 +1,17 @@
+mutation CreatePost (
+  $title: String!
+  $text: String!
+  $image: Upload
+  $author: UserPartialInput
+  $categories: [ID!]!
+) {
+  createPost(data: {
+    title: $title
+    text: $text
+    image: $image
+    author: $author
+    categories: { set: $categories }
+  }) {
+    id
+  }
+}

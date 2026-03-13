@@ -1,0 +1,10 @@
+# import './UserFields.fragment.graphql'
+# import './CategoryFields.fragment.graphql'
+query AllUsersAndCategories {
+  allUsers {
+    ...UserFields
+  }
+  allCategories {
+    ...CategoryFields
+  }
+}

@@ -1,0 +1,6 @@
+# import './PostFullFields.fragment.graphql'
+query Post ($id: ID!) {
+  post(pk: $id) {
+    ...PostFullFields
+  }
+}

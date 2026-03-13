@@ -10,7 +10,8 @@ import {
 } from '@mui/material'
 import PostList from '@comp/post/PostList'
 import useGraphql from '@src/graphql'
-import { getCategoryPostsQuery, getCategoryQuery } from '@src/graphql/queries'
+import categoryQuery from '@src/graphql/Category.query.graphql'
+import categoryPostsQuery from '@src/graphql/CategoryPosts.query.graphql'
 import { T } from '@src/i18n'
 import useRoutes from '@src/routes'
 
@@ -23,7 +24,7 @@ export default function Category() {
   const [category, setCategory] = useState({})
   const fetchCategory = useCallback(async (setCategory) => {
     try {
-      const { category } = await graphqlQuery(getCategoryQuery, { id: catId })
+      const { category } = await graphqlQuery(categoryQuery, { id: catId })
       setCategory(category)
     } catch (err) {
       console.error(err)
@@ -54,7 +55,7 @@ export default function Category() {
         </Typography>
       </Box>
       <PostList
-        postsQuery={getCategoryPostsQuery}
+        postsQuery={categoryPostsQuery}
         postsParams={{ id: catId }}
         postsAnswerResolver={answer => answer.category.posts}
       />

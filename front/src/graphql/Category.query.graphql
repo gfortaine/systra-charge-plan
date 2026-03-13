@@ -1,0 +1,8 @@
+query Category (
+  $id: ID!
+) {
+  category (pk: $id) {
+    id
+    name
+  }
+}

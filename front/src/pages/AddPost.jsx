@@ -31,8 +31,8 @@ import {
 } from '@mui/material'
 import { MuiFileInput } from 'mui-file-input'
 import useGraphql from '@src/graphql'
-import { createPostMutation } from '@src/graphql/mutations'
-import { getAllUsersAndCategoriesQuery } from '@src/graphql/queries'
+import allUsersAndCategoriesQuery from '@src/graphql/AllUsersAndCategories.query.graphql'
+import createPostMutation from '@src/graphql/CreatePost.mutation.graphql'
 import { T, useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 import './AddPost.scoped.scss'
@@ -47,7 +47,7 @@ export default function AddPost() {
   const [imageUrl, setImageUrl] = useState(null)
   const fetchData = useCallback(async (setUsers, setCategories) => {
     try {
-      const { allUsers, allCategories } = await graphqlQuery(getAllUsersAndCategoriesQuery)
+      const { allUsers, allCategories } = await graphqlQuery(allUsersAndCategoriesQuery)
       setUsers(allUsers)
       setCategories(allCategories)
     } catch (err) {

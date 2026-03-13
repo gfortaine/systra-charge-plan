@@ -4,6 +4,7 @@ import react from '@vitejs/plugin-react'
 import DjVitePlugin from 'djvite'
 import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
 import { defineConfig } from 'vite'
+import graphqlLoader from 'vite-plugin-graphql-loader'
 
 const django_server = `http://localhost:${env.DJANGO_PORT || '8000'}`
 const chunksMap = (() => {
@@ -23,7 +24,7 @@ const chunksMap = (() => {
 })()
 
 // https://vitejs.dev/config/
-export default defineConfig({
+const config = defineConfig({
   server: {
     host: (env.VITE_HOST || 'localhost'),
     allowedHosts: true,
@@ -38,6 +39,7 @@ export default defineConfig({
     DjVitePlugin({ verbose: true, manifestPath: 'front/vite.manifest.json' }),
     react(),
     reactScopedCssPlugin(),
+    graphqlLoader(),
   ],
   resolve: {
     alias: {
@@ -98,3 +100,4 @@ export default defineConfig({
     },
   },
 })
+export default config
