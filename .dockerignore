@@ -1,9 +1,7 @@
-.git
-.gitignore
+.git*
 .env
 .venv
 .cache
-.gitlab-ci-local
 __pycache__
 node_modules
 ./back/media/*

@@ -25,17 +25,15 @@ for f in \
   .gitignore \
   .dockerignore \
   $(find .poe -type f) \
-  $(find . -type f -name '*.*js') \
-  $(find . -type f -name '*.jsx') \
+  $(find . -type f \( -name '*.*js' -o -name '*.[jt]sx' \)) \
   $(find . -type f -name '*.py') \
+  $(find . -type f -name '*.po') \
+  $(find . -type f \( -name '*.yml' -o -name '*.lock' \)) \
   leaks.toml \
 ; do
   sed -ri -e "s/myapp/$name/g" -e "s/Myapp/$uname/g" "$f"
 done
 mv back/myapp back/"$name"
-rm -rf \
-  CHANGELOG.md \
-  .git
 # set version to 0.1.0
 sed -ri '/^version =/{s/".*"/"0.1.0"/}' pyproject.toml
 sed -ri '/^  "version": /{s/".*"/"version": "0.1.0"/}' package.json
@@ -47,9 +45,10 @@ if [ -n "$url" ]; then
     pyproject.toml \
     package.json \
   ; do
-    sed -ri "s|https://gitlab.com/.*/boilerplates/[^-a-z0-9]+|$url" "$f"
+    sed -ri "s|https://gitlab.com/.*/boilerplates/[^-a-z0-9]+|$url|" "$f"
   done
 fi
+rm -rf CHANGELOG.md exit .git
 cat <<EOF
 Don’t forget to:
 - edit the LICENSE file
