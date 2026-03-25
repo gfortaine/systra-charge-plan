@@ -8,7 +8,6 @@ import {
   DialogContent,
   DialogTitle,
 } from '@mui/material'
-import { T } from '@src/i18n'
 import { ValidationContext } from './ValidationContext'
 
 export default function InformationPopup({
@@ -71,9 +70,7 @@ export default function InformationPopup({
       }}
     >
       <Dialog onClose={onDialogClose} open={open}>
-        <DialogTitle>
-          <T>{title}</T>
-        </DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
         <DialogContent>
           <form
             onSubmit={() => {
@@ -98,7 +95,7 @@ export default function InformationPopup({
               startIcon={getButtonIcon(btn)}
               onClick={() => onButtonClick(btn)}
             >
-              <T>{btn.label}</T>
+              {btn.label}
             </Button>
           ))}
         </DialogActions>

@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react/macro'
 import {
   Card,
   CardContent,
@@ -5,7 +6,6 @@ import {
   Typography,
 } from '@mui/material'
 import { useAuth } from '@src/auth'
-import { T } from '@src/i18n'
 
 export default function User() {
   const { user } = useAuth()
@@ -14,7 +14,7 @@ export default function User() {
       <Card>
         <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <Typography variant="h4">
-            <T one="Hello {{ fullName }} ({{ email }})!" fullName={user.fullName} email={user.email} />
+            <Trans>Hello {user.fullName} ({user.email})!</Trans>
           </Typography>
         </CardContent>
       </Card>

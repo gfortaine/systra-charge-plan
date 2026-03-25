@@ -1,3 +1,6 @@
+import { useMemo } from 'react'
+import { useLingui } from '@lingui/react'
+import { Trans } from '@lingui/react/macro'
 import {
   Delete,
   Edit,
@@ -7,20 +10,26 @@ import {
   Button,
   Typography,
 } from '@mui/material'
-import { T, useI18n } from '@src/i18n'
 
 export default function Comment({
   comment,
   onEditComment = () => {},
   onDeleteComment = () => {},
 }) {
-  const { locale } = useI18n()
+  const { i18n } = useLingui()
   const text = comment.text ?? ''
   const authorName = comment.author?.fullName ?? ''
-  const commentDate = comment.date ? new Date(comment.date) : null
-  const dateString = commentDate?.toLocaleDateString(locale, { day: '2-digit', month: '2-digit', year: 'numeric' })
-  const timeString = commentDate?.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' })
-  const dateAsString = dateString && timeString ? `${dateString} @ ${timeString}` : ''
+  const commentDate = useMemo(() => {
+    if (!comment.date) {
+      return ''
+    }
+
+    const date = new Date(comment.date)
+    const dateString = i18n.date(date, { day: '2-digit', month: '2-digit', year: 'numeric' })
+    const timeString = i18n.date(date, { hour: '2-digit', minute: '2-digit' })
+    return `${dateString} @ ${timeString}`
+  }, [comment.date, i18n])
+
   return (
     <Box sx={{ display: 'flex', gap: 2, p: 2, border: '1px solid #ddd' }}>
       <Box sx={{ flexGrow: 1 }}>
@@ -31,7 +40,7 @@ export default function Comment({
           {' '}
           on
           {' '}
-          <span>{dateAsString}</span>
+          <span>{commentDate}</span>
         </Typography>
         <Typography>{text}</Typography>
       </Box>
@@ -43,7 +52,7 @@ export default function Comment({
           size="small"
           variant="outlined"
         >
-          <T>Edit</T>
+          <Trans>Edit</Trans>
         </Button>
         <Button
           startIcon={<Delete />}
@@ -52,7 +61,7 @@ export default function Comment({
           size="small"
           variant="outlined"
         >
-          <T>Delete</T>
+          <Trans>Delete</Trans>
         </Button>
       </Box>
     </Box>

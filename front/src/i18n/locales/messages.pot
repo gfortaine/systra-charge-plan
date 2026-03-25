@@ -4,28 +4,61 @@ msgstr ""
 "POT-Creation-Date: \n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
 
-#: front/src/components/home/WelcomePanel.jsx:15
-msgid "Welcome to"
+#: front/src/pages/Post.jsx:227
+msgid "Add"
 msgstr ""
 
-#: front/src/components/home/WelcomePanel.jsx:21
-msgid "Select a blog post in the list, or create a new one!"
+#: front/src/pages/Post.jsx:218
+#: front/src/pages/Post.jsx:224
+msgid "Add a comment"
 msgstr ""
 
-#: front/src/components/home/WelcomePanel.jsx:31
-msgid "Create a new blog post"
+#: front/src/pages/AddPost.jsx:131
+msgid "Add a post"
 msgstr ""
 
-#: front/src/components/post/Comment.jsx:46
+#: front/src/routes/index.jsx:70
+msgid "Add Post"
+msgstr ""
+
+#: front/src/components/post/CommentForm.jsx:70
+#: front/src/pages/AddPost.jsx:158
+#: front/src/pages/AddPost.jsx:163
+msgid "Author"
+msgstr ""
+
+#: front/src/components/post/CommentForm.jsx:73
+msgid "Author is required"
+msgstr ""
+
+#: front/src/components/post/PostCard.jsx:25
+#: front/src/pages/AddPost.jsx:297
+#: front/src/pages/Post.jsx:226
 #: front/src/pages/Post.jsx:239
-msgid "Edit"
+#: front/src/pages/Post.jsx:257
+msgid "Cancel"
 msgstr ""
 
-#: front/src/components/post/Comment.jsx:55
-#: front/src/components/post/PostCard.jsx:75
-#: front/src/pages/Post.jsx:257
-msgid "Delete"
+#: front/src/pages/AddPost.jsx:187
+#: front/src/pages/AddPost.jsx:192
+#: front/src/pages/AddPost.jsx:194
+msgid "Categories"
+msgstr ""
+
+#: front/src/routes/index.jsx:81
+msgid "Category"
+msgstr ""
+
+#. placeholder {0}: category.name
+#: front/src/pages/Category.jsx:54
+msgid "Category {0}:"
 msgstr ""
 
 #: front/src/components/post/CommentForm.jsx:56
@@ -36,216 +69,204 @@ msgstr ""
 msgid "Comment is required"
 msgstr ""
 
-#: front/src/components/post/CommentForm.jsx:70
-#: front/src/pages/AddPost.jsx:117
-#: front/src/pages/AddPost.jsx:122
-msgid "Author"
-msgstr ""
-
-#: front/src/components/post/CommentForm.jsx:73
-msgid "Author is required"
-msgstr ""
-
-#: front/src/components/post/PostCard.jsx:25
-#: front/src/pages/AddPost.jsx:230
-#: front/src/pages/Post.jsx:225
-#: front/src/pages/Post.jsx:238
-#: front/src/pages/Post.jsx:256
-msgid "Cancel"
+#: front/src/pages/Post.jsx:200
+msgid "Comments"
 msgstr ""
 
 #: front/src/components/post/PostCard.jsx:29
 msgid "Confirm"
 msgstr ""
 
-#: front/src/components/post/PostCard.jsx:60
-msgid "Published by {{ authorName }} on {{ localeDate }} at {{ localeTime }}"
+#: front/src/components/home/WelcomePanel.jsx:31
+msgid "Create a new blog post"
 msgstr ""
 
-#: front/src/components/post/PostCard.jsx:84
-msgid "Open"
+#: front/src/routes/index.jsx:91
+msgid "Data grid and charts"
 msgstr ""
 
-#: front/src/components/post/PostCard.jsx:89
+#: front/src/components/post/Comment.jsx:64
+#: front/src/components/post/PostCard.jsx:82
+#: front/src/pages/Post.jsx:258
+msgid "Delete"
+msgstr ""
+
+#: front/src/components/post/PostCard.jsx:96
 msgid "Delete a blog post"
 msgstr ""
 
-#: front/src/components/post/PostCard.jsx:95
-msgid ""
-"You are about to delete the blog post « {{ post }} ». Do you really want to "
-"take that action?"
+#: front/src/pages/Post.jsx:255
+msgid "Delete a comment"
 msgstr ""
 
-#: front/src/components/post/PostList.jsx:68
-msgid "Search"
+#: front/src/components/post/Comment.jsx:55
+#: front/src/pages/Post.jsx:240
+msgid "Edit"
 msgstr ""
 
-#: front/src/components/post/PostList.jsx:69
-msgid "keyword"
+#: front/src/pages/Post.jsx:237
+msgid "Edit a comment"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:279
+msgid "English"
+msgstr ""
+
+#: front/src/routes/index.jsx:33
+msgid "Fail"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:87
+msgid "Files size should be less than {maxSizeMb}MB"
 msgstr ""
 
 #: front/src/layout/NavigationDrawer.jsx:145
 msgid "Fold down pane"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:80
-msgid "Title must be, at least, 3 characters long."
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:82
-msgid "You must select an author."
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:83
-msgid "You must chose a language."
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:91
-msgid "Add a post"
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:103
-msgid "Title"
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:146
-#: front/src/pages/AddPost.jsx:151
-#: front/src/pages/AddPost.jsx:153
-msgid "Categories"
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:189
-msgid "Text"
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:205
-msgid "Language"
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:212
-msgid "English"
-msgstr ""
-
-#: front/src/pages/AddPost.jsx:213
+#: front/src/pages/AddPost.jsx:280
 msgid "French"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:214
-msgid "Other"
+#. placeholder {0}: user.fullName
+#. placeholder {1}: user.email
+#: front/src/pages/User.jsx:17
+msgid "Hello {0} ({1})!"
 msgstr ""
 
-#: front/src/pages/AddPost.jsx:238
-msgid "Publish"
+#: front/src/routes/index.jsx:48
+msgid "Home"
 msgstr ""
 
-#: front/src/pages/Category.jsx:49
-#: front/src/pages/Post.jsx:158
-msgid "Return"
+#: front/src/components/post/PostList.jsx:69
+msgid "keyword"
 msgstr ""
 
-#: front/src/pages/Category.jsx:53
-msgid "Category {{ name }}:"
-msgstr ""
-
-#: front/src/pages/Login.jsx:23
-#: front/src/pages/Login.jsx:39
-#: front/src/routes/index.jsx:25
-msgid "Login"
-msgstr ""
-
-#: front/src/pages/Login.jsx:31
-msgid ""
-"You must be logged in to have access to this application. Please click on "
-"the button below to do so."
-msgstr ""
-
-#: front/src/pages/MapPage.jsx:52
-msgid "Pk:"
+#: front/src/pages/AddPost.jsx:272
+msgid "Language"
 msgstr ""
 
 #: front/src/pages/MapPage.jsx:125
 msgid "Legend"
 msgstr ""
 
+#: front/src/pages/MapPage.jsx:133
+msgid "Line"
+msgstr ""
+
+#: front/src/pages/Login.jsx:23
+#: front/src/pages/Login.jsx:41
+#: front/src/routes/index.jsx:26
+msgid "Login"
+msgstr ""
+
+#: front/src/routes/index.jsx:124
+msgid "Logout"
+msgstr ""
+
+#: front/src/routes/index.jsx:102
+msgid "Map"
+msgstr ""
+
 #: front/src/pages/MapPage.jsx:129
 msgid "Markers"
 msgstr ""
 
-#: front/src/pages/MapPage.jsx:133
-msgid "Line"
+#: front/src/components/post/PostCard.jsx:91
+msgid "Open"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:229
+msgid "Optional image"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:281
+msgid "Other"
+msgstr ""
+
+#: front/src/routes/index.jsx:113
+msgid "Pickers"
+msgstr ""
+
+#: front/src/pages/MapPage.jsx:52
+msgid "Pk:"
+msgstr ""
+
+#: front/src/routes/index.jsx:59
+msgid "Post"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:306
+msgid "Publish"
+msgstr ""
+
+#: front/src/components/post/PostCard.jsx:60
+msgid "Published by <0>{authorName}</0> on {localeDate} at {localeTime}"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:232
+msgid "Remove image"
+msgstr ""
+
+#: front/src/pages/Category.jsx:50
+#: front/src/pages/Post.jsx:159
+msgid "Return"
+msgstr ""
+
+#: front/src/components/post/PostList.jsx:68
+msgid "Search"
+msgstr ""
+
+#: front/src/components/home/WelcomePanel.jsx:21
+msgid "Select a blog post in the list, or create a new one!"
+msgstr ""
+
+#: front/src/pages/AddPost.jsx:256
+msgid "Text"
 msgstr ""
 
 #: front/src/pages/Pickers.jsx:23
 msgid "This Alert displays the default close icon."
 msgstr ""
 
-#: front/src/pages/Post.jsx:199
-msgid "Comments"
+#: front/src/pages/AddPost.jsx:143
+msgid "Title"
 msgstr ""
 
-#: front/src/pages/Post.jsx:217
-#: front/src/pages/Post.jsx:223
-msgid "Add a comment"
+#: front/src/pages/AddPost.jsx:74
+msgid "Title cannot excess 100 characters."
 msgstr ""
 
-#: front/src/pages/Post.jsx:226
-msgid "Add"
+#: front/src/pages/AddPost.jsx:73
+msgid "Title must be, at least, 3 characters long."
 msgstr ""
 
-#: front/src/pages/Post.jsx:236
-msgid "Edit a comment"
-msgstr ""
-
-#: front/src/pages/Post.jsx:254
-msgid "Delete a comment"
-msgstr ""
-
-#: front/src/pages/Post.jsx:264
-msgid ""
-"You are about to delete the comment « {{ comment }} ». Do you really want "
-"to take that action?"
-msgstr ""
-
-#: front/src/pages/User.jsx:17
-msgid "Hello {{ fullName }} ({{ email }})!"
-msgstr ""
-
-#: front/src/routes/index.jsx:32
-msgid "Fail"
-msgstr ""
-
-#: front/src/routes/index.jsx:37
+#: front/src/routes/index.jsx:38
 msgid "User"
 msgstr ""
 
-#: front/src/routes/index.jsx:47
-msgid "Home"
+#: front/src/components/home/WelcomePanel.jsx:15
+msgid "Welcome to"
 msgstr ""
 
-#: front/src/routes/index.jsx:58
-msgid "Post"
+#. placeholder {0}: post.title
+#: front/src/components/post/PostCard.jsx:102
+msgid "You are about to delete the blog post « {0} ». Do you really want to take that action?"
 msgstr ""
 
-#: front/src/routes/index.jsx:69
-msgid "Add Post"
+#. placeholder {0}: currentComment.date
+#: front/src/pages/Post.jsx:265
+msgid "You are about to delete the comment « {0} ». Do you really want to take that action?"
 msgstr ""
 
-#: front/src/routes/index.jsx:80
-msgid "Category"
+#: front/src/pages/Login.jsx:31
+msgid "You must be logged in to have access to this application. Please click on the button below to do so."
 msgstr ""
 
-#: front/src/routes/index.jsx:90
-msgid "Data grid and charts"
+#: front/src/pages/AddPost.jsx:91
+msgid "You must chose a language."
 msgstr ""
 
-#: front/src/routes/index.jsx:101
-msgid "Map"
-msgstr ""
-
-#: front/src/routes/index.jsx:112
-msgid "Pickers"
-msgstr ""
-
-#: front/src/routes/index.jsx:123
-msgid "Logout"
+#: front/src/pages/AddPost.jsx:76
+msgid "You must select an author."
 msgstr ""

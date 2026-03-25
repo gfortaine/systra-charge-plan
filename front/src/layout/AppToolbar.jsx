@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom'
+import { useLingui } from '@lingui/react'
 import { AccountCircle } from '@mui/icons-material'
 import {
   AppBar,
@@ -9,10 +10,10 @@ import {
   Typography,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
-import { languages, useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 import app_logo from '@static/logo-v2-dark.png'
 import './AppToolbar.scoped.scss'
+import { languages, setLocale } from '../i18n'
 
 const MyAppBar = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'open',
@@ -28,7 +29,8 @@ const MyAppBar = styled(AppBar, {
 
 export default function AppToolbar() {
   const { UserRoute } = useRoutes()
-  const { locale: currentLocale, setLocale } = useI18n()
+  const { i18n } = useLingui()
+  const currentLocale = i18n.locale
 
   const handleLocaleChange = (locale) => {
     setLocale(locale)
@@ -45,7 +47,7 @@ export default function AppToolbar() {
           {Object.entries(languages).map(([locale, title]) => (
             <Button
               key={locale}
-              variant={locale == currentLocale ? 'contained' : 'text'}
+              variant={locale === currentLocale ? 'contained' : 'text'}
               title={title}
               onClick={() => handleLocaleChange(locale)}
             >

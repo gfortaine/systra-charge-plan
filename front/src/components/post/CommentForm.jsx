@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useLingui } from '@lingui/react/macro'
 import {
   Autocomplete,
   Box,
@@ -7,14 +8,13 @@ import {
 import { useValidation } from '@comp/utils/ValidationContext'
 import useGraphql from '@src/graphql'
 import allUsersQuery from '@src/graphql/AllUsers.query.graphql'
-import { useI18n } from '@src/i18n'
 
 export default function CommentForm({
   comment = {},
   onChange = _comment => {},
 }) {
   const { setValid } = useValidation()
-  const { t } = useI18n()
+  const { t } = useLingui()
   const { graphqlQuery } = useGraphql()
   const [availUsers, setAvailUsers] = useState([])
   useEffect(() => {
@@ -53,11 +53,11 @@ export default function CommentForm({
         multiline
         minRows={3}
         variant="standard"
-        label={t('Comment')}
+        label={t`Comment`}
         value={formData.text}
         onChange={handleTextChange}
         required
-        helperText={!formData.text && t('Comment is required')}
+        helperText={!formData.text && t`Comment is required`}
       />
       <Autocomplete
         options={availUsers}
@@ -67,10 +67,10 @@ export default function CommentForm({
         renderInput={params => (
           <TextField
             {...params}
-            label={t('Author')}
+            label={t`Author`}
             variant="standard"
             required
-            helperText={!formData.author && t('Author is required')}
+            helperText={!formData.author && t`Author is required`}
           />
         )}
         isOptionEqualToValue={(option, value) => option.id === value.id}
