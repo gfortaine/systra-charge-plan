@@ -33,7 +33,7 @@ class PostFilter:
         ))
 
     @filter_field
-    def author_email(self, info: Info, queryset: QuerySet, value: StrFilterLookup[str], prefix: str) -> tuple[QuerySet, Q]:
+    def author_email(self, info: Info, queryset: QuerySet, value: StrFilterLookup, prefix: str) -> tuple[QuerySet, Q]:
         return apply_filter(queryset, value, prefix, 'author__email', info)
 
 

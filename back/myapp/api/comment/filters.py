@@ -22,7 +22,7 @@ class CommentFilter:
     date: strawberry.auto
 
     @filter_field
-    def author_username(self, info: Info, queryset: QuerySet, value: StrFilterLookup[str] | None, prefix: str) -> tuple[QuerySet, Q]:
+    def author_username(self, info: Info, queryset: QuerySet, value: StrFilterLookup | None, prefix: str) -> tuple[QuerySet, Q]:
         return apply_filter(queryset, value, prefix, 'author__username', info)
 
 
