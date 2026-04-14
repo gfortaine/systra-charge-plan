@@ -1,0 +1,11 @@
+#!/bin/sh
+if echo "$npm_execpath" | grep -q pnpm; then
+  exec pnpm run "$@"
+elif echo "$npm_execpath" | grep -q yarn; then
+  exec yarn run "$@"
+elif echo "$npm_execpath" | grep -q npm; then
+  exec npm run "$@"
+else
+  echo "No compatible package manager found." >&2
+  exit 1
+fi

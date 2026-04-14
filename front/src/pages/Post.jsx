@@ -94,7 +94,7 @@ export default function Post() {
     }
   }, [post])
   const authorName = post.author?.fullName || ''
-  const publicationDate = i18n.date(new Date(post.pubdate))
+  const publicationDate = post.pubdate ? i18n.date(new Date(post.pubdate)) : ''
   const categories = post.categories || []
 
   const [currentComment, setCurrentComment] = useState(null)

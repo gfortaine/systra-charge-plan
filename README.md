@@ -214,6 +214,8 @@ You can adjust your configuration in `front/src/config.js` file.
 
 Use `t` or `<Trans>` in your `.jsx` files.
 
+Use `msg` for lazy translations.
+
 For more information: https://lingui.dev/tutorials/react
 
 To update the `.pot` file and any `.po` language file, use:
@@ -224,7 +226,19 @@ yarn run i18n-extract
 
 Then translate any missing strings in your `.po` file, using **[Poedit](https://poedit.net/)** for instance.
 
-The command above also shows any missing translations.
+You can purge old translations with:
+
+```shell
+yarn run i18n-extract --clean
+```
+
+You can also find out missing translations with:
+
+```shell
+yarn run i18n-report
+```
+
+No compile is necessary in development. `.po` updates will be taken immediately.
 
 ## Linter
 

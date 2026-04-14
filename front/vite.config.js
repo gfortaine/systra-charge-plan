@@ -12,8 +12,7 @@ const chunksMap = (() => {
   const map = {}
   map['config'] = 'front/src/config.js'
   Object.entries({
-    react: ['react', 'react-dom', 'react-router', 'react-hook-form'],
-    mui: ['@mui'],
+    react: ['react', 'react-dom', 'react-router', 'react-hook-form', '@mui'],
     mapbox: ['@mapboxql', 'mapbox-gl'],
   }).forEach(([big, depIds]) => {
     depIds.forEach(depId => {
@@ -55,7 +54,6 @@ const config = defineConfig({
       '@scss': path.resolve('./front/src/theme/scss'),
       '@static': path.resolve('./front/static'),
       '@test': path.resolve('./front/tests'),
-      'lioness': path.resolve('./front/src/i18n/lioness'),
     },
   },
   css: {

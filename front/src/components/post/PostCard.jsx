@@ -11,13 +11,11 @@ export default function PostCard({
   onEnterPost = () => {},
   onDeletePost = () => {},
 }) {
-  const { t } = useLingui()
+  const { t, i18n } = useLingui()
   const categoryNames = post.categories?.map(cat => cat.name) ?? []
   const authorName = post.author?.fullName ?? ''
   const publicationDate = new Date(post.pubdate)
-  const $language = { current: 'fr' }
-  const localeDate = publicationDate.toLocaleDateString($language.current)
-  const localeTime = publicationDate.toLocaleTimeString($language.current)
+  const localeDateTime = i18n.date(publicationDate, { dateStyle: 'medium', timeStyle: 'short' })
   const [deletePostDialogShown, setDeletePostDialogShown] = useState(false)
   const deletePostDialogButtons = [
     {
@@ -64,11 +62,7 @@ export default function PostCard({
           {' '}
           on
           {' '}
-          { localeDate }
-          {' '}
-          at
-          {' '}
-          { localeTime }
+          { localeDateTime }
         </Trans>
       </div>
       <div className="actions">

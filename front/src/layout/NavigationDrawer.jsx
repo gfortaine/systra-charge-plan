@@ -78,7 +78,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function NavigationDrawer() {
   const { routes, LogoutRoute } = useRoutes()
   const { logout } = useAuth()
-  const { t } = useLingui()
+  const { t, _ } = useLingui()
   const [open, setOpen] = useState(false)
 
   const handleDrawerOpen = () => {
@@ -106,10 +106,10 @@ export default function NavigationDrawer() {
             return (
               <ListItem key={index} className="app-menu-item" disablePadding>
                 <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
-                  <ListItemIcon className="app-menu-item-icon" title={t(route.title)}>
+                  <ListItemIcon className="app-menu-item-icon" title={_(route.title)}>
                     { route.icon }
                   </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={t(route.title)} />
+                  <ListItemText className="app-menu-item-title" primary={_(route.title)} />
                 </ListItemButton>
               </ListItem>
             )
@@ -122,10 +122,10 @@ export default function NavigationDrawer() {
                 disablePadding
               >
                 <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon className="app-menu-item-icon" title={t(route.title)}>
+                  <ListItemIcon className="app-menu-item-icon" title={_(route.title)}>
                     { route.icon }
                   </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={t(route.title)} />
+                  <ListItemText className="app-menu-item-title" primary={_(route.title)} />
                 </ListItemButton>
               </ListItem>
             )

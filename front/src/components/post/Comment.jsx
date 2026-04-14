@@ -1,6 +1,5 @@
 import { useMemo } from 'react'
-import { useLingui } from '@lingui/react'
-import { Trans } from '@lingui/react/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import {
   Delete,
   Edit,
@@ -23,7 +22,6 @@ export default function Comment({
     if (!comment.date) {
       return ''
     }
-
     const date = new Date(comment.date)
     const dateString = i18n.date(date, { day: '2-digit', month: '2-digit', year: 'numeric' })
     const timeString = i18n.date(date, { hour: '2-digit', minute: '2-digit' })

@@ -20,5 +20,5 @@ front/vite.manifest.json
 *-error.log*
 **/config.js
 **/color-shades.scss
-**/translations.json
+**/locales/*.js
 *.zip

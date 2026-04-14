@@ -1,104 +1,47 @@
-import { i18n } from '@lingui/core'
-import { detect, fromNavigator, fromStorage } from '@lingui/detect-locale'
+import { createContext, useContext } from 'react'
 import { messages as en } from './locales/en.po'
 import { messages as fr } from './locales/fr.po'
 import locales from './locales.json'
 
-export const LOCALE_STORAGE_KEY = 'locale'
-
-i18n.load({ en, fr })
-
-const canonicalizeLocale = locale => {
-  try {
-    return Intl.getCanonicalLocales(locale)[0] ?? locale
-  } catch {
-    return String(locale || '').trim()
-  }
+export const I18nContext = createContext()
+export const useI18nContext = () => useContext(I18nContext)
+export const languages = locales.languages
+export const translations = {
+  en,
+  fr,
 }
 
-const normalizeForLookup = locale => canonicalizeLocale(locale).toLowerCase()
-
-export const selectBestLocale = (
-  requestedLocales,
-  availableLocales = Object.keys(locales.languages),
-  fallbackLocale = locales.default,
-) => {
-  const availableLookup = new Map(
-    availableLocales.map((locale) => [normalizeForLookup(locale), locale]),
-  )
-
-  for (const requestedLocale of requestedLocales) {
-    if (!requestedLocale) {
-      continue
-    }
-
-    const normalizedRequested = normalizeForLookup(requestedLocale)
-
-    // 1) match exact
-    const exactMatch = availableLookup.get(normalizedRequested)
-    if (exactMatch) {
-      return exactMatch
-    }
-
-    // 2) fallback régional : fr-CA -> fr
-    const [languagePart] = normalizedRequested.split('-')
-    if (!languagePart) {
-      continue
-    }
-
-    const baseMatch = availableLookup.get(languagePart)
-    if (baseMatch) {
-      return baseMatch
+function normalizeLocale(locale) {
+  let canonicalLocale = undefined
+  try {
+    canonicalLocale = Intl.getCanonicalLocales(locale)[0]
+  } finally {
+    if (!canonicalLocale) {
+      canonicalLocale = String(locale || '').trim()
     }
   }
+  return canonicalLocale.toLowerCase()
+}
 
+export function selectBestLocale (
+  requestedLocales = navigator.languages,
+  availableLocales = Object.keys(locales.languages),
+  fallbackLocale = locales.default,
+) {
+  const localeMap = new Map(availableLocales.map(locale => [normalizeLocale(locale), locale]))
+  for (const requestedLocale of requestedLocales.filter(l => l)) {
+    const normLocale = normalizeLocale(requestedLocale)
+    const countryLocale = normLocale.includes('-') ? normLocale.split('-')[0] : null
+    for (const oneLocale of [normLocale, countryLocale].filter(l => l)) {
+      const locale = localeMap.get(oneLocale)
+      if (locale) {
+        return locale
+      }
+    }
+  }
   return fallbackLocale
 }
 
-const getStoredLocale = () => {
-  const detected = detect(fromStorage(LOCALE_STORAGE_KEY))
-  return typeof detected === 'string' && detected.length > 0
-    ? detected
-    : undefined
+export function useI18n() {
+  return useI18nContext()
 }
-
-const getBrowserLocales = () => {
-  if (typeof window === 'undefined') {
-    return []
-  }
-
-  if (Array.isArray(window.navigator.languages) && window.navigator.languages.length > 0) {
-    return window.navigator.languages.filter(Boolean)
-  }
-
-  const locale = detect(fromNavigator())
-  return typeof locale === 'string' && locale.length > 0 ? [locale] : []
-}
-
-export const resolveInitialLocale = () => {
-  const storedLocale = getStoredLocale()
-  if (storedLocale) {
-    return selectBestLocale([storedLocale])
-  }
-
-  return selectBestLocale(getBrowserLocales())
-}
-
-export const activateLocale = locale => {
-  const nextLocale = selectBestLocale([locale])
-  i18n.activate(nextLocale)
-  return nextLocale
-}
-
-export const setLocale = locale => {
-  const nextLocale = activateLocale(locale)
-
-  if (typeof window !== 'undefined') {
-    window.localStorage.setItem(LOCALE_STORAGE_KEY, nextLocale)
-  }
-
-  return nextLocale
-}
-
-export const activateInitialLocale = () => activateLocale(resolveInitialLocale())
-export const languages = locales.languages

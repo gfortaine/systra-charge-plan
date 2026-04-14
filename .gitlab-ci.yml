@@ -43,12 +43,9 @@ i18n_js:
   extends:
     - .linter_js22
   cache: []
-  before_script:
-    - apt-get update && apt-get install -y gettext
-    - !reference [.js_22, before_script]
   script:
     - |
-      [ -d front/src/i18n/locales.json ] || exit 0
+      [ -f front/src/i18n/locales.json ] || exit 0
       yarn run i18n-report
 test_py:
   extends:
@@ -95,11 +92,9 @@ test_js:
   before_script:
     - |
       set -e
-      apt-get update && apt-get install -y gettext
       [ -d reports ] && rm -rf reports; mkdir -p reports
       [ -d build ] && rm -rf build; mkdir -p build
     - !reference [.js_22, before_script]
-    - yarn run pre
   script:
     - |
       set -e
