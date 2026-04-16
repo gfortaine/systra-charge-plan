@@ -1,9 +1,9 @@
 import { useState } from 'react'
+import { Trans, useLingui } from '@lingui/react/macro'
 import EnterIcon from '@mui/icons-material/ArrowRight'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Button, Chip, Stack } from '@mui/material'
 import InformationPopup from '@comp/utils/InformationPopup'
-import { T, useI18n } from '@src/i18n'
 import './PostCard.scoped.scss'
 
 export default function PostCard({
@@ -11,22 +11,20 @@ export default function PostCard({
   onEnterPost = () => {},
   onDeletePost = () => {},
 }) {
-  const { t } = useI18n()
+  const { t, i18n } = useLingui()
   const categoryNames = post.categories?.map(cat => cat.name) ?? []
   const authorName = post.author?.fullName ?? ''
   const publicationDate = new Date(post.pubdate)
-  const $language = { current: 'fr' }
-  const localeDate = publicationDate.toLocaleDateString($language.current)
-  const localeTime = publicationDate.toLocaleTimeString($language.current)
+  const localeDateTime = i18n.date(publicationDate, { dateStyle: 'medium', timeStyle: 'short' })
   const [deletePostDialogShown, setDeletePostDialogShown] = useState(false)
   const deletePostDialogButtons = [
     {
       type: 'cancel',
-      label: t('Cancel'),
+      label: t`Cancel`,
     },
     {
       type: 'submit',
-      label: t('Confirm'),
+      label: t`Confirm`,
       icon: (<DeleteIcon />),
       color: 'error',
     },
@@ -50,19 +48,22 @@ export default function PostCard({
         <div className="title">{ post.title }</div>
         { categoryNames.length && (
           <Stack className="categories" direction="row" spacing={1}>
-            {categoryNames.forEach(category => { (
+            {categoryNames.map(category => { (
               <Chip key="category" label={category} />
             ) })}
           </Stack>
         )}
       </div>
       <div className="author-date">
-        <T
-          one="Published by {{ authorName }} on {{ localeDate }} at {{ localeTime }}"
-          authorName={<span className="author">{ authorName }</span>}
-          localeDate={localeDate}
-          localeTime={localeTime}
-        />
+        <Trans>
+          Published by
+          {' '}
+          <span className="author">{ authorName }</span>
+          {' '}
+          on
+          {' '}
+          { localeDateTime }
+        </Trans>
       </div>
       <div className="actions">
         <Button
@@ -72,7 +73,7 @@ export default function PostCard({
           startIcon={(<DeleteIcon />)}
           onClick={showDeletePostDialog}
         >
-          <T>Delete</T>
+          <Trans>Delete</Trans>
         </Button>
         <Button
           variant="contained"
@@ -81,21 +82,20 @@ export default function PostCard({
           startIcon={(<EnterIcon />)}
           onClick={enterPost}
         >
-          <T>Open</T>
+          <Trans>Open</Trans>
         </Button>
       </div>
       <InformationPopup
         open={deletePostDialogShown}
-        title={t('Delete a blog post')}
+        title={t`Delete a blog post`}
         buttons={deletePostDialogButtons}
         onCancel={hideDeletePostDialog}
         onSubmit={deletePost}
       >
         <div>
-          <T
-            one="You are about to delete the blog post « {{ post }} ». Do you really want to take that action?"
-            post={post.title}
-          />
+          <Trans>
+            You are about to delete the blog post « { post.title } ». Do you really want to take that action?
+          </Trans>
         </div>
       </InformationPopup>
     </div>

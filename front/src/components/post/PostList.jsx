@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useLingui } from '@lingui/react/macro'
 import ClearIcon from '@mui/icons-material/Close'
 import SearchIcon from '@mui/icons-material/Search'
 import { Box, IconButton, InputAdornment, TextField } from '@mui/material'
 import useGraphql from '@src/graphql'
 import allPostsQuery from '@src/graphql/AllPosts.query.graphql'
 import deletePostMutation from '@src/graphql/DeletePost.mutation.graphql'
-import { useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 import PostCard from './PostCard'
 import './PostList.scoped.scss'
@@ -19,7 +19,7 @@ export default function PostList({
   postsParams = defaultPostParams,
   postsAnswerResolver = defaultPostAnswerResolver,
 }) {
-  const { t } = useI18n()
+  const { t } = useLingui()
   const navigate = useNavigate()
   const { PostRoute } = useRoutes()
   const { graphqlQuery, graphqlMutate } = useGraphql()
@@ -65,8 +65,8 @@ export default function PostList({
         value={searchTerm}
         onChange={handleSearchChange}
         className="search"
-        label={t('Search')}
-        placeholder={t('keyword')}
+        label={t`Search`}
+        placeholder={t`keyword`}
         variant="standard"
         fullWidth
         color={hasPrimaryColoredIcon ? 'primary' : 'default'}

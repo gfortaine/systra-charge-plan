@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { ChevronLeft, ChevronRight } from '@mui/icons-material'
 import {
   Box,
@@ -14,14 +15,13 @@ import MapboxGL from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import colorShades from '@scss/color-shades'
 import { mapboxPublicKey } from '@src/config'
-import { T, useI18n } from '@src/i18n'
 import line from '@static/line.json'
 import pkPoints from '@static/markers.json'
 import './MapPage.scoped.scss'
 import './MapPage.scss'
 
 export default function MapPage() {
-  const { t } = useI18n()
+  const { t } = useLingui()
   const mapRef = useRef() // Mapbox instance
   const mapContainerRef = useRef() // DOM element for Mapbox
   const [showPanel, setShowPanel] = useState(false)
@@ -49,7 +49,7 @@ export default function MapPage() {
           .setLngLat(point.geometry.coordinates)
           .setPopup(
             new MapboxGL.Popup({ offset: 25 }).setHTML(
-              `<div>${t('Pk:')} ${point.properties.pk}</div>`,
+              `<div>${t`Pk:`} ${point.properties.pk}</div>`,
             ),
           )
         marker.addTo(map)
@@ -122,15 +122,15 @@ export default function MapPage() {
         <Slide direction="right" in={panelContentVisible} mountOnEnter unmountOnExit>
           <Box sx={{ p: 2, mt: 6 }}>
             <Typography variant="h6" gutterBottom>
-              <T>Legend</T>
+              <Trans>Legend</Trans>
             </Typography>
             <Stack>
               <FormControlLabel
-                label={t('Markers')}
+                label={t`Markers`}
                 control={<Checkbox checked={showMarkers} onChange={(e) => setShowMarkers(e.target.checked)} />}
               />
               <FormControlLabel
-                label={t('Line')}
+                label={t`Line`}
                 control={<Checkbox checked={showLine} onChange={(e) => setShowLine(e.target.checked)} />}
               />
             </Stack>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { Trans, useLingui } from '@lingui/react/macro'
 import {
   Cancel,
   CheckBox,
@@ -33,12 +34,11 @@ import { MuiFileInput } from 'mui-file-input'
 import useGraphql from '@src/graphql'
 import allUsersAndCategoriesQuery from '@src/graphql/AllUsersAndCategories.query.graphql'
 import createPostMutation from '@src/graphql/CreatePost.mutation.graphql'
-import { T, useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 import './AddPost.scoped.scss'
 
 export default function AddPost() {
-  const { t } = useI18n()
+  const { t } = useLingui()
   const navigate = useNavigate()
   const { HomeRoute } = useRoutes()
   const { graphqlQuery, graphqlMutate } = useGraphql()
@@ -70,10 +70,10 @@ export default function AddPost() {
   })
   // https://react-hook-form.com/docs/useform/register#options
   const titleRules = {
-    minLength: { value: 3, message: t('Title must be, at least, {{ num }} characters long.', { num: 3 }) },
-    maxLength: { value: 100, message: t('Title cannot excess {{ num }} characters.', { num: 100 }) },
+    minLength: { value: 3, message: t`Title must be, at least, 3 characters long.` },
+    maxLength: { value: 100, message: t`Title cannot excess 100 characters.` },
   }
-  const authorRules = { required: t('You must select an author.') }
+  const authorRules = { required: t`You must select an author.` }
   const imageRules = {
     validate: files => {
       if (!files || !files.length) {
@@ -84,12 +84,11 @@ export default function AddPost() {
       const maxSizeMb = 2
       const maxSize = maxSizeMb * MB
       if (file.size > maxSize) {
-        const unit = t('MB')
-        return t('Files size should be less than {{ size }}', { size: `${maxSizeMb}${unit}` })
+        return t`Files size should be less than ${maxSizeMb}MB`
       }
     },
   }
-  const languageRules = { required: t('You must chose a language.') }
+  const languageRules = { required: t`You must chose a language.` }
   async function onImageChanged(file) {
     if (file) {
       await new Promise(resolve => {
@@ -129,7 +128,7 @@ export default function AddPost() {
   return (
     <div className="view">
       <Card className="add-post-card">
-        <CardHeader title={t('Add a post')} />
+        <CardHeader title={t`Add a post`} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="form-content">
             <FormControl>
@@ -141,7 +140,7 @@ export default function AddPost() {
                   <TextField
                     {...field}
                     inputProps={{ maxLength: 100 }}
-                    label={t('Title')}
+                    label={t`Title`}
                     required
                   />
                 )}
@@ -156,12 +155,12 @@ export default function AddPost() {
                 render={({ field }) => (
                   <>
                     <InputLabel id="author-label">
-                      <T>Author</T>
+                      <Trans>Author</Trans>
                     </InputLabel>
                     <Select
                       {...field}
                       labelId="author-label"
-                      label={t('Author')}
+                      label={t`Author`}
                     >
                       {users.map(user => (
                         <MenuItem
@@ -185,14 +184,14 @@ export default function AddPost() {
                 render={({ field }) => (
                   <>
                     <InputLabel id="categories-label">
-                      <T>Categories</T>
+                      <Trans>Categories</Trans>
                     </InputLabel>
                     <Select
                       {...field}
                       labelId="categories-label"
-                      label={t('Categories')}
+                      label={t`Categories`}
                       multiple
-                      input={<OutlinedInput id="select-multiple-chip" label={t('Categories')} />}
+                      input={<OutlinedInput id="select-multiple-chip" label={t`Categories`} />}
                       renderValue={(selected) => (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                           {selected.map(cat_id => (
@@ -227,10 +226,10 @@ export default function AddPost() {
                 render={({ field }) => (
                   <MuiFileInput
                     {...field}
-                    label={t('Optional image')}
+                    label={t`Optional image`}
                     inputProps={{ accept: 'image/*' }}
                     clearIconButtonProps={{
-                      title: t('Remove image'),
+                      title: t`Remove image`,
                       children: <Close fontSize="small" />,
                     }}
                     onChange={e => {
@@ -254,7 +253,7 @@ export default function AddPost() {
                     {...field}
                     required
                     id="text-field"
-                    label={t('Text')}
+                    label={t`Text`}
                     multiline
                     rows={5}
                   />
@@ -270,16 +269,16 @@ export default function AddPost() {
                 render={({ field }) => (
                   <>
                     <FormLabel id="language-radio-label">
-                      <T>Language</T>
+                      <Trans>Language</Trans>
                     </FormLabel>
                     <RadioGroup
                       {...field}
                       name="language"
                       aria-labelledby="language-radio-label"
                     >
-                      <FormControlLabel value="english" control={<Radio />} label={t('English')} />
-                      <FormControlLabel value="french" control={<Radio />} label={t('French')} />
-                      <FormControlLabel value="other" control={<Radio />} label={t('Other')} />
+                      <FormControlLabel value="english" control={<Radio />} label={t`English`} />
+                      <FormControlLabel value="french" control={<Radio />} label={t`French`} />
+                      <FormControlLabel value="other" control={<Radio />} label={t`Other`} />
                     </RadioGroup>
                   </>
                 )}
@@ -295,7 +294,7 @@ export default function AddPost() {
               color="secondary"
               startIcon={<Cancel />}
             >
-              <T>Cancel</T>
+              <Trans>Cancel</Trans>
             </Button>
             <Button
               variant="contained"
@@ -304,7 +303,7 @@ export default function AddPost() {
               color="primary"
               disabled={!isValid}
             >
-              <T>Publish</T>
+              <Trans>Publish</Trans>
             </Button>
           </CardActions>
         </form>

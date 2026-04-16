@@ -212,9 +212,11 @@ You can adjust your configuration in `front/src/config.js` file.
 
 ## Internationalization (i18n)
 
-Use `t` or `<T>` in your `.jsx` files.
+Use `t` or `<Trans>` in your `.jsx` files.
 
-For more information: https://github.com/alexanderwallin/lioness
+Use `msg` for lazy translations.
+
+For more information: https://lingui.dev/tutorials/react
 
 To update the `.pot` file and any `.po` language file, use:
 
@@ -222,10 +224,12 @@ To update the `.pot` file and any `.po` language file, use:
 yarn run i18n-extract
 ```
 
-Then translate any missing strings in your `.po` file, using **[Poedit](https://poedit.net/)** for instance. Then compile the `.po` files to a single `.json` file using:
+Then translate any missing strings in your `.po` file, using **[Poedit](https://poedit.net/)** for instance.
+
+You can purge old translations with:
 
 ```shell
-yarn run i18n-compile
+yarn run i18n-extract --clean
 ```
 
 You can also find out missing translations with:
@@ -233,6 +237,8 @@ You can also find out missing translations with:
 ```shell
 yarn run i18n-report
 ```
+
+No compile is necessary in development. `.po` updates will be taken immediately.
 
 ## Linter
 

@@ -6,7 +6,7 @@ import { useI18n } from '@src/i18n'
 
 export function useTheme() {
   const { locale } = useI18n()
-  const findMuiLocale = useCallback((locale) => {
+  const findMuiLocale = useCallback(locale => {
     for (const [muiKey, muiLocale] of Object.entries(muiLocales)) {
       if (muiKey.startsWith(locale)) {
         return muiLocale
@@ -15,8 +15,8 @@ export function useTheme() {
     return muiLocales.enUS
   }, [])
   const muiLocale = findMuiLocale(locale)
-  const theme = useMemo(() => {
-    return createTheme({
+  return useMemo(() =>
+    createTheme({
       palette: {
         primary: {
           main: colors.primary,
@@ -53,7 +53,5 @@ export function useTheme() {
           ultralight: colors.grey_ultralight,
         },
       },
-    }, muiLocale)
-  }, [muiLocale])
-  return theme
+    }, muiLocale), [muiLocale])
 }

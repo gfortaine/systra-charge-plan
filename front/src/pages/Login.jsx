@@ -1,3 +1,4 @@
+import { Trans, useLingui } from '@lingui/react/macro'
 import {
   Button,
   Card,
@@ -7,20 +8,19 @@ import {
   Container,
 } from '@mui/material'
 import { useAuth } from '@src/auth'
-import { T, useI18n } from '@src/i18n'
 import logo from '@static/icon_circle.png'
 import './Login.scoped.scss'
 
 export default function Login() {
   const { login } = useAuth()
-  const { t } = useI18n()
+  const { t } = useLingui()
 
   return (
     <div className="view">
       <Container className="login-container">
         <Card elevation="5" className="login-card">
           <CardHeader
-            title={t('Login')}
+            title={t`Login`}
           />
           <img
             src={logo}
@@ -28,7 +28,9 @@ export default function Login() {
             height="160"
           />
           <CardContent>
-            <T>You must be logged in to have access to this application. Please click on the button below to do so.</T>
+            <Trans>
+              You must be logged in to have access to this application. Please click on the button below to do so.
+            </Trans>
           </CardContent>
           <CardActions className="login-actions">
             <Button
@@ -36,7 +38,7 @@ export default function Login() {
               color="primary"
               onClick={login}
             >
-              <T>Login</T>
+              <Trans>Login</Trans>
             </Button>
           </CardActions>
         </Card>

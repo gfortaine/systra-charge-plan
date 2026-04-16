@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { NavLink, useNavigate, useParams } from 'react-router-dom'
+import { Trans, useLingui } from '@lingui/react/macro'
 import {
   Add,
   ArrowBack,
@@ -22,7 +23,6 @@ import createCommentMutation from '@src/graphql/CreateComment.mutation.graphql'
 import deleteCommentMutation from '@src/graphql/DeleteComment.mutation.graphql'
 import postQuery from '@src/graphql/Post.query.graphql'
 import updateCommentMutation from '@src/graphql/UpdateComment.mutation.graphql'
-import { T, useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 
 export default function Post() {
@@ -30,7 +30,7 @@ export default function Post() {
   const navigate = useNavigate()
   const { HomeRoute, CategoryRoute } = useRoutes()
   const { graphqlQuery, graphqlMutate } = useGraphql()
-  const { t, locale } = useI18n()
+  const { t, i18n } = useLingui()
 
   const [post, setPost] = useState({})
   const fetchPost = useCallback(async (setPost) => {
@@ -94,8 +94,7 @@ export default function Post() {
     }
   }, [post])
   const authorName = post.author?.fullName || ''
-  const publicationDate = new Date(post.pubdate)
-  const localeDate = publicationDate ? publicationDate.toLocaleDateString(locale) : ''
+  const publicationDate = post.pubdate ? i18n.date(new Date(post.pubdate)) : ''
   const categories = post.categories || []
 
   const [currentComment, setCurrentComment] = useState(null)
@@ -157,7 +156,7 @@ export default function Post() {
           onClick={goBack}
           sx={{ alignSelf: 'flex-start' }}
         >
-          <T>Return</T>
+          <Trans>Return</Trans>
         </Button>
         {/* Header */}
         <Box>
@@ -174,7 +173,7 @@ export default function Post() {
             {' '}
             on
             {' '}
-            <span>{localeDate}</span>
+            <span>{publicationDate}</span>
           </Typography>
           {categories.length > 0 && (
             <Stack direction="row" spacing={1}>
@@ -198,7 +197,7 @@ export default function Post() {
         {/* Comments */}
         <Box sx={{ borderTop: '1px solid black', mt: 4, pt: 2 }}>
           <Typography variant="h6">
-            <T>Comments</T>
+            <Trans>Comments</Trans>
           </Typography>
           <Stack spacing={1} sx={{ mb: 2 }}>
             {post.comments?.map(comment => (
@@ -216,16 +215,16 @@ export default function Post() {
             startIcon={<Add />}
             onClick={openAdd}
           >
-            <T>Add a comment</T>
+            <Trans>Add a comment</Trans>
           </Button>
         </Box>
         {/* Add Dialog */}
         <InformationPopup
           open={showAdd}
-          title={t('Add a comment')}
+          title={t`Add a comment`}
           buttons={[
-            { type: 'cancel', label: t('Cancel') },
-            { type: 'submit', label: t('Add'), icon: (<Add />) },
+            { type: 'cancel', label: t`Cancel` },
+            { type: 'submit', label: t`Add`, icon: (<Add />) },
           ]}
           onCancel={cancelAdd}
           onSubmit={handleAdd}
@@ -235,10 +234,10 @@ export default function Post() {
         {/* Edit Dialog */}
         <InformationPopup
           open={showEdit}
-          title={t('Edit a comment')}
+          title={t`Edit a comment`}
           buttons={[
-            { type: 'cancel', label: t('Cancel') },
-            { type: 'submit', label: t('Edit'), icon: (<Edit />) },
+            { type: 'cancel', label: t`Cancel` },
+            { type: 'submit', label: t`Edit`, icon: (<Edit />) },
           ]}
           onCancel={cancelEdit}
           onSubmit={handleEdit}
@@ -253,20 +252,19 @@ export default function Post() {
         {/* Delete Dialog */}
         <InformationPopup
           open={showDelete}
-          title={t('Delete a comment')}
+          title={t`Delete a comment`}
           buttons={[
-            { type: 'cancel', label: t('Cancel') },
-            { type: 'submit', label: t('Delete'), icon: (<Delete />), color: 'error' },
+            { type: 'cancel', label: t`Cancel` },
+            { type: 'submit', label: t`Delete`, icon: (<Delete />), color: 'error' },
           ]}
           onCancel={cancelDelete}
           onSubmit={handleDelete}
         >
           {currentComment && (
             <Box>
-              <T
-                one="You are about to delete the comment « {{ comment }} ». Do you really want to take that action?"
-                comment={currentComment.date}
-              />
+              <Trans>
+                You are about to delete the comment « {currentComment.date} ». Do you really want to take that action?
+              </Trans>
             </Box>
           )}
         </InformationPopup>

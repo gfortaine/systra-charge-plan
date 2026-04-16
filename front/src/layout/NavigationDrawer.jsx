@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useLingui } from '@lingui/react/macro'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import MenuIcon from '@mui/icons-material/Menu'
 import {
@@ -14,7 +15,6 @@ import {
 import MuiDrawer from '@mui/material/Drawer'
 import { styled } from '@mui/material/styles'
 import { useAuth } from '@src/auth'
-import { useI18n } from '@src/i18n'
 import useRoutes from '@src/routes'
 import './NavigationDrawer.scss'
 
@@ -78,7 +78,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function NavigationDrawer() {
   const { routes, LogoutRoute } = useRoutes()
   const { logout } = useAuth()
-  const { t } = useI18n()
+  const { t, _ } = useLingui()
   const [open, setOpen] = useState(false)
 
   const handleDrawerOpen = () => {
@@ -106,10 +106,10 @@ export default function NavigationDrawer() {
             return (
               <ListItem key={index} className="app-menu-item" disablePadding>
                 <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
-                  <ListItemIcon className="app-menu-item-icon" title={route.title(t)}>
+                  <ListItemIcon className="app-menu-item-icon" title={_(route.title)}>
                     { route.icon }
                   </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={route.title(t)} />
+                  <ListItemText className="app-menu-item-title" primary={_(route.title)} />
                 </ListItemButton>
               </ListItem>
             )
@@ -122,10 +122,10 @@ export default function NavigationDrawer() {
                 disablePadding
               >
                 <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon className="app-menu-item-icon" title={route.title(t)}>
+                  <ListItemIcon className="app-menu-item-icon" title={_(route.title)}>
                     { route.icon }
                   </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={route.title(t)} />
+                  <ListItemText className="app-menu-item-title" primary={_(route.title)} />
                 </ListItemButton>
               </ListItem>
             )
@@ -142,7 +142,7 @@ export default function NavigationDrawer() {
         <ListItemIcon>
           <ChevronLeftIcon color="white" />
         </ListItemIcon>
-        <ListItemText primary={t('Fold down pane')} />
+        <ListItemText primary={t`Fold down pane`} />
       </ListItemButton>
     )
   } else {

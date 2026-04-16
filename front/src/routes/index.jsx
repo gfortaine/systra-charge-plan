@@ -1,3 +1,4 @@
+import { msg } from '@lingui/core/macro'
 import {
   CalendarMonth,
   Home,
@@ -22,19 +23,19 @@ import AuthRequired from '@src/auth/AuthRequired'
 export default function useRoutes() {
   const routes = {
     LoginRoute: {
-      title: t => t('Login'),
+      title: msg`Login`,
       path: '/login',
       element: <LoginPage />,
       icon: <Login />,
       isNav: false,
     },
     FailRoute: {
-      title: t => t('Fail'),
+      title: msg`Fail`,
       path: '/fail',
       isNav: false,
     },
     UserRoute: {
-      title: t => t('User'),
+      title: msg`User`,
       path: '/user',
       element: (
         <AuthRequired>
@@ -44,7 +45,7 @@ export default function useRoutes() {
       isNav: false,
     },
     HomeRoute: {
-      title: t => t('Home'),
+      title: msg`Home`,
       path: '/',
       element: (
         <AuthRequired>
@@ -55,7 +56,7 @@ export default function useRoutes() {
       isNav: true,
     },
     PostRoute: {
-      title: t => t('Post'),
+      title: msg`Post`,
       path: '/post/:id',
       element: (
         <AuthRequired>
@@ -66,7 +67,7 @@ export default function useRoutes() {
       isNav: false,
     },
     AddPostRoute: {
-      title: t => t('Add Post'),
+      title: msg`Add Post`,
       path: '/add-post',
       element: (
         <AuthRequired>
@@ -77,7 +78,7 @@ export default function useRoutes() {
       isNav: true,
     },
     CategoryRoute: {
-      title: t => t('Category'),
+      title: msg`Category`,
       path: '/category/:id',
       element: (
         <AuthRequired>
@@ -87,7 +88,7 @@ export default function useRoutes() {
       isNav: false,
     },
     DatagridRoute: {
-      title: t => t('Data grid and charts'),
+      title: msg`Data grid and charts`,
       path: '/data',
       element: (
         <AuthRequired>
@@ -98,7 +99,7 @@ export default function useRoutes() {
       isNav: true,
     },
     MapRoute: {
-      title: t => t('Map'),
+      title: msg`Map`,
       path: '/map',
       element: (
         <AuthRequired>
@@ -109,7 +110,7 @@ export default function useRoutes() {
       isNav: true,
     },
     PickersRoute: {
-      title: t => t('Pickers'),
+      title: msg`Pickers`,
       path: '/pickers',
       element: (
         <AuthRequired>
@@ -120,7 +121,7 @@ export default function useRoutes() {
       isNav: true,
     },
     LogoutRoute: {
-      title: t => t('Logout'),
+      title: msg`Logout`,
       path: '/logout', // not used
       icon: <Logout />,
       isNav: true,

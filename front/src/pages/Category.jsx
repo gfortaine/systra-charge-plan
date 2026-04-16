@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Trans } from '@lingui/react/macro'
 import {
   ArrowBack,
 } from '@mui/icons-material'
@@ -12,7 +13,6 @@ import PostList from '@comp/post/PostList'
 import useGraphql from '@src/graphql'
 import categoryQuery from '@src/graphql/Category.query.graphql'
 import categoryPostsQuery from '@src/graphql/CategoryPosts.query.graphql'
-import { T } from '@src/i18n'
 import useRoutes from '@src/routes'
 
 export default function Category() {
@@ -47,11 +47,11 @@ export default function Category() {
         onClick={goBack}
         sx={{ alignSelf: 'flex-start' }}
       >
-        <T>Return</T>
+        <Trans>Return</Trans>
       </Button>
       <Box>
         <Typography variant="h6">
-          <T one="Category {{ name }}:" name={category.name} />
+          <Trans>Category { category.name }:</Trans>
         </Typography>
       </Box>
       <PostList

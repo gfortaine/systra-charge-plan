@@ -30,10 +30,6 @@ export default function AppToolbar() {
   const { UserRoute } = useRoutes()
   const { locale: currentLocale, setLocale } = useI18n()
 
-  const handleLocaleChange = (locale) => {
-    setLocale(locale)
-  }
-
   return (
     <MyAppBar position="fixed" className="app-toolbar">
       <Toolbar>
@@ -45,9 +41,9 @@ export default function AppToolbar() {
           {Object.entries(languages).map(([locale, title]) => (
             <Button
               key={locale}
-              variant={locale == currentLocale ? 'contained' : 'text'}
+              variant={locale === currentLocale ? 'contained' : 'text'}
               title={title}
-              onClick={() => handleLocaleChange(locale)}
+              onClick={() => setLocale(locale)}
             >
               {locale}
             </Button>

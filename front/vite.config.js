@@ -1,5 +1,6 @@
 import path from 'path'
 import { env } from 'process'
+import { lingui } from '@lingui/vite-plugin'
 import react from '@vitejs/plugin-react'
 import DjVitePlugin from 'djvite'
 import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
@@ -11,8 +12,7 @@ const chunksMap = (() => {
   const map = {}
   map['config'] = 'front/src/config.js'
   Object.entries({
-    react: ['react', 'react-dom', 'react-router', 'react-hook-form'],
-    mui: ['@mui'],
+    react: ['react', 'react-dom', 'react-router', 'react-hook-form', '@mui'],
     mapbox: ['@mapboxql', 'mapbox-gl'],
   }).forEach(([big, depIds]) => {
     depIds.forEach(depId => {
@@ -37,7 +37,12 @@ const config = defineConfig({
   },
   plugins: [
     DjVitePlugin({ verbose: true, manifestPath: 'front/vite.manifest.json' }),
-    react(),
+    react({
+      babel: {
+        plugins: ['@lingui/babel-plugin-lingui-macro'],
+      },
+    }),
+    lingui(),
     reactScopedCssPlugin(),
     graphqlLoader(),
   ],
@@ -49,7 +54,6 @@ const config = defineConfig({
       '@scss': path.resolve('./front/src/theme/scss'),
       '@static': path.resolve('./front/static'),
       '@test': path.resolve('./front/tests'),
-      'lioness': path.resolve('./front/src/i18n/lioness'),
     },
   },
   css: {
