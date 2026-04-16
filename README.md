@@ -20,7 +20,7 @@
 [csslinter-image]: https://img.shields.io/badge/linter-stylelint-blue?style=flat&logo=stylelint&labelColor=navy&logoColor=yellow
 [isort-image]: https://img.shields.io/badge/imports-isort-blue?style=flat&labelColor=orange&logo=python
 [type-hint-image]: https://img.shields.io/badge/type_hint-mypy-blue?style=flat&labelColor=orange&logo=python
-[py-image]: https://img.shields.io/badge/python-3.13-blue?style=flat&labelColor=blueviolet&logo=python&logoColor=white
+[py-image]: https://img.shields.io/badge/python-3.14-blue?style=flat&labelColor=blueviolet&logo=python&logoColor=white
 [django-image]: https://img.shields.io/badge/django-5.2-blue?style=flat&labelColor=blueviolet&logo=django&logoColor=white
 [node-image]: https://img.shields.io/badge/Node%20js-24-blue?style=flat&logo=nodedotjs&logoColor=white
 [react-image]: https://img.shields.io/badge/React-19-blue?style=flat&logo=reactjs
@@ -83,8 +83,8 @@ Django
 ## Setup
 
 ```shell
-# create a virtual env with python version 3.13 or more
-uv venv -p 3.13
+# create a virtual env with python version 3.14 or more
+uv venv -p 3.14
 # install all dependencies
 uv sync
 # adjust some env variables (`export DJANGO_[…]=[…]`), see `back/config/settings.py`.

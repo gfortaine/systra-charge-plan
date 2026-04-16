@@ -19,7 +19,7 @@ secret:
 
 linter_py:
   extends:
-    - .linter_py313
+    - .linter_py314
   cache: []
 linter_js:
   extends:
@@ -27,14 +27,14 @@ linter_js:
   cache: []
 i18n_py:
   extends:
-    - .python_313
+    - .python_314
   cache: []
   stage: test
   rules:
     - if: $CI_COMMIT_BRANCH
   before_script:
     - sudo apt-get update && sudo apt-get install -y gettext
-    - !reference [.python_313, before_script]
+    - !reference [.python_314, before_script]
   script:
     - |
       [ -d back/myapp/locale ] || exit 0
@@ -49,13 +49,13 @@ i18n_js:
       yarn run i18n-report
 test_py:
   extends:
-    - .python_313
+    - .python_314
   cache: []
   stage: test
   rules:
     - if: $CI_COMMIT_BRANCH
   image:
-    name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python:3.13
+    name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python:3.14
   services: # disable this service for sqlite
     - name: postgres:17-alpine
       alias: db
@@ -70,7 +70,7 @@ test_py:
     DB_HOST: db
   before_script:
     - sudo apt-get install -y postgresql-client
-    - !reference [.python_313, before_script]
+    - !reference [.python_314, before_script]
   script:
     - uv run poe test
   artifacts:
@@ -114,7 +114,7 @@ total_coverage:
   stage: test
   rules:
     - if: $CI_COMMIT_BRANCH
-  image: python:3.13
+  image: python:3.14
   needs:
     - test_py
     - test_js

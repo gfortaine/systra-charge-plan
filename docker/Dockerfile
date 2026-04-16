@@ -1,11 +1,11 @@
 # syntax = docker/dockerfile:1
-FROM registry.gitlab.com/systracorp/hq/infra/docker/python-gunicorn-nginx:3.13 AS base
+FROM registry.gitlab.com/systracorp/hq/infra/docker/python-gunicorn-nginx:3.14 AS base
 LABEL maintainer="Cyrille Pontvieux <cpontvieux@systra.com>"
 EXPOSE 80
 USER root
 # Install system dependencies
 # https://docs.gunicorn.org/en/stable/design.html
-# https://gitlab.com/systracorp/hq/infra/docker/-/blob/master/python-gunicorn-nginx/3.13/gunicorn-conf.py
+# https://gitlab.com/systracorp/hq/infra/docker/-/blob/master/python-gunicorn-nginx/3.14/gunicorn-conf.py
 ENV DEBIAN_FRONTEND=noninteractive \
     LANG=C.UTF-8 \
     GUNICORN_CHDIR=/var/www/myapp/back \
@@ -21,8 +21,10 @@ RUN apt-get update \
         gnupg \
         sqlite3 \
         zstd \
- && echo "deb http://apt.postgresql.org/pub/repos/apt $(sed -rn '/^VERSION_CODENAME=/{s/.*=//;p}' /etc/os-release)-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
- && curl -s https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
+ && install -d /usr/share/postgresql-common/pgdg \
+ && curl -o /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc -s https://www.postgresql.org/media/keys/ACCC4CF8.asc \
+ && . /etc/os-release \
+ && echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $VERSION_CODENAME-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
  && apt-get update \
  && apt-get install -y postgresql-client-$POSTGRES_VER \
  && apt-get clean -y
@@ -86,8 +88,16 @@ COPY --chown=root: docker/docker-healthcheck /
 HEALTHCHECK --interval=60s --timeout=10s --retries=5 --start-period=180s CMD ["/docker-healthcheck"]
 ARG VER
 LABEL version=$VER
-COPY --chown=user: ./ ./
-RUN rm -rf .git* docker back/tests front/.scripts front/src front/static front/tests front/*.*js
+COPY --chown=user: \
+     --exclude=docker* \
+     --exclude=docs \
+     --exclude=back/tests \
+     --exclude=front/.scripts \
+     --exclude=front/src \
+     --exclude=front/static \
+     --exclude=front/tests \
+     --exclude=front/*.*js \
+     ./ ./
 COPY --chown=user: --from=jsbuild /app/front/dist ./front/dist
 COPY --chown=user: --from=jsbuild /app/front/vite.manifest.json ./front/
 VOLUME /var/www/myapp/back/db
