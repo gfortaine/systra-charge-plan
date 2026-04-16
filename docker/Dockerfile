@@ -73,8 +73,7 @@ RUN yarn install
 COPY --chown=node: ./ ./
 ENV MAPBOX_PUBLIC_KEY='###MAPBOX_PUBLIC_KEY###' \
     NO_COLOR=true
-RUN cp env.dist .env \
- && yarn run build
+RUN yarn run build
 
 ########################################
 FROM base AS final

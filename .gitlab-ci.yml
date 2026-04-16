@@ -25,6 +25,10 @@ linter_js:
   extends:
     - .linter_js22
   cache: []
+  script:
+    - |
+      [ -e .env ] && rm .env
+      yarn run lint
 i18n_py:
   extends:
     - .python_313
@@ -46,6 +50,7 @@ i18n_js:
   script:
     - |
       [ -f front/src/i18n/locales.json ] || exit 0
+      [ -e .env ] && rm .env
       yarn run i18n-report
 test_py:
   extends:
@@ -98,6 +103,7 @@ test_js:
   script:
     - |
       set -e
+      [ -e .env ] && rm .env
       yarn run -s test || FAILED=1
       [ -s reports/report-js.xunit ] && yarn run -s test-report
       [ -z "$FAILED" ]
