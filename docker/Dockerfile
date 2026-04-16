@@ -59,7 +59,7 @@ RUN uv venv \
  && uv pip install 'gunicorn[gevent]'
 
 ########################################
-FROM node:22-alpine AS jsbuild
+FROM node:24-alpine AS jsbuild
 RUN apk add jq gettext
 ENV YARN_CACHE_FOLDER=/tmp/yarn-cache \
     YARN_IGNORE_ENGINES=1

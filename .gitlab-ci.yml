@@ -23,12 +23,8 @@ linter_py:
   cache: []
 linter_js:
   extends:
-    - .linter_js22
+    - .linter_js24
   cache: []
-  script:
-    - |
-      [ -e .env ] && rm .env
-      yarn run lint
 i18n_py:
   extends:
     - .python_313
@@ -45,12 +41,11 @@ i18n_py:
       uv run poe i18n_report
 i18n_js:
   extends:
-    - .linter_js22
+    - .linter_js24
   cache: []
   script:
     - |
       [ -f front/src/i18n/locales.json ] || exit 0
-      [ -e .env ] && rm .env
       yarn run i18n-report
 test_py:
   extends:
@@ -89,7 +84,7 @@ test_py:
         path: reports/coverage.xml
 test_js:
   extends:
-    - .js_22
+    - .js_24
   cache: []
   stage: test
   rules:
@@ -99,11 +94,10 @@ test_js:
       set -e
       [ -d reports ] && rm -rf reports; mkdir -p reports
       [ -d build ] && rm -rf build; mkdir -p build
-    - !reference [.js_22, before_script]
+    - !reference [.js_24, before_script]
   script:
     - |
       set -e
-      [ -e .env ] && rm .env
       yarn run -s test || FAILED=1
       [ -s reports/report-js.xunit ] && yarn run -s test-report
       [ -z "$FAILED" ]

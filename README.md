@@ -22,7 +22,7 @@
 [type-hint-image]: https://img.shields.io/badge/type_hint-mypy-blue?style=flat&labelColor=orange&logo=python
 [py-image]: https://img.shields.io/badge/python-3.13-blue?style=flat&labelColor=blueviolet&logo=python&logoColor=white
 [django-image]: https://img.shields.io/badge/django-5.2-blue?style=flat&labelColor=blueviolet&logo=django&logoColor=white
-[node-image]: https://img.shields.io/badge/Node%20js-22-blue?style=flat&logo=nodedotjs&logoColor=white
+[node-image]: https://img.shields.io/badge/Node%20js-24-blue?style=flat&logo=nodedotjs&logoColor=white
 [react-image]: https://img.shields.io/badge/React-19-blue?style=flat&logo=reactjs
 [latest-commit-url]: https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/-/commits/master
 [pipeline-image]: https://gitlab.com/systracorp/hq/boilerplates/django-react-boilerplate/badges/master/pipeline.svg?ignore_skipped=true

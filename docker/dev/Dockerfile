@@ -1,8 +1,8 @@
 # syntax = docker/dockerfile:1
 FROM registry.gitlab.com/systracorp/hq/infra/docker/python-gunicorn-nginx:3.13
 USER root
-ENV NODE_VERSION=22.22.0 \
-    NODE_SHA256=c33c39ed9c80deddde77c960d00119918b9e352426fd604ba41638d6526a4744 \
+ENV NODE_VERSION=24.15.0 \
+    NODE_SHA256=44836872d9aec49f1e6b52a9a922872db9a2b02d235a616a5681b6a85fec8d89 \
     NODE_ENV=development \
     FIXUID_VER=0.6.0 \
     FIXUID_SHA256=8c47f64ec4eec60e79871796ea4097ead919f7fcdedace766da9510b78c5fa14 \
