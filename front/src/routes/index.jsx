@@ -21,7 +21,7 @@ import UserPage from '@page/User'
 import AuthRequired from '@src/auth/AuthRequired'
 
 export default function useRoutes() {
-  const routes = {
+  const baseRoutes = {
     LoginRoute: {
       title: msg`Login`,
       path: '/login',
@@ -132,21 +132,20 @@ export default function useRoutes() {
     if (!params) {
       params = {}
     }
-    path.matchAll(new RegExp(':([^/]+)', 'g')).forEach(m => {
+    for (const m of path.matchAll(new RegExp(':([^/]+)', 'g'))) {
       if (params[m[1]] !== undefined) {
         path2 = path2.replace(m[0], String(params[m[1]]))
       }
-    })
+    }
     return path2
   }
-  Object.values(routes).forEach(route => {
-    route.pathParams = function(params) {
-      return replacePathParams(this.path, params)
-    }.bind(route)
+  const routeList = Object.values(baseRoutes).map(baseRoute => {
+    const route = baseRoute
+    route.pathParams = params => replacePathParams(route.path, params)
+    return route
   })
-  return {
-    replacePathParams,
-    ...routes,
-    routes: Object.values(routes),
-  }
+  const routes = baseRoutes
+  return Object.assign({}, {
+    routes: routeList,
+  }, routes)
 }

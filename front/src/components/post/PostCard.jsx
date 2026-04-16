@@ -8,14 +8,14 @@ import './PostCard.scoped.scss'
 
 export default function PostCard({
   post,
-  onEnterPost = () => {},
-  onDeletePost = () => {},
+  onEnterPost = (_post) => {},
+  onDeletePost = (_post) => {},
 }) {
   const { t, i18n } = useLingui()
-  const categoryNames = post.categories?.map(cat => cat.name) ?? []
+  const categoryNames = post.categories?.map(cat => cat.name || '') ?? []
   const authorName = post.author?.fullName ?? ''
-  const publicationDate = new Date(post.pubdate)
-  const localeDateTime = i18n.date(publicationDate, { dateStyle: 'medium', timeStyle: 'short' })
+  const publicationDate = post.pubdate ? new Date(post.pubdate) : null
+  const localeDateTime = publicationDate ? i18n.date(publicationDate, { dateStyle: 'medium', timeStyle: 'short' }) : ''
   const [deletePostDialogShown, setDeletePostDialogShown] = useState(false)
   const deletePostDialogButtons = [
     {
@@ -48,9 +48,11 @@ export default function PostCard({
         <div className="title">{ post.title }</div>
         { categoryNames.length && (
           <Stack className="categories" direction="row" spacing={1}>
-            {categoryNames.map(category => { (
-              <Chip key="category" label={category} />
-            ) })}
+            {categoryNames.map(category => {
+              return (
+                <Chip key="category" label={category} />
+              )
+            })}
           </Stack>
         )}
       </div>

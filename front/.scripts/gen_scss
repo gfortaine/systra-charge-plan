@@ -1,0 +1,6 @@
+#!/bin/sh
+cd $(dirname "$0")/../src/theme/scss
+if [ ! -e color-shades.scss -o color-shades.js -nt color-shades.scss ]; then
+  set -x
+  node sass-js-importer.js color-shades.js > color-shades.scss
+fi

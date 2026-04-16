@@ -18,7 +18,7 @@ export default function Login() {
   return (
     <div className="view">
       <Container className="login-container">
-        <Card elevation="5" className="login-card">
+        <Card elevation={5} className="login-card">
           <CardHeader
             title={t`Login`}
           />

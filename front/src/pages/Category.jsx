@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Trans } from '@lingui/react/macro'
 import {
@@ -22,17 +22,18 @@ export default function Category() {
   const { graphqlQuery } = useGraphql()
 
   const [category, setCategory] = useState({})
-  const fetchCategory = useCallback(async (setCategory) => {
-    try {
-      const { category } = await graphqlQuery(categoryQuery, { id: catId })
+  useEffect(() => {
+    let isCancelled = false
+    graphqlQuery(categoryQuery, { id: catId }).then(({ category }) => {
+      if (isCancelled) {
+        return
+      }
       setCategory(category)
-    } catch (err) {
-      console.error(err)
+    }).catch(console.error)
+    return () => {
+      isCancelled = true
     }
   }, [graphqlQuery, catId])
-  useEffect(() => {
-    fetchCategory(setCategory)
-  }, [fetchCategory, catId])
 
   function goBack() {
     navigate({ pathname: HomeRoute.path })

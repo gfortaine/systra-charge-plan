@@ -51,6 +51,7 @@ EOF
   dot_link() {
     from="$1"
     to="$2"
+    IFS=$'\n'
     for ignore in $IGNORE_LIST; do
       if echo "$from" | grep -q -E "$ignore"; then
         return

@@ -42,7 +42,10 @@ export default function MapPage() {
       map._pkMarkers.forEach(m => m.remove())
     }
     if (showMarkers) {
-      const markers = pkPoints.features.map(point => {
+      const markers = pkPoints.features.flatMap(point => {
+        if (!point.geometry.coordinates) {
+          return []
+        }
         const el = document.createElement('div')
         el.className = 'map-pk-marker'
         const marker = new MapboxGL.Marker({ element: el, color: colorShades.secondary })
@@ -59,38 +62,39 @@ export default function MapPage() {
     }
   }, [t])
   useEffect(() => { /* Map Init */
-    if (!mapRef.current) { // Create map only once
-      MapboxGL.accessToken = mapboxPublicKey
-      const map = new MapboxGL.Map({
-        container: mapContainerRef.current,
-        style: 'mapbox://styles/mapbox/light-v9',
-        center: [0, 0],
-        zoom: 2,
-      })
-      map.addControl(new MapboxGL.NavigationControl(), 'bottom-right')
-      map.on('style.load', () => {
-        map.setFog({}) // Set the default atmosphere style
-      })
-      map.on('load', () => {
-        map.addSource('myLine', {
-          type: 'geojson',
-          data: line,
-        })
-        map.addLayer({
-          id: 'line-layer',
-          type: 'line',
-          source: 'myLine',
-          paint: {
-            'line-color': colorShades.primary,
-            'line-width': 3,
-            'line-opacity': 1,
-          },
-        })
-        drawMarkers(map, true, true)
-        fitLineBounds(map)
-      })
-      mapRef.current = map
+    if (mapRef.current || !mapContainerRef.current) { // Create map only once
+      return
     }
+    MapboxGL.accessToken = mapboxPublicKey
+    const map = new MapboxGL.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/light-v9',
+      center: [0, 0],
+      zoom: 2,
+    })
+    map.addControl(new MapboxGL.NavigationControl(), 'bottom-right')
+    map.on('style.load', () => {
+      map.setFog({}) // Set the default atmosphere style
+    })
+    map.on('load', () => {
+      map.addSource('myLine', {
+        type: 'geojson',
+        data: line,
+      })
+      map.addLayer({
+        id: 'line-layer',
+        type: 'line',
+        source: 'myLine',
+        paint: {
+          'line-color': colorShades.primary,
+          'line-width': 3,
+          'line-opacity': 1,
+        },
+      })
+      drawMarkers(map, true, true)
+      fitLineBounds(map)
+    })
+    mapRef.current = map
   }, [drawMarkers, fitLineBounds])
   useEffect(() => { // react to checkbox changes
     const map = mapRef.current
@@ -105,7 +109,7 @@ export default function MapPage() {
   return (
     <Box className="map-view">
       <Paper
-        elevation="4"
+        elevation={4}
         className="left-panel"
         sx={{ width: showPanel ? 'auto' : '25px' }}
       >

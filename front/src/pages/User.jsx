@@ -9,12 +9,14 @@ import { useAuth } from '@src/auth'
 
 export default function User() {
   const { user } = useAuth()
+  const fullName = user?.fullName ?? 'Unknown'
+  const email = user?.email ?? ''
   return (
     <Container className="view">
       <Card>
         <CardContent sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
           <Typography variant="h4">
-            <Trans>Hello {user.fullName} ({user.email})!</Trans>
+            <Trans>Hello {fullName} ({email})!</Trans>
           </Typography>
         </CardContent>
       </Card>

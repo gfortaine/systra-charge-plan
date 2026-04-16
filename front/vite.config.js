@@ -28,7 +28,7 @@ const config = defineConfig({
   server: {
     host: (env.VITE_HOST || 'localhost'),
     allowedHosts: true,
-    port: 1 * (env.PORT || '3978'),
+    port: Number(env.PORT || '3978'),
     origin: `http://localhost:${env.PORT || '3978'}`,
     proxy: {
       '^/(static|__debug__|graphql|oidc)': django_server,
@@ -99,6 +99,7 @@ const config = defineConfig({
               return chunk
             }
           }
+          return undefined
         },
       },
     },

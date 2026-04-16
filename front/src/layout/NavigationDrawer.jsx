@@ -78,7 +78,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 export default function NavigationDrawer() {
   const { routes, LogoutRoute } = useRoutes()
   const { logout } = useAuth()
-  const { t, _ } = useLingui()
+  const { t } = useLingui()
   const [open, setOpen] = useState(false)
 
   const handleDrawerOpen = () => {
@@ -106,10 +106,10 @@ export default function NavigationDrawer() {
             return (
               <ListItem key={index} className="app-menu-item" disablePadding>
                 <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
-                  <ListItemIcon className="app-menu-item-icon" title={_(route.title)}>
+                  <ListItemIcon className="app-menu-item-icon" title={t(route.title)}>
                     { route.icon }
                   </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={_(route.title)} />
+                  <ListItemText className="app-menu-item-title" primary={t(route.title)} />
                 </ListItemButton>
               </ListItem>
             )
@@ -122,10 +122,10 @@ export default function NavigationDrawer() {
                 disablePadding
               >
                 <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon className="app-menu-item-icon" title={_(route.title)}>
+                  <ListItemIcon className="app-menu-item-icon" title={t(route.title)}>
                     { route.icon }
                   </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={_(route.title)} />
+                  <ListItemText className="app-menu-item-title" primary={t(route.title)} />
                 </ListItemButton>
               </ListItem>
             )
@@ -140,7 +140,7 @@ export default function NavigationDrawer() {
     button = (
       <ListItemButton onClick={handleDrawerClose}>
         <ListItemIcon>
-          <ChevronLeftIcon color="white" />
+          <ChevronLeftIcon color="inherit" />
         </ListItemIcon>
         <ListItemText primary={t`Fold down pane`} />
       </ListItemButton>
@@ -156,7 +156,7 @@ export default function NavigationDrawer() {
   return (
     <ClickAwayListener onClickAway={handleClickAway}>
       <Drawer className="drawer" variant="permanent" open={open}>
-        <DrawerHeader className="drawer-header" disablePadding>
+        <DrawerHeader className="drawer-header">
           <ListItem className="app-menu-item" disablePadding>
             {button}
           </ListItem>

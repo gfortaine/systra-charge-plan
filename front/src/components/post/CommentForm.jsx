@@ -34,8 +34,8 @@ export default function CommentForm({
   })
   useEffect(() => {
     onChange(formData)
-  }, [formData]) // eslint-disable-line react-hooks/exhaustive-deps
-  const validate = useCallback((formData) => {
+  }, [formData, onChange])
+  const validate = useCallback(formData => {
     return !!formData.text && !!formData.author
   }, [])
   useEffect(() => {

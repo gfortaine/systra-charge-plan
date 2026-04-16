@@ -38,35 +38,27 @@ class EnumItem {
  * JSON.stringify([...ColorValue]) === JSON.stringify([ColorValue.red, ColorValue.green, ColorValue.blue])
  */
 export default function createEnum (...names) {
-  const BaseEnum = Object.create({
-    _names: [],
-    [Symbol.iterator]: function* () {
-      for (const name of this._names) {
-        yield this[name]
-      }
-    },
-    fromName: function (name) {
-      for (const item of this) {
-        if (item.name === name) {
-          return item
-        }
-      }
-      return null
-    },
-    fromValue: function (value) {
-      for (const item of this) {
-        if (item.value === value) {
-          return item
-        }
-      }
-      return null
-    },
+  const items = names.map(obj => {
+    const isObject = typeof obj == 'object'
+    const name = isObject ? obj.name : obj
+    const value = isObject && Object.prototype.hasOwnProperty.call(obj, 'value') ? obj.value : Symbol(name)
+    return new EnumItem(name, value)
   })
-  for (const obj of names) {
-    const name = obj.hasOwnProperty('name') ? obj.name : obj
-    const value = obj.hasOwnProperty('value') ? obj.value : Symbol(obj)
-    BaseEnum._names.push(name)
-    BaseEnum[name] = new EnumItem(name, value)
+  const itemsByName = items.reduce((acc, item) => {
+    acc[item.name] = item
+    return acc
+  }, {})
+  const enumCollection = {
+    ...itemsByName,
+    * [Symbol.iterator]() {
+      yield* items
+    },
+    fromName(name) {
+      return itemsByName[name] ?? null
+    },
+    fromValue(value) {
+      return items.find(item => item.value === value) ?? null
+    },
   }
-  return Object.freeze(BaseEnum)
+  return Object.freeze(enumCollection)
 }

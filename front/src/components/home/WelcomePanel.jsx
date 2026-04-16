@@ -10,7 +10,7 @@ import './WelcomePanel.scoped.scss'
 export default function WelcomePanel() {
   const { AddPostRoute } = useRoutes()
   return (
-    <Paper className="welcome-panel" elevation="5">
+    <Paper className="welcome-panel" elevation={5}>
       <div className="welcome-subtitle">
         <Trans>Welcome to</Trans>
       </div>

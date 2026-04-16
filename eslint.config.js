@@ -48,7 +48,10 @@ export default defineConfig([
         sourceType: 'module', // default
         requireConfigFile: false,
       },
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
     },
     rules: {
       'import/extensions': [
@@ -119,6 +122,14 @@ export default defineConfig([
       ],
       'quote-props': ['warn', 'as-needed', { unnecessary: false }],
       'react/prop-types': 'off',
+    },
+  },
+  {
+    files: [
+      'front/src/config.js',
+    ],
+    rules: {
+      'max-len': 'off',
     },
   },
   {

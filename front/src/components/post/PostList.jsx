@@ -26,24 +26,28 @@ export default function PostList({
   const [posts, setPosts] = useState([])
   const [searchTerm, setSearchTerm] = useState('')
   const [hasPrimaryColoredIcon, setHasPrimaryColoredIcon] = useState(false)
-  const fetchPosts = useCallback(async (term, setPosts) => {
-    try {
-      const answer = await graphqlQuery(postsQuery, { ...postsParams, search: term })
-      setPosts(postsAnswerResolver(answer))
-    } catch (err) {
-      console.error(err)
-    }
+  const fetchPosts = useCallback(async term => {
+    const answer = await graphqlQuery(postsQuery, { ...postsParams, search: term })
+    return postsAnswerResolver(answer) ?? []
   }, [graphqlQuery, postsQuery, postsParams, postsAnswerResolver])
   useEffect(() => {
-    fetchPosts(searchTerm, setPosts)
+    let isCancelled = false
+    fetchPosts(searchTerm).then(posts => {
+      if (isCancelled) {
+        return
+      }
+      setPosts(posts)
+    }).catch(console.error)
+    return () => {
+      isCancelled = true
+    }
   }, [fetchPosts, searchTerm])
   async function handleSearchChange(e) {
-    console.log('handleSearchChange', { e })
     const keyword = e?.target?.value ?? ''
     setSearchTerm(keyword)
   }
-  async function handleClear() {
-    await handleSearchChange(null)
+  function handleClear() {
+    setSearchTerm('')
   }
   function onEnterPost(post) {
     navigate({
@@ -53,7 +57,8 @@ export default function PostList({
   async function onDeletePost(post) {
     try {
       await graphqlMutate(deletePostMutation, { id: post.id })
-      await fetchPosts(searchTerm, setPosts)
+      const posts = await fetchPosts(searchTerm)
+      setPosts(posts)
     } catch(e) {
       console.error(e)
     }
@@ -69,7 +74,7 @@ export default function PostList({
         placeholder={t`keyword`}
         variant="standard"
         fullWidth
-        color={hasPrimaryColoredIcon ? 'primary' : 'default'}
+        color={hasPrimaryColoredIcon ? 'primary' : undefined}
         onFocus={() => setHasPrimaryColoredIcon(true)}
         onBlur={() => setHasPrimaryColoredIcon(false)}
         slotProps={{
@@ -87,7 +92,7 @@ export default function PostList({
                     handleClear()
                   }}
                 >
-                  <ClearIcon color={hasPrimaryColoredIcon ? 'primary' : 'default'} />
+                  <ClearIcon color={hasPrimaryColoredIcon ? 'primary' : 'inherit'} />
                 </IconButton>
               </InputAdornment>
             ),

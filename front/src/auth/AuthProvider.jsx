@@ -23,7 +23,15 @@ export const AuthProvider = ({ children }) => {
   const { LoginRoute, FailRoute, HomeRoute } = useRoutes()
   const [user, setUser] = useState(() => {
     const userStr = localStorage.getItem('authUser')
-    return userStr ? JSON.parse(userStr) : null
+    if (!userStr) {
+      return null
+    }
+    try {
+      return JSON.parse(userStr)
+    } catch {
+      localStorage.removeItem('authUser')
+      return null
+    }
   })
 
   const checkAuth = useCallback(async () => {
@@ -39,16 +47,6 @@ export const AuthProvider = ({ children }) => {
       }
     }
   }, [graphqlQuery, authUserQuery])
-
-  const checkUser = useCallback(async (setUser) => {
-    const user = await checkAuth()
-    if (user) {
-      localStorage.setItem('authUser', JSON.stringify(user))
-    } else {
-      localStorage.removeItem('authUser')
-    }
-    setUser(user)
-  }, [checkAuth])
 
   const redirectTo = useCallback(({ uri, next, fail }) => {
     if (fakeUser) {
@@ -91,8 +89,24 @@ export const AuthProvider = ({ children }) => {
   }, [redirectLogout])
 
   useEffect(() => {
-    checkUser(setUser)
-  }, [checkUser]) // once on mount
+    let isCancelled = false
+    checkAuth().then(nextUser => {
+      if (isCancelled) {
+        return
+      }
+      if (nextUser) {
+        localStorage.setItem('authUser', JSON.stringify(nextUser))
+      } else {
+        localStorage.removeItem('authUser')
+      }
+      setUser(nextUser)
+    }).catch(error => {
+      console.debug(error)
+    })
+    return () => {
+      isCancelled = true
+    }
+  }, [checkAuth]) // once on mount
 
   const context = {
     user,

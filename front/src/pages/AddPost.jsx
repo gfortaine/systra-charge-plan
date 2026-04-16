@@ -45,25 +45,27 @@ export default function AddPost() {
   const [users, setUsers] = useState([])
   const [categories, setCategories] = useState([])
   const [imageUrl, setImageUrl] = useState(null)
-  const fetchData = useCallback(async (setUsers, setCategories) => {
-    try {
-      const { allUsers, allCategories } = await graphqlQuery(allUsersAndCategoriesQuery)
+  useEffect(() => {
+    let isCancelled = false
+    graphqlQuery(allUsersAndCategoriesQuery).then(({ allUsers, allCategories }) => {
+      if (isCancelled) {
+        return
+      }
       setUsers(allUsers)
       setCategories(allCategories)
-    } catch (err) {
-      console.error(err)
+    }).catch(console.error)
+    return () => {
+      isCancelled = true
     }
   }, [graphqlQuery])
-  useEffect(() => {
-    fetchData(setUsers, setCategories)
-  }, [fetchData])
   // https://react-hook-form.com/docs/useform
   const { control, handleSubmit, formState: { errors, isValid } } = useForm({
+    mode: 'onChange',
     defaultValues: {
       title: '',
       author: '',
       categories: [],
-      imageFile: undefined,
+      imageFile: null,
       text: '',
       language: '',
     },
@@ -75,17 +77,17 @@ export default function AddPost() {
   }
   const authorRules = { required: t`You must select an author.` }
   const imageRules = {
-    validate: files => {
-      if (!files || !files.length) {
+    validate: (file) => {
+      if (!file) {
         return true
       }
-      const file = files[0]
       const MB = 1 << 20
       const maxSizeMb = 2
       const maxSize = maxSizeMb * MB
       if (file.size > maxSize) {
         return t`Files size should be less than ${maxSizeMb}MB`
       }
+      return true
     },
   }
   const languageRules = { required: t`You must chose a language.` }
@@ -94,7 +96,7 @@ export default function AddPost() {
       await new Promise(resolve => {
         const imgReader = new FileReader()
         imgReader.onload = e => {
-          setImageUrl(e.target.result)
+          setImageUrl(e.target?.result ?? '')
           resolve()
         }
         imgReader.readAsDataURL(file)
@@ -103,11 +105,14 @@ export default function AddPost() {
       setImageUrl(null)
     }
   }
-  async function onSubmit(data) {
+  const onSubmit = async (data) => {
     await addPost(data)
   }
   const addPost = useCallback(async (data) => {
     const authorId = data.author
+    if (!authorId) {
+      return
+    }
     const variables = {
       title: data.title,
       text: data.text,
@@ -192,15 +197,21 @@ export default function AddPost() {
                       label={t`Categories`}
                       multiple
                       input={<OutlinedInput id="select-multiple-chip" label={t`Categories`} />}
-                      renderValue={(selected) => (
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                          {selected.map(cat_id => (
-                            <Chip key={cat_id} label={categories.find(cat => cat.id == cat_id).name} />
-                          ))}
-                        </Box>
-                      )}
+                      renderValue={(selected) => {
+                        const selectedIds = Array.isArray(selected) ? selected : []
+                        return (
+                          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+                            {selectedIds.map(catId => (
+                              <Chip key={catId} label={categories.find(cat => cat.id == catId)?.name} />
+                            ))}
+                          </Box>
+                        )
+                      }}
                     >
                       {categories.map(category => {
+                        if (!category.id) {
+                          return null
+                        }
                         const selected = field.value.includes(category.id)
                         const SelectionIcon = selected ? CheckBox : CheckBoxOutlineBlank
                         return (

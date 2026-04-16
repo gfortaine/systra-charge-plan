@@ -24,6 +24,13 @@ export default function InformationPopup({
   function isButtonDisabled(button) {
     return button.type === 'submit' && !isValid
   }
+  function getButtonType(button) {
+    if (button.type == 'submit') {
+      return 'submit'
+    } else {
+      return 'button'
+    }
+  }
   function getButtonColor(button) {
     let color = button.color
     if (!color) {
@@ -73,7 +80,7 @@ export default function InformationPopup({
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
           <form
-            onSubmit={() => {
+            onSubmit={(event) => {
               event.preventDefault()
               if (isValid) {
                 onSubmit()
@@ -87,7 +94,7 @@ export default function InformationPopup({
           {buttons.map(btn => (
             <Button
               key={btn.label}
-              type={['submit'].find(v => v == btn.type) || 'button'} // button or submit
+              type={getButtonType(btn)}
               variant="contained"
               className="button"
               color={getButtonColor(btn)}

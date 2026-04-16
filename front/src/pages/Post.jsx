@@ -33,15 +33,13 @@ export default function Post() {
   const { t, i18n } = useLingui()
 
   const [post, setPost] = useState({})
-  const fetchPost = useCallback(async (setPost) => {
-    try {
-      const { post } = await graphqlQuery(postQuery, { id: postId })
-      setPost(post)
-    } catch (err) {
-      console.error(err)
-    }
+  const fetchPost = useCallback(async () => {
+    return await graphqlQuery(postQuery, { id: postId })
   }, [graphqlQuery, postId])
   const pushAddComment = useCallback(async (comment) => {
+    if (!comment?.author?.id) {
+      return
+    }
     try {
       await graphqlMutate(
         createCommentMutation,
@@ -56,6 +54,9 @@ export default function Post() {
     }
   }, [graphqlMutate, postId])
   const pushEditComment = useCallback(async (comment) => {
+    if (!comment?.id || !comment.author?.id) {
+      return
+    }
     try {
       await graphqlMutate(
         updateCommentMutation,
@@ -70,6 +71,9 @@ export default function Post() {
     }
   }, [graphqlMutate])
   const pushDeleteComment = useCallback(async (comment) => {
+    if (!comment?.id) {
+      return
+    }
     try {
       await graphqlMutate(
         deleteCommentMutation,
@@ -80,8 +84,17 @@ export default function Post() {
     }
   }, [graphqlMutate])
   useEffect(() => {
-    fetchPost(setPost)
-  }, [fetchPost, postId])
+    let isCancelled = false
+    fetchPost().then(({ post }) => {
+      if (isCancelled) {
+        return
+      }
+      setPost(post)
+    }).catch(console.error)
+    return () => {
+      isCancelled = true
+    }
+  }, [fetchPost])
   const imageFullUrl = useMemo(() => {
     if (post.imageUrl) {
       if (post.imageUrl[0] === '/') {
@@ -111,7 +124,8 @@ export default function Post() {
   }
   async function handleAdd() {
     await pushAddComment(currentComment)
-    await fetchPost(setPost)
+    const { post } = await fetchPost()
+    setPost(post)
     cancelAdd()
   }
   function cancelAdd() {
@@ -124,7 +138,8 @@ export default function Post() {
   }
   async function handleEdit() {
     await pushEditComment(currentComment)
-    await fetchPost(setPost)
+    const { post } = await fetchPost()
+    setPost(post)
     cancelEdit()
   }
   function cancelEdit() {
@@ -138,7 +153,8 @@ export default function Post() {
   }
   async function handleDelete() {
     await pushDeleteComment(currentComment)
-    await fetchPost(setPost)
+    const { post } = await fetchPost()
+    setPost(post)
     cancelDelete()
   }
   function cancelDelete() {

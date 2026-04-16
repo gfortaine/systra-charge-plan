@@ -1,14 +1,14 @@
 import { createContext, useContext } from 'react'
-import { messages as en } from './locales/en.po'
-import { messages as fr } from './locales/fr.po'
+import { i18n } from '@lingui/core'
 import locales from './locales.json'
 
-export const I18nContext = createContext()
+export const I18nContext = createContext(null)
 export const useI18nContext = () => useContext(I18nContext)
 export const languages = locales.languages
-export const translations = {
-  en,
-  fr,
+
+export async function loadCatalog(locale) {
+  const catalog = await import(`./locales/${locale}.po`)
+  i18n.load(locale, catalog.messages)
 }
 
 function normalizeLocale(locale) {
@@ -33,7 +33,7 @@ export function selectBestLocale (
     const normLocale = normalizeLocale(requestedLocale)
     const countryLocale = normLocale.includes('-') ? normLocale.split('-')[0] : null
     for (const oneLocale of [normLocale, countryLocale].filter(l => l)) {
-      const locale = localeMap.get(oneLocale)
+      const locale = oneLocale && localeMap.get(oneLocale)
       if (locale) {
         return locale
       }
@@ -43,5 +43,9 @@ export function selectBestLocale (
 }
 
 export function useI18n() {
-  return useI18nContext()
+  const ctx = useI18nContext()
+  if (!ctx) {
+    throw new Error('You cannot invoke useI18n outside an I18nProvider')
+  }
+  return ctx
 }

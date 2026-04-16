@@ -1,5 +1,4 @@
 export const backUrl = `${window.location.origin}/`
 export const graphqlUrl = backUrl + 'graphql/'
-/* eslint-disable max-len */
 export const mapboxPublicKey = '###MAPBOX_PUBLIC_KEY###'
 export const fakeUser = false

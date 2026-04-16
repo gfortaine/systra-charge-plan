@@ -1,4 +1,3 @@
-/* global process */
 import { isAbsolute, join } from 'path'
 
 async function load(fileName) {

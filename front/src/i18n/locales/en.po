@@ -11,16 +11,16 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 
-#: src/pages/Post.jsx:227
+#: src/pages/Post.jsx:243
 msgid "Add"
 msgstr "Add"
 
-#: src/pages/Post.jsx:218
-#: src/pages/Post.jsx:224
+#: src/pages/Post.jsx:234
+#: src/pages/Post.jsx:240
 msgid "Add a comment"
 msgstr "Add a comment"
 
-#: src/pages/AddPost.jsx:131
+#: src/pages/AddPost.jsx:136
 msgid "Add a post"
 msgstr "Add a post"
 
@@ -29,8 +29,8 @@ msgid "Add Post"
 msgstr "Add Post"
 
 #: src/components/post/CommentForm.jsx:70
-#: src/pages/AddPost.jsx:158
 #: src/pages/AddPost.jsx:163
+#: src/pages/AddPost.jsx:168
 msgid "Author"
 msgstr "Author"
 
@@ -39,16 +39,16 @@ msgid "Author is required"
 msgstr "Author is required"
 
 #: src/components/post/PostCard.jsx:23
-#: src/pages/AddPost.jsx:297
-#: src/pages/Post.jsx:226
-#: src/pages/Post.jsx:239
-#: src/pages/Post.jsx:257
+#: src/pages/AddPost.jsx:308
+#: src/pages/Post.jsx:242
+#: src/pages/Post.jsx:255
+#: src/pages/Post.jsx:273
 msgid "Cancel"
 msgstr "Cancel"
 
-#: src/pages/AddPost.jsx:187
 #: src/pages/AddPost.jsx:192
-#: src/pages/AddPost.jsx:194
+#: src/pages/AddPost.jsx:197
+#: src/pages/AddPost.jsx:199
 msgid "Categories"
 msgstr "Categories"
 
@@ -57,7 +57,7 @@ msgid "Category"
 msgstr "Category"
 
 #. placeholder {0}: category.name
-#: src/pages/Category.jsx:54
+#: src/pages/Category.jsx:55
 msgid "Category {0}:"
 msgstr "Category {0}:"
 
@@ -69,7 +69,7 @@ msgstr "Comment"
 msgid "Comment is required"
 msgstr "Comment is required"
 
-#: src/pages/Post.jsx:200
+#: src/pages/Post.jsx:216
 msgid "Comments"
 msgstr "Comments"
 
@@ -86,29 +86,29 @@ msgid "Data grid and charts"
 msgstr "Data grid and charts"
 
 #: src/components/post/Comment.jsx:62
-#: src/components/post/PostCard.jsx:76
-#: src/pages/Post.jsx:258
+#: src/components/post/PostCard.jsx:78
+#: src/pages/Post.jsx:274
 msgid "Delete"
 msgstr "Delete"
 
-#: src/components/post/PostCard.jsx:90
+#: src/components/post/PostCard.jsx:92
 msgid "Delete a blog post"
 msgstr "Delete a blog post"
 
-#: src/pages/Post.jsx:255
+#: src/pages/Post.jsx:271
 msgid "Delete a comment"
 msgstr "Delete a comment"
 
 #: src/components/post/Comment.jsx:53
-#: src/pages/Post.jsx:240
+#: src/pages/Post.jsx:256
 msgid "Edit"
 msgstr "Edit"
 
-#: src/pages/Post.jsx:237
+#: src/pages/Post.jsx:253
 msgid "Edit a comment"
 msgstr "Edit a comment"
 
-#: src/pages/AddPost.jsx:279
+#: src/pages/AddPost.jsx:290
 msgid "English"
 msgstr "English"
 
@@ -116,7 +116,7 @@ msgstr "English"
 msgid "Fail"
 msgstr "Fail"
 
-#: src/pages/AddPost.jsx:87
+#: src/pages/AddPost.jsx:88
 msgid "Files size should be less than {maxSizeMb}MB"
 msgstr "Files size should be less than {maxSizeMb}MB"
 
@@ -124,33 +124,31 @@ msgstr "Files size should be less than {maxSizeMb}MB"
 msgid "Fold down pane"
 msgstr "Fold down pane"
 
-#: src/pages/AddPost.jsx:280
+#: src/pages/AddPost.jsx:291
 msgid "French"
 msgstr "French"
 
-#. placeholder {0}: user.fullName
-#. placeholder {1}: user.email
-#: src/pages/User.jsx:17
-msgid "Hello {0} ({1})!"
-msgstr "Hello {0} ({1})!"
+#: src/pages/User.jsx:19
+msgid "Hello {fullName} ({email})!"
+msgstr "Hello {fullName} ({email})!"
 
 #: src/routes/index.jsx:48
 msgid "Home"
 msgstr "Home"
 
-#: src/components/post/PostList.jsx:69
+#: src/components/post/PostList.jsx:74
 msgid "keyword"
 msgstr "keyword"
 
-#: src/pages/AddPost.jsx:272
+#: src/pages/AddPost.jsx:283
 msgid "Language"
 msgstr "Language"
 
-#: src/pages/MapPage.jsx:125
+#: src/pages/MapPage.jsx:129
 msgid "Legend"
 msgstr "Legend"
 
-#: src/pages/MapPage.jsx:133
+#: src/pages/MapPage.jsx:137
 msgid "Line"
 msgstr "Line"
 
@@ -168,19 +166,19 @@ msgstr "Logout"
 msgid "Map"
 msgstr "Map"
 
-#: src/pages/MapPage.jsx:129
+#: src/pages/MapPage.jsx:133
 msgid "Markers"
 msgstr "Markers"
 
-#: src/components/post/PostCard.jsx:85
+#: src/components/post/PostCard.jsx:87
 msgid "Open"
 msgstr "Open"
 
-#: src/pages/AddPost.jsx:229
+#: src/pages/AddPost.jsx:240
 msgid "Optional image"
 msgstr "Optional image"
 
-#: src/pages/AddPost.jsx:281
+#: src/pages/AddPost.jsx:292
 msgid "Other"
 msgstr "Other"
 
@@ -188,7 +186,7 @@ msgstr "Other"
 msgid "Pickers"
 msgstr "Pickers"
 
-#: src/pages/MapPage.jsx:52
+#: src/pages/MapPage.jsx:55
 msgid "Pk:"
 msgstr "Pk:"
 
@@ -196,24 +194,24 @@ msgstr "Pk:"
 msgid "Post"
 msgstr "Post"
 
-#: src/pages/AddPost.jsx:306
+#: src/pages/AddPost.jsx:317
 msgid "Publish"
 msgstr "Publish"
 
-#: src/components/post/PostCard.jsx:58
+#: src/components/post/PostCard.jsx:60
 msgid "Published by <0>{authorName}</0> on {localeDateTime}"
 msgstr "Published by <0>{authorName}</0> on {localeDateTime}"
 
-#: src/pages/AddPost.jsx:232
+#: src/pages/AddPost.jsx:243
 msgid "Remove image"
 msgstr "Remove image"
 
-#: src/pages/Category.jsx:50
-#: src/pages/Post.jsx:159
+#: src/pages/Category.jsx:51
+#: src/pages/Post.jsx:175
 msgid "Return"
 msgstr "Return"
 
-#: src/components/post/PostList.jsx:68
+#: src/components/post/PostList.jsx:73
 msgid "Search"
 msgstr "Search"
 
@@ -221,7 +219,7 @@ msgstr "Search"
 msgid "Select a blog post in the list, or create a new one!"
 msgstr "Select a blog post in the list, or create a new one!"
 
-#: src/pages/AddPost.jsx:256
+#: src/pages/AddPost.jsx:267
 msgid "Text"
 msgstr "Text"
 
@@ -229,15 +227,15 @@ msgstr "Text"
 msgid "This Alert displays the default close icon."
 msgstr "This Alert displays the default close icon."
 
-#: src/pages/AddPost.jsx:143
+#: src/pages/AddPost.jsx:148
 msgid "Title"
 msgstr "Title"
 
-#: src/pages/AddPost.jsx:74
+#: src/pages/AddPost.jsx:76
 msgid "Title cannot excess 100 characters."
 msgstr "Title cannot excess 100 characters."
 
-#: src/pages/AddPost.jsx:73
+#: src/pages/AddPost.jsx:75
 msgid "Title must be, at least, 3 characters long."
 msgstr "Title must be, at least, 3 characters long."
 
@@ -250,12 +248,12 @@ msgid "Welcome to"
 msgstr "Welcome to"
 
 #. placeholder {0}: post.title
-#: src/components/post/PostCard.jsx:96
+#: src/components/post/PostCard.jsx:98
 msgid "You are about to delete the blog post « {0} ». Do you really want to take that action?"
 msgstr "You are about to delete the blog post « {0} ». Do you really want to take that action?"
 
 #. placeholder {0}: currentComment.date
-#: src/pages/Post.jsx:265
+#: src/pages/Post.jsx:281
 msgid "You are about to delete the comment « {0} ». Do you really want to take that action?"
 msgstr "You are about to delete the comment « {0} ». Do you really want to take that action?"
 
@@ -263,10 +261,10 @@ msgstr "You are about to delete the comment « {0} ». Do you really want to
 msgid "You must be logged in to have access to this application. Please click on the button below to do so."
 msgstr "You must be logged in to have access to this application. Please click on the button below to do so."
 
-#: src/pages/AddPost.jsx:91
+#: src/pages/AddPost.jsx:93
 msgid "You must chose a language."
 msgstr "You must chose a language."
 
-#: src/pages/AddPost.jsx:76
+#: src/pages/AddPost.jsx:78
 msgid "You must select an author."
 msgstr "You must select an author."

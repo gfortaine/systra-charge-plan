@@ -3,6 +3,10 @@ import { ApolloClient, InMemoryCache } from '@apollo/client/core'
 import UploadHttpLink from 'apollo-upload-client/UploadHttpLink.mjs'
 import { graphqlUrl } from '@src/config'
 
+function isGraphqlResponse(value) {
+  return typeof value === 'object' && value && ('data' in value || 'errors' in value)
+}
+
 export function createApolloClient() {
   return new ApolloClient({
     link: new UploadHttpLink({
@@ -10,9 +14,7 @@ export function createApolloClient() {
       headers: {},
       credentials: 'include',
     }),
-    cache: new InMemoryCache({
-      addTypename: false,
-    }),
+    cache: new InMemoryCache(),
     defaultOptions: {
       query: {
         fetchPolicy: 'no-cache',
@@ -29,8 +31,13 @@ export function createApolloClient() {
 export async function unwrapGraphqlResponse (rawPromise) {
   return new Promise((resolve, reject) => {
     rawPromise.then(response => {
+      if (!isGraphqlResponse(response)) {
+        throw new Error('Unexpected GraphQL response shape')
+      }
       if (response.errors) {
         reject(response.errors)
+      } else if (!response.data) {
+        throw new Error('GraphQL response did not contain data')
       } else {
         resolve(response.data)
       }

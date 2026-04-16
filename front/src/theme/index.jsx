@@ -28,12 +28,6 @@ export function useTheme() {
           dark: colors.secondary_dark,
           light: colors.secondary_light,
         },
-        black: {
-          main: colors.black,
-        },
-        white: {
-          main: colors.white,
-        },
         error: {
           main: colors.error,
         },
@@ -43,14 +37,8 @@ export function useTheme() {
         warning: {
           main: colors.warning,
         },
-        main: {
+        info: {
           main: colors.main,
-        },
-        grey: {
-          main: colors.grey_medium,
-          dark: colors.grey_dark,
-          light: colors.grey_light,
-          ultralight: colors.grey_ultralight,
         },
       },
     }, muiLocale), [muiLocale])
