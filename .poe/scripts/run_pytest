@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 PROJECT_NAME=${CI_PROJECT_NAME:-myapp}
 if [ ${DJANGO_DB_TYPE:-postgresql} = postgresql ]; then
@@ -7,14 +7,6 @@ if [ ${DJANGO_DB_TYPE:-postgresql} = postgresql ]; then
   [ -z "$DB_HOST" ] && DB_HOST=127.0.0.1
 else # sqlite
   NO_DB=1
-fi
-PYTEST_ARGS=(
-    --metadata "Myapp back Git version" "$(git name-rev --name-only HEAD)"
-)
-if [ -n "$QUICK" ]; then
-    PYTEST_ARGS+=(--reuse-db --no-cov)
-else
-    PYTEST_ARGS+=(-v)
 fi
 
 run_docker_postgres() {
@@ -88,9 +80,18 @@ if [ -z "$NO_DB" ]; then
             exit 1
         fi
     fi
-    if ! echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h "$DB_HOST" -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
+    if echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h "$DB_HOST" -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
+      echo "Postgres database running"
+    else
       echo "Postgres database not running, please check your config" >&2
+      exit 1
     fi
 fi
+set -- "--metadata" "Myapp back Git version" "$(git name-rev --name-only HEAD)" "$@"
+if [ -n "$QUICK" ]; then
+    set -- "$@" "--reuse-db --no-cov"
+else
+    set -- "$@" "-v"
+fi
 set -x
-pytest "${PYTEST_ARGS[@]}" "$@"
+pytest "$@"

@@ -1,0 +1,17 @@
+#!/bin/sh
+cd "$(dirname "$0")/../.."
+if [ -n "$QUICK" ]; then
+  dotenv -- vitest \
+    -c front/vite.config.js \
+    --run \
+    --no-coverage \
+    "$@"
+else
+  ./.jsrun pre
+  dotenv -- vitest \
+    -c front/vite.config.js \
+    "$@"
+  res=$?
+  ./.jsrun -s test-report
+  exit $res
+fi

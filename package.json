@@ -27,9 +27,9 @@
     "prei18n-report": "./.jsrun -s gen-env",
     "i18n-report": "dotenv -- lingui extract --clean && dotenv -- lingui compile --strict --verbose",
     "pretest": "./.jsrun -s gen-env",
-    "test": "sh -c 'if [ -n \"$QUICK\" ]; then dotenv -- vitest -c front/vite.config.js --run --no-coverage \"$@\"; else ./.jsrun pre && dotenv -- vitest -c front/vite.config.js \"$@\"; fi' --",
+    "test": "./front/.scripts/run_tests",
     "test-report": "./front/.scripts/gen_report_html",
-    "test-ui": "dotenv -- vitest -c front/vite.config.js --ui"
+    "test-ui": "./front/.scripts/run_tests --ui"
   },
   "@comment dependencies": {
     "react": "Component engine",
