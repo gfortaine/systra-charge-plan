@@ -1,62 +1,37 @@
 include:
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/python-ci.yml'
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/javascript-ci.yml'
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/security-ci.yml'
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/secret-ci.yml'
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/linter-ci.yml'
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/tag-ci.yml'
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/publish-ci.yml'
-  - remote: 'https://gitlab.com/systracorp/hq/infra/gitlab-ci-templates/raw/master/deploy-ci.yml'
-stages:
-  - test
-  - release
-  - publish
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/security@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-linter@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-i18n@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-tests@0.6
+    inputs:
+      system-packages: 'postgresql-client'
+      future-system-packages: 'postgresql-client'
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-linter@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-i18n@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-tests@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/total-coverage@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/docker-test@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/tag@0.6
+    inputs:
+      needs:
+        - security
+        - secret
+        - python-linter
+        - python-i18n
+        - python-tests
+        - js-linter
+        - js-i18n
+        - js-tests
+        - docker-test
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/docker-publish@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/release@0.6
+    inputs:
+      needs:
+        - docker-publish
 
-security:
-  extends: .security
-secret:
-  extends: .secret
-
-linter_py:
-  extends:
-    - .linter_py314
-  cache: []
-linter_js:
-  extends:
-    - .linter_js24
-  cache: []
-i18n_py:
-  extends:
-    - .python_314
-  cache: []
-  stage: test
-  rules:
-    - if: $CI_COMMIT_BRANCH
-  before_script:
-    - sudo apt-get update && sudo apt-get install -y gettext
-    - !reference [.python_314, before_script]
-  script:
-    - |
-      [ -d back/myapp/locale ] || exit 0
-      uv run poe i18n_report
-i18n_js:
-  extends:
-    - .linter_js24
-  cache: []
-  script:
-    - |
-      [ -f front/src/i18n/locales.json ] || exit 0
-      yarn run i18n-report
-test_py:
-  extends:
-    - .python_314
-  cache: []
-  stage: test
-  rules:
-    - if: $CI_COMMIT_BRANCH
-  image:
-    name: registry.gitlab.com/systracorp/hq/infra/docker/ci/python:3.14
-  services: # disable this service for sqlite
+# extra parameters to use a postgresql service
+python-tests: &python-pg-svc
+  services:
     - name: postgres:17-alpine
       alias: db
       variables:
@@ -66,100 +41,6 @@ test_py:
         POSTGRES_HOST_AUTH_METHOD: trust
   variables:
     DJANGO_DB_TYPE: postgresql
-    # DJANGO_DB_TYPE: sqlite
     DB_HOST: db
-  before_script:
-    - sudo apt-get install -y postgresql-client
-    - !reference [.python_314, before_script]
-  script:
-    - uv run poe test
-  artifacts:
-    when: always
-    paths:
-      - 'reports/**'
-    reports:
-      junit: reports/report.xunit
-      coverage_report:
-        coverage_format: cobertura
-        path: reports/coverage.xml
-test_js:
-  extends:
-    - .js_24
-  cache: []
-  stage: test
-  rules:
-    - if: $CI_COMMIT_BRANCH
-  before_script:
-    - |
-      set -e
-      [ -d reports ] && rm -rf reports; mkdir -p reports
-      [ -d build ] && rm -rf build; mkdir -p build
-    - !reference [.js_24, before_script]
-  script:
-    - |
-      set -e
-      yarn run -s test || FAILED=1
-      [ -s reports/report-js.xunit ] && yarn run -s test-report
-      [ -z "$FAILED" ]
-  artifacts:
-    when: always
-    paths:
-      - reports/**
-    reports:
-      junit: reports/report-js.xunit
-      coverage_report:
-        coverage_format: cobertura
-        path: reports/coverage-js/cobertura-coverage.xml
-total_coverage:
-  stage: test
-  rules:
-    - if: $CI_COMMIT_BRANCH
-  image: python:3.14
-  needs:
-    - test_py
-    - test_js
-  before_script:
-    - pip install uv
-    - uv venv
-  script:
-    - uv run poe total_coverage
-  coverage: '/^Total coverage: ([\d.]+%)$/'
-test_docker:
-  stage: test
-  rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-  image:
-    name: docker:26-cli
-  variables:
-    DOCKER_TLS_CERTDIR: ""
-  interruptible: true
-  allow_failure: true
-  before_script:
-    - echo "$CI_REGISTRY_PASSWORD" | docker login $CI_REGISTRY --username $CI_REGISTRY_USER --password-stdin
-  script:
-    - |
-      set -x
-      docker buildx build --pull --no-cache --progress=plain -o type=tar,dest=/dev/null -f docker/Dockerfile .
-.tag_base:
-  extends: .tag_python
-  needs:
-    - security
-    - secret
-    - linter_py
-    - linter_js
-    - i18n_py
-    - i18n_js
-    - test_py
-    - test_js
-tag:major:
-  extends: .tag_base
-tag:minor:
-  extends: .tag_base
-tag:patch:
-  extends: .tag_base
-publish:
-  extends: .publish
-image_security:
-  extends: .image_security
-  needs:
-    - publish
+python-tests:future:
+  <<: *python-pg-svc
