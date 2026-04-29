@@ -70,10 +70,13 @@ RUN mkdir -p /app $YARN_CACHE_FOLDER \
  && chown -R node: /app $YARN_CACHE_FOLDER
 WORKDIR /app
 USER node
-COPY --chown=node: package.json yarn.lock ./
-RUN yarn install
+COPY --chown=node: package.json yarn.lock .npmr[c] ./
+RUN --mount=type=secret,mode=0444,id=GITLAB_TOKEN export GITLAB_TOKEN=$(cat /run/secrets/GITLAB_TOKEN 2>/dev/null) \
+ && yarn install
 COPY --chown=node: ./ ./
-ENV MAPBOX_PUBLIC_KEY='###MAPBOX_PUBLIC_KEY###' \
+#check=skip=SecretsUsedInArgOrEnv
+ENV GITLAB_TOKEN=XXX \
+    MAPBOX_PUBLIC_KEY='###MAPBOX_PUBLIC_KEY###' \
     NO_COLOR=true
 RUN yarn run build
 
