@@ -1,0 +1,1 @@
+- CI catalog 0.7

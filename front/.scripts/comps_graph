@@ -21,7 +21,7 @@ EOF
   )
   ALIASES=$(echo "$ALIASES_MAP" | cut -d: -f1)
   ALIASES_REGEX=$(echo "$ALIASES" | tr "\n" "|" | sed 's/|$//')
-  DEP_REGEX="/from '($ALIASES_REGEX|\.)[^.]+(.[jt]sx?)?'/{s|\.[jt]sx?||; s|.*'(.+)'.*|\1|;p}"
+  DEP_REGEX="/from '($ALIASES_REGEX|\.)[^.]+(\.[jt]sx?)?'/{s|\.[jt]sx?||; s|.*'(.+)'.*|\1|;p}"
   HERE_DIR="$PWD"
 
   normalize_comp() {

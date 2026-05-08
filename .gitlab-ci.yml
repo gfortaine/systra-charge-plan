@@ -1,17 +1,20 @@
 include:
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/security@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-linter@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-i18n@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-tests@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/security@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-linter@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-i18n@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-tests@0.7
     inputs:
       system-packages: 'postgresql-client'
+      future-enable: true
       future-system-packages: 'postgresql-client'
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-linter@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-i18n@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-tests@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/total-coverage@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/docker-test@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/tag@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-linter@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-i18n@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-tests@0.7
+    inputs:
+      future-enable: true
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/total-coverage@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/docker-test@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/tag@0.7
     inputs:
       needs:
         - security
@@ -23,8 +26,8 @@ include:
         - js-i18n
         - js-tests
         - docker-test
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/docker-publish@0.6
-  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/release@0.6
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/docker-publish@0.7
+  - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/release@0.7
     inputs:
       needs:
         - docker-publish

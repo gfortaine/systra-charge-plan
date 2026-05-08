@@ -73,7 +73,7 @@
     "react-router-dom": "^7.13.0",
     "rxjs": "^7.8.2"
   },
-  "@comments devDependencies": {
+  "@comment devDependencies": {
     "vite": "Bundler and runner",
     "@vitejs/plugin-react": "React plugin for Vite",
     "vite-plugin-graphql-loader": "To load .graphql files in Vite",
@@ -85,7 +85,7 @@
     "@lingui/babel-plugin-lingui-macro": "Babel plugin to transform i18n macro calls into static strings",
     "jsdom": "Vitest environment with many browser features implemented",
     "djvite": "Integration with Django",
-    "eslint": "Javascript linter, import @eslint/js is better???",
+    "eslint": "Javascript linter",
     "eslint-config-standard": "Basic standard eslint config",
     "eslint-plugin-import": "Import rules for eslint",
     "eslint-plugin-n": "Node rules for eslint",
