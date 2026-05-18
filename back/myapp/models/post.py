@@ -8,7 +8,7 @@ from django.utils.timezone import now
 
 def pre_delete_handler(sender: type['Post'], instance: 'Post', **kwargs) -> None:
     post = instance
-    if post.image and (image_path := settings.MEDIA_ROOT / Path(post.image.name)).exists():
+    if post.image and post.image.name and (image_path := settings.MEDIA_ROOT / Path(post.image.name)).exists():
         image_path.unlink()
 
 

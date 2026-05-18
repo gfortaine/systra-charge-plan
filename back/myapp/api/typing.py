@@ -1,9 +1,6 @@
-from typing import (
-    Any,
-    TypeAlias,
-)
+from typing import Any
 
 from strawberry.django.context import StrawberryDjangoContext
 from strawberry.types import Info as GenericInfo
 
-Info: TypeAlias = GenericInfo[StrawberryDjangoContext, Any]
+type Info = GenericInfo[StrawberryDjangoContext, Any]

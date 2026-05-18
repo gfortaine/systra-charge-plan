@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.http import (
     HttpRequest,
     HttpResponse,
@@ -6,8 +7,6 @@ from django.http import (
 from django.shortcuts import render
 
 from .utils.version import version
-
-from django.conf import settings
 
 
 def get_version(request: HttpRequest) -> JsonResponse:

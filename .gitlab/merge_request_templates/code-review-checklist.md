@@ -19,7 +19,6 @@ Go through this checklist before the code is reviewed.
 - [ ] **Update the deployment and/or the development environment**, if needed:
   - `README.md`
   - `docker-compose.yml`
-  - [Myapp Deploy](https://gitlab.com/systracorp/hq/boilerplates)
   - Possibly others in [Myapp](https://gitlab.com/systracorp/hq/boilerplates/)
 - [ ] **Unit tests**
   - Write unit tests to cover new or modified code

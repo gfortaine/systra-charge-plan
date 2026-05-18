@@ -3,10 +3,7 @@ from typing import (
     Any,
     Callable,
     ClassVar,
-    Generic,
     Iterable,
-    TypeAlias,
-    TypeVar,
 )
 
 from strawberry.extensions.field_extension import SyncExtensionResolver
@@ -107,11 +104,10 @@ class AndConditions(PermExtension):
         return resolver()
 
 
-ObjT = TypeVar('ObjT')
-CachePermType: TypeAlias = dict[tuple[Any, Any], bool]
+type CachePermType = dict[tuple[Any, Any], bool]
 
 
-class HasPermissionOnObj(Generic[ObjT], PermExtension):
+class HasPermissionOnObj[T](PermExtension):
     DEFAULT_ERROR_MESSAGE: ClassVar[str] = "You don't have permission to access this object."
     SCHEMA_DIRECTIVE_DESCRIPTION: ClassVar[str] = "Can only be resolved when enough permission on an object."
 
@@ -154,16 +150,16 @@ class HasPermissionOnObj(Generic[ObjT], PermExtension):
             else:
                 return obj
 
-    def _has_permission_on_obj_iterable(self, info: Info, user: User, obj_list: Iterable[ObjT | OperationInfo]) -> list[Any]:
+    def _has_permission_on_obj_iterable(self, info: Info, user: User, obj_list: Iterable[T | OperationInfo]) -> list[Any]:
         cache = self.get_cache(info, user)
         allowed_objs = [obj for obj in obj_list if self._check_obj(info, user, cache, obj)]
         return allowed_objs
 
-    def _has_permission_on_obj(self, info: Info, user: User, obj: ObjT) -> bool:
+    def _has_permission_on_obj(self, info: Info, user: User, obj: T) -> bool:
         cache = self.get_cache(info, user)
         return self._check_obj(info, user, cache, obj)
 
-    def _check_obj(self, info: Info, user: User, cache: CachePermType, obj: ObjT | OperationInfo) -> bool:
+    def _check_obj(self, info: Info, user: User, cache: CachePermType, obj: T | OperationInfo) -> bool:
         key = (self, obj)
         if key in cache:  # Maybe the result ended up in the cache in the meantime
             return cache[key]
@@ -175,5 +171,5 @@ class HasPermissionOnObj(Generic[ObjT], PermExtension):
         cache[key] = has_perm
         return has_perm
 
-    def check_perm_on_obj(self, info: Info, user: models.User, obj: ObjT) -> bool:
+    def check_perm_on_obj(self, info: Info, user: models.User, obj: T) -> bool:
         raise NotImplementedError

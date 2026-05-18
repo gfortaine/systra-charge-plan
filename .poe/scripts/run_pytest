@@ -89,9 +89,9 @@ if [ -z "$NO_DB" ]; then
 fi
 set -- "--metadata" "Myapp back Git version" "$(git name-rev --name-only HEAD)" "$@"
 if [ -n "$QUICK" ]; then
-    set -- "$@" "--reuse-db --no-cov"
+    set -- "$@" --reuse-db --no-cov
 else
-    set -- "$@" "-v"
+    set -- "$@" -v
 fi
 set -x
 pytest "$@"

@@ -45,8 +45,8 @@ RUN mkdir -p $PIP_CACHE_DIR $UV_CACHE_DIR \
  && chown -R user: $PIP_CACHE_DIR $UV_CACHE_DIR
 ARG VER
 RUN /usr/local/bin/update-os
-RUN mkdir -p media \
- && chown user: media
+RUN mkdir -p back/media \
+ && chown user: back/media
 # switch to regular user
 USER user
 ENV HOME=/home/user
@@ -62,7 +62,6 @@ RUN uv venv \
 
 ########################################
 FROM node:24-alpine AS jsbuild
-RUN apk add jq gettext
 ENV YARN_CACHE_FOLDER=/tmp/yarn-cache \
     YARN_IGNORE_ENGINES=1
 RUN mkdir -p /app $YARN_CACHE_FOLDER \

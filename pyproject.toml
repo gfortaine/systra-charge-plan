@@ -10,7 +10,7 @@ maintainers = [
 ]
 # license = "LicenseRef-Proprietary"
 license = "MIT"
-requires-python = "~=3.14.0"
+requires-python = ">=3.14"
 readme = "README.md"
 keywords = [
     "boilerplate",
@@ -43,7 +43,8 @@ dependencies = [
     "django-oauth2-authcodeflow", # Authent
     "djvite", # Vite integration
     "pillow", # To handle images, like django ImageField
-    "psycopg[binary]", # Postgresql driver
+    "psycopg", # Postgresql driver
+    "psycopg[binary]; python_version<'3.15'", # Postgresql binaries
     "requests", # Http requests
     "strawberry-graphql", # GraphQL
     "strawberry-graphql-django", # GraphQL for Django

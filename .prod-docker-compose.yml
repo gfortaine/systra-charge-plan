@@ -1,0 +1,69 @@
+# vim: set st=2 sts=2 sw=2 et:
+---
+name: myapp
+services:
+  db:
+    image: postgres:17-alpine
+    healthcheck:
+      test: ["CMD", "/docker-healthcheck"]
+      interval: 30s
+      timeout: 2s
+      retries: 20
+    command:
+      - "postgres"
+      - "-c"
+      - "config_file=/etc/postgresql.conf"
+    networks:
+      - db
+    environment:
+      - POSTGRES_DB=myapp
+      - POSTGRES_USER=myapp
+      - POSTGRES_PASSWORD=myapp
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - type: volume
+        source: db
+        target: /var/lib/postgresql/data/pgdata
+        read_only: false
+      - type: bind
+        source: ./docker/dev/db-healthcheck
+        target: /docker-healthcheck
+        read_only: true
+      - type: bind
+        source: ./docker/prod/postgresql.conf
+        target: /etc/postgresql.conf
+        read_only: true
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+      args:
+        - VER=test-prod
+    depends_on:
+      - db
+    sysctls:
+      net.core.somaxconn: 5100
+    networks:
+      - db
+      - app
+    env_file: .env
+    environment:
+      - "DJANGO_DEBUG=false"
+      - "DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY:?DJANGO_SECRET_KEY must be set}"
+      - "DJANGO_VITE_DEV_MODE=false"
+      - "DJANGO_DB_TYPE=postgresql"
+      - "DJANGO_DB_HOST=db"
+      - "DJANGO_DB_PORT=5432"
+    volumes:
+      - type: volume
+        source: media
+        target: /var/www/myapp/back/media
+        read_only: false
+    ports:
+      - ${PORT:-3978}:80
+volumes:
+  db:
+  media:
+networks:
+  db:
+  app:

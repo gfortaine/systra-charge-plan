@@ -20,7 +20,7 @@ services:
         target: /var/lib/postgresql/data/pgdata
         read_only: false
       - type: bind
-        source: ./docker/db-healthcheck
+        source: ./docker/dev/db-healthcheck
         target: /docker-healthcheck
         read_only: true
   app:
@@ -33,7 +33,9 @@ services:
     environment:
       - "PRE_EP_PATH=/preentrypoint.sh"
       - "PRE_START_PATH=/prestart.sh"
+      - "DJANGO_DB_TYPE=postgresql"
       - "DJANGO_DB_HOST=db"
+      - "DJANGO_DB_PORT=5432"
       - "DJANGO_PORT=${DJANGO_PORT:-8000}"
       - "PORT=${PORT:-3978}"
     user: ${UID:-1000}:${GID:-1000}

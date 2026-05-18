@@ -26,8 +26,11 @@ paths: \n\
     - /etc/nginx/nginx.conf\n\
     - /etc/nginx/conf.d\n\
     - /home/$USER\n\
+    - /home/$USER/.cache/uv\n\
+    - /home/$USER/.cache/yarn\n\
     - /opt/cache/pip\n\
     - /app/.venv\n\
+    - /app/back/media\n\
 " > /etc/fixuid/config.yml \
  && rm /etc/supervisor/conf.d/*.conf \
  && mkdir -p /opt/cache/pip /home/$USER/.cache/uv /home/$USER/.cache/yarn \
@@ -47,8 +50,8 @@ ENV UV_CACHE_DIR=/home/${USER}/.cache/uv \
     NO_COLOR=1 \
     DJANGO_HOST=0.0.0.0 \
     VITE_HOST=0.0.0.0
-RUN mkdir -p /app/.venv
-VOLUME /opt/cache/pip /app/.venv
+RUN mkdir -p /app/.venv /app/back/media
+VOLUME /opt/cache/pip /app/.venv /app/back/media
 WORKDIR /app
 COPY --chown=$USER: ./pyproject.toml ./uv.lock ./yarn.lock ./package.json *.md ./
 RUN uv venv \

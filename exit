@@ -4,13 +4,16 @@ cd "$(dirname "$0")"
 if [ -z "$1" ]; then
   echo "You must specify the new application name as first argument" >&2
   exit 1
-elif ! echo "$1" | grep -q '^[a-z_]\+$'; then
+elif ! echo "$1" | grep -Eq '^[a-z_]+$'; then
   echo "The new application name should be lower case only + underscore" >&2
   exit 1
 fi
 name="$1"
-if [ -n "$2" ] && echo "$2" | grep -q '^https:'; then
+if [ -n "$2" ] && echo "$2" | grep -Eq '^https?:'; then
   url="$2"
+else
+  echo "You must specify the new application url as second argument" >&2
+  exit 1
 fi
 # shellcheck disable=SC2018,SC2019
 uname="$(echo "$name"|cut -c1|tr a-z A-Z)$(echo "$name"|tr '_' ' '|cut -c2-)"
@@ -24,6 +27,7 @@ for f in \
   .gitlab-ci.yml \
   .gitignore \
   .dockerignore \
+  .prod-docker-compose.yml \
   $(find .poe -type f) \
   $(find . -type f \( -name '*.*js' -o -name '*.[jt]sx' \)) \
   $(find . -type f -name '*.py') \
@@ -31,21 +35,24 @@ for f in \
   $(find . -type f \( -name '*.yml' -o -name '*.lock' \)) \
   leaks.toml \
 ; do
-  sed -ri -e "s/myapp/$name/g" -e "s/Myapp/$uname/g" "$f"
+  sed -Ei -e "s/myapp/$name/g" -e "s/Myapp/$uname/g" "$f"
 done
 mv back/myapp back/"$name"
 # set version to 0.1.0
-sed -ri '/^version =/{s/".*"/"0.1.0"/}' pyproject.toml
-sed -ri '/^  "version": /{s/".*"/"version": "0.1.0"/}' package.json
-sed -ri "/Code Generators/d" pyproject.toml
-sed -ri "/Start of Boilerplate doc/,/End of Boilerplate doc/d" README.md
+sed -Ei '/^version =/{s/".*"/"0.1.0"/}' pyproject.toml
+sed -Ei '/^  "version": /{s/".*"/"version": "0.1.0"/}' package.json
+sed -Ei "/Code Generators/d" pyproject.toml
+sed -Ei "/Start of Boilerplate doc/,/End of Boilerplate doc/d" README.md
 if [ -n "$url" ]; then
+  base_url=$(dirname "$url")
   for f in \
     README.md \
     pyproject.toml \
     package.json \
+    .gitlab/merge_request_templates/code-review-checklist.md \
   ; do
-    sed -ri "s|https://gitlab.com/.*/boilerplates/[^-a-z0-9]+|$url|" "$f"
+    sed -Ei "s|https://gitlab.com/.*/boilerplates/[-a-z0-9]+|$url|" "$f"
+    sed -Ei "s|https://gitlab.com/.*/boilerplates|$base_url|" "$f"
   done
 fi
 rm -rf CHANGELOG.md exit .git

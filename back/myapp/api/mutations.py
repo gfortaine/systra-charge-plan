@@ -7,7 +7,6 @@ from inspect import ismethod
 from typing import (
     Any,
     Generic,
-    TypeAlias,
     TypeVar,
     get_type_hints,
 )
@@ -23,9 +22,9 @@ from strawberry import (
 )
 from strawberry import mutation as strawberry_mutation
 from strawberry.annotation import StrawberryAnnotation
+from strawberry.types import Info
 from strawberry.types.arguments import StrawberryArgument
 from strawberry.types.field import StrawberryField
-from strawberry.types import Info
 from strawberry_django.resolvers import django_resolver
 from strawberry_django.utils.typing import (
     get_django_definition,
@@ -33,8 +32,8 @@ from strawberry_django.utils.typing import (
 )
 
 T_Model = TypeVar("T_Model", bound=Model)
-Kwargs: TypeAlias = dict[str, Any]
-DataDict: TypeAlias = dict[str, Any]
+type Kwargs = dict[str, Any]
+type DataDict = dict[str, Any]
 
 
 class BaseMutation(Generic[T_Model], StrawberryField):
