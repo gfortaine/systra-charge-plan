@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
-import UploadHttpLink from 'apollo-upload-client/UploadHttpLink.mjs'
+import UploadHttpLink from 'apollo-upload-client/UploadHttpLink.mjs' // eslint-disable-line import/extensions
 import { graphqlUrl } from '@src/config'
 
 function isGraphqlResponse(value) {

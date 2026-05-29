@@ -25,7 +25,6 @@ export default function MapPage() {
   const mapRef = useRef() // Mapbox instance
   const mapContainerRef = useRef() // DOM element for Mapbox
   const [showPanel, setShowPanel] = useState(false)
-  const [panelContentVisible, setPanelContentVisible] = useState(false)
   const [showMarkers, setShowMarkers] = useState(true)
   const [showLine, setShowLine] = useState(true)
   const togglePanel = () => setShowPanel(shown => !shown)
@@ -103,9 +102,6 @@ export default function MapPage() {
     }
     drawMarkers(map, showMarkers, showLine)
   }, [drawMarkers, showMarkers, showLine])
-  useEffect(() => {
-    setPanelContentVisible(showPanel)
-  }, [showPanel])
   return (
     <Box className="map-view">
       <Paper
@@ -123,7 +119,7 @@ export default function MapPage() {
         >
           {showPanel ? <ChevronLeft /> : <ChevronRight />}
         </Button>
-        <Slide direction="right" in={panelContentVisible} mountOnEnter unmountOnExit>
+        <Slide direction="right" in={showPanel} mountOnEnter unmountOnExit>
           <Box sx={{ p: 2, mt: 6 }}>
             <Typography variant="h6" gutterBottom>
               <Trans>Legend</Trans>

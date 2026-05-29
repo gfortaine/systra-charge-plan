@@ -146,11 +146,11 @@ msgstr "mot-clé"
 msgid "Language"
 msgstr "Langue"
 
-#: src/pages/MapPage.jsx:129
+#: src/pages/MapPage.jsx:125
 msgid "Legend"
 msgstr "Légende"
 
-#: src/pages/MapPage.jsx:137
+#: src/pages/MapPage.jsx:133
 msgid "Line"
 msgstr "Ligne"
 
@@ -168,7 +168,7 @@ msgstr "Se déconnecter"
 msgid "Map"
 msgstr "Carte"
 
-#: src/pages/MapPage.jsx:133
+#: src/pages/MapPage.jsx:129
 msgid "Markers"
 msgstr "Marqueurs"
 
@@ -188,7 +188,7 @@ msgstr "Autre"
 msgid "Pickers"
 msgstr "Sélecteurs"
 
-#: src/pages/MapPage.jsx:55
+#: src/pages/MapPage.jsx:54
 msgid "Pk:"
 msgstr "Pk :"
 

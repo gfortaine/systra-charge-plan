@@ -59,7 +59,7 @@ export default defineConfig([
         {
           js: 'never',
           jsx: 'never',
-          mjs: 'always',
+          mjs: 'never',
           json: 'always',
           css: 'always',
           scss: 'always',

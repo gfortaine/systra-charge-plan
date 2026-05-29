@@ -71,6 +71,6 @@ schema = strawberry.Schema(
     mutation=Mutation,
     extensions=[
         DjangoOptimizerExtension,
-        ParserCache(maxsize=100),
+        lambda: ParserCache(maxsize=100),
     ],
 )

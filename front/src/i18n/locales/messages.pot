@@ -144,11 +144,11 @@ msgstr ""
 msgid "Language"
 msgstr ""
 
-#: src/pages/MapPage.jsx:129
+#: src/pages/MapPage.jsx:125
 msgid "Legend"
 msgstr ""
 
-#: src/pages/MapPage.jsx:137
+#: src/pages/MapPage.jsx:133
 msgid "Line"
 msgstr ""
 
@@ -166,7 +166,7 @@ msgstr ""
 msgid "Map"
 msgstr ""
 
-#: src/pages/MapPage.jsx:133
+#: src/pages/MapPage.jsx:129
 msgid "Markers"
 msgstr ""
 
@@ -186,7 +186,7 @@ msgstr ""
 msgid "Pickers"
 msgstr ""
 
-#: src/pages/MapPage.jsx:55
+#: src/pages/MapPage.jsx:54
 msgid "Pk:"
 msgstr ""
 
