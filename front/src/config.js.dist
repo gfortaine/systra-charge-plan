@@ -1,3 +1,4 @@
+// vim: ft=javascript:
 export const backUrl = `${window.location.origin}/`
 export const graphqlUrl = backUrl + 'graphql/'
 export const mapboxPublicKey = '###MAPBOX_PUBLIC_KEY###'

@@ -112,6 +112,7 @@ The following environment variables are available with their default:
 | Name                         | Default value                           | Comment                        |
 | ---                          | ---                                     | ---                            |
 | `DJANGO_DEBUG`               | `False`                                 | `0`/`1`/`True`/`False`         |
+| `DJANGO_VITE_DEV_MODE`       | `True` if `DJANGO_DEBUG` else `False`   | `0`/`1`/`True`/`False`         |
 | `DJANGO_LOG_LEVEL`           | `INFO` if `DJANGO_DEBUG` else `WARNING` |                                |
 | `DJANGO_RUNSERVER_LOG_LEVEL` | `DEBUG` if `DJANGO_DEBUG` else `INFO`   | only used with `runserver`     |
 | `DJANGO_NO_HTTPS`            | `False`                                 | `0`/`1`/`True`/`False`         |
@@ -194,7 +195,7 @@ React
 ## Build Setup
 
 ```shell
-# define MAPBOX_TOKEN variable in your .env
+# define MAPBOX_PUBLIC_KEY variable in your .env
 
 # install dependencies
 $ yarn install
@@ -265,10 +266,10 @@ yarn run csslint
 Unit tests are made with **[Vitest](https://vitest.dev/)** which is a testing framework close to Jest. You can run tests by using:
 
 ```shell
-QUICK=1 yarn run test
+yarn run test
 ```
 
-If you wish to run unit tests quickly without coverage nor watch mode, you can use the `QUICK` option as follows:
+If you wish to run unit tests quickly without coverage nor watch mode, you can set `QUICK=1` env var.
 
 Start the application
 =====================

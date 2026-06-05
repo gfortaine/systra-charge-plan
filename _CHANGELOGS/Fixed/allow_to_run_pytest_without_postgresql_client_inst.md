@@ -1,0 +1,1 @@
+- Allow to run pytest without postgresql client installed

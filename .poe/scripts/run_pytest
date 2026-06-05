@@ -31,7 +31,7 @@ run_docker_postgres() {
     # shellcheck disable=SC2034
     for i in $(seq 10); do
         sleep 1
-        if echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h 127.0.0.1 -p "$port" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
+        if ./back/manage.py inspectdb >/dev/null 2>&1; then
             running=1
             break
         fi
@@ -63,9 +63,9 @@ run_local_postgres() {
 if [ -z "$NO_DB" ]; then
     export DJANGO_DB_HOST="${DB_HOST}"
     export DJANGO_DB_PORT="${DB_PORT}"
-    echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h "${DB_HOST}" -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1 && NO_DB=1
+    ./back/manage.py inspectdb >/dev/null 2>&1 && NO_DB=1
     if [ -z "$NO_DB" ]; then
-        export DB_HOST=127.0.0.1
+        export DJANGO_DB_HOST=127.0.0.1
         if [ -z "$NO_DOCKER" ] && which docker >/dev/null; then
             echo "Running postgres $POSTGRES_VER in docker on port $DB_PORT"
             pg_cid=$(run_docker_postgres "$POSTGRES_VER" "$DB_PORT")
@@ -80,7 +80,7 @@ if [ -z "$NO_DB" ]; then
             exit 1
         fi
     fi
-    if echo 'select 1' | PGPASSWORD=${PROJECT_NAME} psql -h "$DB_HOST" -p "$DB_PORT" -U ${PROJECT_NAME} -w ${PROJECT_NAME} >/dev/null 2>&1; then
+    if ./back/manage.py inspectdb >/dev/null 2>&1; then
       echo "Postgres database running"
     else
       echo "Postgres database not running, please check your config" >&2

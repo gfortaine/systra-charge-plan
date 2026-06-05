@@ -2,12 +2,8 @@ include:
   - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/security@0.8
   - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-linter@0.8
   - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-i18n@0.8
-    inputs:
-      system-packages: 'gettext git'
   - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/python-tests@0.8
     inputs:
-      system-packages: 'postgresql-client'
-      future-system-packages: 'postgresql-client'
       future-enable: true
   - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-linter@0.8
   - component: $CI_SERVER_FQDN/systracorp/hq/infra/ci/js-i18n@0.8
@@ -40,9 +36,9 @@ python-tests: &python-pg-svc
     - name: postgres:17-alpine
       alias: db
       variables:
-        POSTGRES_DB: "${CI_PROJECT_NAME}"
-        POSTGRES_USER: "${CI_PROJECT_NAME}"
-        POSTGRES_PASSWORD: "${CI_PROJECT_NAME}"
+        POSTGRES_DB: myapp
+        POSTGRES_USER: myapp
+        POSTGRES_PASSWORD: myapp
         POSTGRES_HOST_AUTH_METHOD: trust
   variables:
     DJANGO_DB_TYPE: postgresql
