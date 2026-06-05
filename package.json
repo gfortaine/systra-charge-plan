@@ -9,9 +9,8 @@
   "scripts": {
     "list": "node -e 'console.log(Object.keys(require(\"./package.json\").scripts).filter(name => !name.startsWith(\"pre\")).join(\"\\n\"))'",
     "clean": "rm -rf front/dist front/src/config.js",
-    "pre": "./.jsrun gen-env; ./.jsrun gen-config; ./front/.scripts/gen_scss",
+    "pre": "./.jsrun gen-env; ./front/.scripts/gen_config; ./front/.scripts/gen_scss",
     "gen-env": "[ -e .env ] || cp env.dist .env",
-    "gen-config": "[ -e front/src/config.js ] || sed -E -e \"s|###MAPBOX_PUBLIC_KEY###|${MAPBOX_PUBLIC_KEY}|\" front/src/config.js.dist > front/src/config.js",
     "prebuild": "./.jsrun -s pre",
     "build": "dotenv -- vite -c front/vite.config.js build",
     "prestart": "./.jsrun -s pre >/dev/null",

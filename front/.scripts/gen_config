@@ -1,0 +1,8 @@
+#!/bin/sh
+cd $(dirname "$0")/..
+if [ ! -e src/config.js ]; then
+  sed -E \
+    -e "s|###MAPBOX_PUBLIC_KEY###|${MAPBOX_PUBLIC_KEY}|" \
+    src/config.js.dist \
+  > src/config.js
+fi

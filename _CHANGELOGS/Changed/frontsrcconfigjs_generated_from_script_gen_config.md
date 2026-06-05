@@ -1,0 +1,1 @@
+- front/src/config.js generated from script gen_config instead on package.json
