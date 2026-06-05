@@ -53,7 +53,8 @@ ENV UV_CACHE_DIR=/home/${USER}/.cache/uv \
 RUN mkdir -p /app/.venv /app/back/media
 VOLUME /opt/cache/pip /app/.venv /app/back/media
 WORKDIR /app
-COPY --chown=$USER: ./pyproject.toml ./uv.lock ./yarn.lock ./package.json *.md ./
-RUN uv venv \
+COPY --chown=$USER: ./pyproject.toml ./uv.lock ./yarn.lock ./package.json .npmr[c] *.md ./
+RUN --mount=type=secret,mode=0444,id=GITLAB_TOKEN export GITLAB_TOKEN=$(cat /run/secrets/GITLAB_TOKEN 2>/dev/null) \
+ && uv venv \
  && uv sync \
  && yarn install

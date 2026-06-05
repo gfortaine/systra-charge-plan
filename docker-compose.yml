@@ -27,6 +27,8 @@ services:
     build:
       context: .
       dockerfile: docker/dev/Dockerfile
+      secrets:
+        - GITLAB_TOKEN
     depends_on:
       - db
     env_file: .env
@@ -73,3 +75,6 @@ services:
       - ${PORT:-3978}:${PORT:-3978}
 volumes:
   db:
+secrets:
+  GITLAB_TOKEN:
+    environment: "GITLAB_TOKEN"

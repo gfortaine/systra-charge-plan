@@ -1,0 +1,1 @@
+- Better support for GITLAB_TOKEN and .npmrc in dev

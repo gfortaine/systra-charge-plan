@@ -39,6 +39,8 @@ services:
       dockerfile: docker/Dockerfile
       args:
         - VER=test-prod
+      secrets:
+        - GITLAB_TOKEN
     depends_on:
       - db
     sysctls:
@@ -67,3 +69,6 @@ volumes:
 networks:
   db:
   app:
+secrets:
+  GITLAB_TOKEN:
+    environment: "GITLAB_TOKEN"
