@@ -1,0 +1,1 @@
+- Explicit config for rolldown as vite 8 is used

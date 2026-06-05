@@ -100,7 +100,7 @@ export default defineConfig([
       '@stylistic/jsx-one-expression-per-line': ['error', { allow: 'non-jsx' }],
       'comma-dangle': ['warn', 'always-multiline'],
       'curly': 'error',
-      'max-len': ['warn', { code: 120 }],
+      'max-len': ['warn', { code: 160 }],
       'no-irregular-whitespace': 'off',
       'no-prototype-builtins': 'off',
       'no-unused-vars': [

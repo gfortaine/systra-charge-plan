@@ -16,7 +16,7 @@ const chunksMap = (() => {
     mapbox: ['@mapboxql', 'mapbox-gl'],
   }).forEach(([big, depIds]) => {
     depIds.forEach(depId => {
-      map[depId] = `vendor-${big}`
+      map[`vendor-${big}`] = depId
     })
   })
   map['vendor-all'] = 'node_modules'
@@ -89,17 +89,23 @@ const config = defineConfig({
   build: {
     outDir: path.resolve('./front/dist'),
     sourcemap: true,
-    rollupOptions: {
-      // https://rollupjs.org/configuration-options/
+    chunkSizeWarningLimit: 2 * 1024,
+    // https://rolldown.rs/reference
+    rolldownOptions: {
       output: {
-        compact: true,
-        manualChunks: (id) => {
-          for (const [chunk, depId] of Object.entries(chunksMap)) {
-            if (id.includes(depId)) {
-              return chunk
-            }
-          }
-          return undefined
+        codeSplitting: {
+          groups: [
+            {
+              name(moduleId) {
+                for (const [chunk, depId] of Object.entries(chunksMap)) {
+                  if (moduleId.includes(depId)) {
+                    return chunk
+                  }
+                }
+                return null
+              },
+            },
+          ],
         },
       },
     },
