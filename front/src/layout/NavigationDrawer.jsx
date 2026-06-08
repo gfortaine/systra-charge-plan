@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { matchPath, NavLink, useLocation } from 'react-router'
 import { useLingui } from '@lingui/react/macro'
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import MenuIcon from '@mui/icons-material/Menu'
@@ -11,9 +11,11 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Tooltip,
 } from '@mui/material'
 import MuiDrawer from '@mui/material/Drawer'
 import { styled } from '@mui/material/styles'
+import { Stack } from '@mui/system'
 import { useAuth } from '@src/auth'
 import useRoutes from '@src/routes'
 import './NavigationDrawer.scss'
@@ -35,10 +37,7 @@ const closedMixin = (theme) => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
+  width: '57px',
 })
 
 const DrawerHeader = styled('div')(({ theme }) => ({
@@ -77,86 +76,128 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function NavigationDrawer() {
   const { routes, LogoutRoute } = useRoutes()
+  const navRoutes = routes.filter(r => r.isNav)
+  const topRoutes = navRoutes.filter(r => r != LogoutRoute && !r.bottom)
+  const bottomRoutes = navRoutes.filter(r => r != LogoutRoute && r.bottom)
+  const logoutRoutes = navRoutes.filter(r => r == LogoutRoute)
   const { logout } = useAuth()
   const { t } = useLingui()
+  const location = useLocation()
   const [open, setOpen] = useState(false)
 
   const handleDrawerOpen = () => {
     setOpen(true)
   }
-
   const handleDrawerClose = () => {
     setOpen(false)
   }
-
-  const handleClickAway = () => {
-    setOpen(false)
-  }
-
   const handleLogout = () => {
     setOpen(false)
     logout()
   }
 
-  const DrawerList = (
-    <List sx={{ height: '100%' }}>
-      {routes.map((route, index) => {
-        if (route.isNav) {
-          if (route != LogoutRoute) {
-            return (
-              <ListItem key={index} className="app-menu-item" disablePadding>
-                <ListItemButton component={NavLink} to={route.path} onClick={handleDrawerClose}>
-                  <ListItemIcon className="app-menu-item-icon" title={t(route.title)}>
-                    { route.icon }
-                  </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={t(route.title)} />
-                </ListItemButton>
-              </ListItem>
-            )
-          } else {
-            return (
-              <ListItem
-                key={index}
-                className="app-menu-item"
-                sx={{ position: 'absolute', bottom: '1em' }}
-                disablePadding
-              >
-                <ListItemButton onClick={handleLogout}>
-                  <ListItemIcon className="app-menu-item-icon" title={t(route.title)}>
-                    { route.icon }
-                  </ListItemIcon>
-                  <ListItemText className="app-menu-item-title" primary={t(route.title)} />
-                </ListItemButton>
-              </ListItem>
-            )
-          }
-        }
-      })}
-    </List>
-  )
-
-  let button
-  if (open) {
-    button = (
-      <ListItemButton onClick={handleDrawerClose}>
-        <ListItemIcon>
-          <ChevronLeftIcon color="inherit" />
-        </ListItemIcon>
-        <ListItemText primary={t`Fold down pane`} />
+  const DrawerListItem = ({ route }) => {
+    const isLogoutRoute = route == LogoutRoute
+    const isCurrentLocation = matchPath(route.path, location.pathname)
+    const MyListItemButton = ({ children }) => isLogoutRoute ? (
+      <ListItemButton onClick={handleLogout}>
+        { children }
+      </ListItemButton>
+    ) : (
+      <ListItemButton
+        component={NavLink}
+        to={route.path}
+        state={route.state}
+        onClick={handleDrawerClose}
+        className={`button ${isCurrentLocation ? 'selected' : ''}`}
+      >
+        { children }
       </ListItemButton>
     )
-  } else {
-    button = (
-      <ListItemButton onClick={handleDrawerOpen}>
-        <MenuIcon />
-      </ListItemButton>
+    return (
+      <ListItem
+        className="app-menu-item"
+        disablePadding
+      >
+        <Tooltip title={t(route.title)} enterDelay={500} leaveDelay={0}>
+          <MyListItemButton>
+            <ListItemIcon
+              className={`app-menu-item-icon ${isCurrentLocation ? 'selected' : ''}`}
+              color="secondary"
+            >
+              { route.icon }
+            </ListItemIcon>
+            <ListItemText
+              className={`app-menu-item-title ${isCurrentLocation ? 'selected' : ''}`}
+              primary={t(route.title)}
+              sx={{ marginLeft: 1 }}
+            />
+          </MyListItemButton>
+        </Tooltip>
+      </ListItem>
     )
   }
 
+  const DrawerList = (
+    <Stack
+      sx={{ height: '100%', bgcolor: 'secondary.main', placeContent: 'space-between' }}
+    >
+      <List>
+        {topRoutes.map((route, index) => (
+          <DrawerListItem
+            key={index}
+            route={route}
+          />
+        ))}
+      </List>
+      <List
+        disablePadding
+        sx={{ marginBottom: '20px' }}
+      >
+        <Divider
+          color="white"
+          variant="middle"
+          sx={{ marginBottom: '10px' }}
+        />
+        {bottomRoutes.map((route, index) => (
+          <DrawerListItem
+            key={index}
+            route={route}
+          />
+        ))}
+        {logoutRoutes.map((route, index) => (
+          <DrawerListItem
+            key={index}
+            route={route}
+          />
+        ))}
+      </List>
+    </Stack>
+  )
+
+  const button = open ? (
+    <ListItemButton onClick={handleDrawerClose}>
+      <ListItemIcon className="app-menu-item-icon">
+        <ChevronLeftIcon />
+      </ListItemIcon>
+      <ListItemText primary={t`Fold down pane`} />
+    </ListItemButton>
+  ) : (
+    <ListItemButton onClick={handleDrawerOpen}>
+      <MenuIcon />
+    </ListItemButton>
+  )
+
   return (
-    <ClickAwayListener onClickAway={handleClickAway}>
-      <Drawer className="drawer" variant="permanent" open={open}>
-        <DrawerHeader className="drawer-header">
+    <ClickAwayListener onClickAway={handleDrawerClose}>
+      <Drawer
+        variant="permanent"
+        open={open}
+      >
+        <DrawerHeader
+          className="drawer-header"
+          sx={{ bgcolor: 'secondary.main' }}
+        >
           <ListItem className="app-menu-item" disablePadding>
             {button}
           </ListItem>

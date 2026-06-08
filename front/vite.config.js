@@ -1,6 +1,7 @@
 import path from 'path'
 import { env } from 'process'
 import { lingui } from '@lingui/vite-plugin'
+import babel from '@rolldown/plugin-babel'
 import react from '@vitejs/plugin-react'
 import DjVitePlugin from 'djvite'
 import { reactScopedCssPlugin } from 'rollup-plugin-react-scoped-css'
@@ -37,10 +38,9 @@ const config = defineConfig({
   },
   plugins: [
     DjVitePlugin({ verbose: true, manifestPath: 'front/vite.manifest.json' }),
-    react({
-      babel: {
-        plugins: ['@lingui/babel-plugin-lingui-macro'],
-      },
+    react(),
+    babel({
+      plugins: ['@lingui/babel-plugin-lingui-macro'],
     }),
     lingui(),
     reactScopedCssPlugin(),

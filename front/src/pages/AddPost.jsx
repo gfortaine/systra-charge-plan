@@ -144,7 +144,7 @@ export default function AddPost() {
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    inputProps={{ maxLength: 100 }}
+                    slotProps={{ htmlInput: { maxLength: 100 } }}
                     label={t`Title`}
                     required
                   />
@@ -238,7 +238,7 @@ export default function AddPost() {
                   <MuiFileInput
                     {...field}
                     label={t`Optional image`}
-                    inputProps={{ accept: 'image/*' }}
+                    slotProps={{ htmlInput: { accept: 'image/*' } }}
                     clearIconButtonProps={{
                       title: t`Remove image`,
                       children: <Close fontSize="small" />,

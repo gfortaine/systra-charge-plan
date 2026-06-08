@@ -1,6 +1,8 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback } from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client/core'
-import UploadHttpLink from 'apollo-upload-client/UploadHttpLink.mjs' // eslint-disable-line import/extensions
+import { useApolloClient } from '@apollo/client/react'
+// eslint-disable-next-line import/extensions
+import UploadHttpLink from 'apollo-upload-client/UploadHttpLink.mjs'
 import { graphqlUrl } from '@src/config'
 
 function isGraphqlResponse(value) {
@@ -17,11 +19,15 @@ export function createApolloClient() {
     cache: new InMemoryCache(),
     defaultOptions: {
       query: {
-        fetchPolicy: 'no-cache',
+        fetchPolicy: 'network-only',
+        errorPolicy: 'all',
+      },
+      mutate: {
+        fetchPolicy: 'network-only',
         errorPolicy: 'all',
       },
       watchQuery: {
-        fetchPolicy: 'no-cache',
+        fetchPolicy: 'network-only',
         errorPolicy: 'ignore',
       },
     },
@@ -52,8 +58,7 @@ export async function graphqlMutate (apolloClient, mutation, variables) {
   return await unwrapGraphqlResponse(apolloClient.mutate({ mutation, variables }))
 }
 export default function useGraphql() {
-  // created only once per component lifetime
-  const apolloClient = useMemo(() => createApolloClient(), [])
+  const apolloClient = useApolloClient()
   const graphqlQueryStable = useCallback(
     async (query, variables) => await graphqlQuery(apolloClient, query, variables),
     [apolloClient],
@@ -67,3 +72,4 @@ export default function useGraphql() {
     graphqlMutate: graphqlMutateStable,
   }
 }
+export const apolloClient = createApolloClient()

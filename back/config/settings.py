@@ -34,7 +34,7 @@ def from_env(key: str, default: str | bool | None = None) -> str | bool | None:
 
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-# Use `./manage.py generate_secret_key` to generate a new one
+# Use `./back/manage.py generate_secret_key` to generate a new one
 SECRET_KEY = from_env('DJANGO_SECRET_KEY', 'django-insecure-1l_c9eu$a5%8+@m(=1bv6on!m*b(z^w0yk9pc--nhcw61hm#^s')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = from_env('DJANGO_DEBUG', False)
@@ -220,6 +220,7 @@ if OIDC_RP_CLIENT_ID:
     ))
     OIDC_OP_TOTAL_LOGOUT = False
     OIDC_RP_FORCE_SECRET_WITH_PKCE = True  # depends on the RP configuration
+    OIDC_RP_FORCE_NO_CONSENT_PROMPT = True
     # OIDC_RP_AZURE_SPA = True  # if RP is Azure and SPA is configured instead of WebApp
     # given_name and family_name might be null
     OIDC_OP_EXPECTED_CLAIMS = ['email']

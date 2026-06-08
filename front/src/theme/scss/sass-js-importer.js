@@ -7,7 +7,7 @@ async function load(fileName) {
     console.log('/* stylelint-disable */')
     console.log(scss)
   } catch (error) {
-    throw new Error(`Error transforming JS module to SASS. Check if your JS module parses correctly.\n${error}`)
+    throw new Error('Error transforming JS module to SASS. Check if your JS module parses correctly.', { cause: error })
   }
 }
 

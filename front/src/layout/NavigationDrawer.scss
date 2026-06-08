@@ -1,27 +1,43 @@
 @use "@scss/color-shades" as *;
-.drawer > * {
-  background-color: $secondary !important;
-}
 .drawer-header {
   border-bottom: 1px solid $white;
   color: $white;
-}
-.app-menu-item {
   padding: 0 !important;
-  justify-content: flex-start !important;
-  flex: 1;
-}
-.app-menu-item-title {
-  color: $white;
-}
-.app-menu-item:hover {
-  background-color: $secondary-light;
-  .icon,
-  .app-menu-item-title {
+  > .MuiListItem-root, /* stylelint-disable-line selector-class-pattern */
+  > .MuiListItem-root > .MuiButtonBase-root { /* stylelint-disable-line selector-class-pattern */
+    height: 100%;
+  }
+  &:hover {
     color: $secondary;
+    .app-menu-item-icon {
+      color: $secondary;
+    }
   }
 }
-.app-menu-item-icon > * {
-  opacity: 1 !important;
-  color: $white;
+.app-menu-item {
+  .button.selected {
+    background-color: $secondary-light !important;
+  }
+  .app-menu-item-icon {
+    .selected {
+      color: $secondary !important;
+    }
+    > * {
+      opacity: 1 !important;
+      color: $white;
+    }
+  }
+  .app-menu-item-title {
+    color: $white;
+    .selected {
+      color: $secondary !important;
+    }
+  }
+  &:hover {
+    background-color: $secondary-light;
+    .app-menu-item-icon > *,
+    .app-menu-item-title {
+      color: $secondary;
+    }
+  }
 }
