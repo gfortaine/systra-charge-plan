@@ -1,8 +1,10 @@
 """
 Django settings for project.
 """
+from datetime import timedelta
 from os import getenv
 from pathlib import Path
+from re import match
 from socket import (
     gaierror,
     gethostbyname_ex,
@@ -18,17 +20,30 @@ def from_env(key: str, default: bool) -> bool: ...  # noqa: E704
 @overload
 def from_env(key: str, default: str) -> str: ...  # noqa: E704
 @overload
+def from_env(key: str, default: timedelta) -> timedelta: ...  # noqa: E704
+@overload
 def from_env(key: str, default: None) -> str | None: ...  # noqa: E704
 @overload
 def from_env(key: str) -> str | None: ...  # noqa: E704
 
 
-def from_env(key: str, default: str | bool | None = None) -> str | bool | None:
+def from_env(key: str, default: str | bool | timedelta | None = None) -> str | bool | timedelta | None:
     match default:
         case str():
             return getenv(key, default)
         case bool():
             return getenv(key, str(default)).lower() in ('true', '1', 'on')
+        case timedelta():
+            value = getenv(key, default)
+            if isinstance(value, timedelta):
+                return value
+            else:  # str
+                m = match('(?:([0-9]+)d)? *(?:([0-9]+)h)? *(?:([0-9]+)m)? *(?:([0-9]+)s)?', str(value))
+                if m:
+                    days, hours, minutes, seconds = m.groups()
+                    return timedelta(days=int(days or 0), hours=int(hours or 0), minutes=int(minutes or 0), seconds=int(seconds or 0))
+                else:
+                    return default
         case None:
             return getenv(key)
 
@@ -111,6 +126,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_tasks_db',
+    'crontask',
     'corsheaders',
     'strawberry_django',
     'djvite',
@@ -161,7 +178,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 DATABASES = {
     'default': {
         'ENGINE': {
@@ -178,6 +195,18 @@ DATABASES = {
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'myapp.User'
+
+# Tasks
+TASKS = {
+    'default': {
+        'BACKEND': 'django_tasks_db.DatabaseBackend',
+        'QUEUES': ['default']
+    },
+}
+TASK_MAX_EXPIRATION_DELTA = from_env('DJANGO_TASK_MAX_EXPIRATION_DELTA', timedelta(days=1))
+CRONTASK = {
+    'LOCK_REFRESH_INTERVAL': 86400,  # not used
+}
 
 # Graphql
 STRAWBERRY_DJANGO = {
@@ -242,7 +271,7 @@ if OIDC_RP_CLIENT_ID:
     OIDC_MIDDLEWARE_SESSION_TIMEOUT_SECONDS = SESSION_COOKIE_AGE - 3600  # 30 days minus 1 hour
 
 # Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -259,7 +288,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
+# https://docs.djangoproject.com/en/6.0/topics/i18n/
 LANGUAGE_CODE = 'en-us'
 LOCALE_PATHS = [BASE_DIR / 'myapp' / 'locale']
 TIME_ZONE = 'Europe/Paris'
@@ -278,13 +307,11 @@ CORS_ALLOW_CREDENTIALS = True
 SHELL_PLUS_POST_IMPORTS = [
     ('pprint', 'pprint'),
     ('inspect', 'getsource'),
-    ('django.db.models', 'Subquery'),
-    ('django.db.models', 'OuterRef'),
     ('strawberry'),
 ]
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
+# https://docs.djangoproject.com/en/6.0/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 DJVITE = {

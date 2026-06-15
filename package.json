@@ -50,7 +50,7 @@
     "moment": "Dates with timezone"
   },
   "dependencies": {
-    "@apollo/client": "^4.2.0",
+    "@apollo/client": "^4.2.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@lingui/react": "^6.1.0",
@@ -61,7 +61,7 @@
     "@mui/x-data-grid": "^9.4.0",
     "@mui/x-date-pickers": "^9.4.0",
     "apollo-upload-client": "^19.0.0",
-    "graphql": "^16.14.0",
+    "graphql": "^16.14.1",
     "graphql-request": "^7.4.0",
     "immutable": "^5.1.6",
     "mapbox-gl": "^3.24.0",
@@ -110,8 +110,8 @@
     "@rolldown/plugin-babel": "^0.2.3",
     "@stylistic/eslint-plugin": "^5.7.1",
     "@vitejs/plugin-react": "^6.0.2",
-    "@vitest/coverage-istanbul": "^4.1.7",
-    "@vitest/ui": "^4.1.7",
+    "@vitest/coverage-istanbul": "^4.1.8",
+    "@vitest/ui": "^4.1.8",
     "djvite": "^1.4.3",
     "dotenv-cli": "^11.0.0",
     "eslint": "^9",
@@ -128,13 +128,10 @@
     "sass": "^1.100.0",
     "stylelint": "^17.12.0",
     "stylelint-config-standard-scss": "^17.0.0",
-    "vite": "^8.0.11",
+    "vite": "^8.0.16",
     "vite-plugin-graphql-loader": "^5.1.1",
-    "vitest": "^4.1.7",
+    "vitest": "^4.1.8",
     "xunit-viewer": "^10.6.1"
-  },
-  "resolutions": {
-    "@isaacs/brace-expansion": "^5.0.1"
   },
   "engines": {
     "node": ">= 24.0.0"

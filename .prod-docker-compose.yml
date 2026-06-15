@@ -3,7 +3,7 @@
 name: myapp
 services:
   db:
-    image: postgres:17-alpine
+    image: postgres:18-alpine
     healthcheck:
       test: ["CMD", "/docker-healthcheck"]
       interval: 30s
@@ -19,11 +19,10 @@ services:
       - POSTGRES_DB=myapp
       - POSTGRES_USER=myapp
       - POSTGRES_PASSWORD=myapp
-      - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - type: volume
         source: db
-        target: /var/lib/postgresql/data/pgdata
+        target: /var/lib/postgresql/18/docker
         read_only: false
       - type: bind
         source: ./docker/dev/db-healthcheck
@@ -48,6 +47,7 @@ services:
     networks:
       - db
       - app
+    # https://docs.docker.com/reference/compose-file/services/#env_file-format
     env_file: .env
     environment:
       - "DJANGO_DEBUG=false"

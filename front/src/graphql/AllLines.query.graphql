@@ -1,0 +1,8 @@
+query AllLines {
+  allLines {
+    points {
+      longitude
+      latitude
+    }
+  }
+}

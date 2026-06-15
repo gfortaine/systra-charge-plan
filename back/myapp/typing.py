@@ -1,6 +1,11 @@
-from typing import Any
+from typing import NewType
 
-from strawberry.django.context import StrawberryDjangoContext
-from strawberry.types import Info as GenericInfo
+Longitude = NewType('Longitude', float)
+Latitude = NewType('Latitude', float)
+type Point = tuple[Longitude, Latitude]
 
-type Info = GenericInfo[StrawberryDjangoContext, Any]
+__all__ = [
+    'Longitude',
+    'Latitude',
+    'Point',
+]

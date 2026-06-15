@@ -33,7 +33,7 @@ include:
 # extra parameters to use a postgresql service
 python-tests: &python-pg-svc
   services:
-    - name: postgres:17-alpine
+    - name: postgres:18-alpine
       alias: db
       variables:
         POSTGRES_DB: myapp

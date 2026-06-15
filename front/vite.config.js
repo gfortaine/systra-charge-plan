@@ -80,6 +80,7 @@ const config = defineConfig({
       include: ['front/src/**/*.{js,jsx}'],
       exclude: [
         'front/src/i18n/locale/**',
+        'front/src/theme/scss/**',
       ],
       reportsDirectory: './reports/coverage-js',
       reporter: ['cobertura', 'clover', 'text', 'text-summary', 'html'],
@@ -92,6 +93,9 @@ const config = defineConfig({
     chunkSizeWarningLimit: 2 * 1024,
     // https://rolldown.rs/reference
     rolldownOptions: {
+      checks: {
+        invalidAnnotation: false,
+      },
       output: {
         codeSplitting: {
           groups: [

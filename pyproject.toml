@@ -24,7 +24,7 @@ classifiers = [
     "Development Status :: 1 - Planning",
     "Environment :: Web Environment",
     "Framework :: Django",
-    "Framework :: Django :: 5.2",
+    "Framework :: Django :: 6.0",
     "Intended Audience :: Developers",
     # "License :: Other/Proprietary License",
     "License :: OSI Approved :: MIT License",
@@ -36,13 +36,16 @@ classifiers = [
     "Typing :: Typed",
 ]
 dependencies = [
-    "django~=5.2",
+    "django>=6,<7", # Django framework
     "django-cors-headers", # CORS headers for Django
+    "django-crontask", # Cron tasks
     "django-extensions", # More commands for Django
     "django-pdb", # Django Python Debugger
     "django-oauth2-authcodeflow", # Authent
+    "django-tasks-db", # Background tasks with result in DB
     "djvite", # Vite integration
     "pillow", # To handle images, like django ImageField
+    "poethepoet", # Task runner, also used in prod for worker/scheduler
     "psycopg", # Postgresql driver
     "psycopg[binary]; python_version<'3.15'", # Postgresql binaries
     "requests", # Http requests
@@ -67,13 +70,14 @@ dev = [
     "isort", # sorting imports
     "parameterized", # Parameterize multiple tests with a unique function
     "pdbpp", # Python Debugger ++
-    "poethepoet", # Task runner
     "pydot", # Dot (graph) generation
     "pytest", # Python Unit Tests
     "pytest-cov", # Coverage for Pytest
     "pytest-django", # Pytest for Django
     "pytest-freezer", # Time freeze for Pytest
     "pytest-html", # Allow html output for Pytest results
+    "pytest-mock", # To use Mocker directly with Pytest
+    "watchdog", # Allow to restart workers if .py files modified
     "werkzeug", # Simple http and wsgi server for dev
 ]
 
@@ -89,6 +93,7 @@ default-groups = [
     "dev",
     "typing",
 ]
+exclude-newer = "P3D"
 
 [tool.poe]
 include = [
@@ -98,6 +103,7 @@ include = [
     ".poe/schema.toml",
     ".poe/secret.toml",
     ".poe/server.toml",
+    ".poe/tasks.toml",
     ".poe/tests.toml",
     ".poe/version.toml",
 ]
@@ -135,7 +141,6 @@ mypy_path = "$MYPY_CONFIG_FILE_DIR/back"
 # https://mypy.readthedocs.io/en/stable/config_file.html#confval-exclude
 exclude = [
     "/migrations/.*\\.py$",
-    "/tests/.*\\.py$",
     "\\.cache",
     "\\.gitlab-ci-local",
     "\\.venv",

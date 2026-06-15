@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     GUNICORN_CHDIR=/var/www/myapp/back \
     GUNICORN_WSGI_FILE=./wsgi.py \
     CI=1
-ARG POSTGRES_VER=17
+ARG POSTGRES_VER=18
 RUN apt-get update \
  && apt-get upgrade -y \
  && apt-get install -y \
@@ -45,8 +45,8 @@ RUN mkdir -p $PIP_CACHE_DIR $UV_CACHE_DIR \
  && chown -R user: $PIP_CACHE_DIR $UV_CACHE_DIR
 ARG VER
 RUN /usr/local/bin/update-os
-RUN mkdir -p back/media \
- && chown user: back/media
+RUN mkdir -p back/{media,schedule} \
+ && chown user: back/{media,schedule}
 # switch to regular user
 USER user
 ENV HOME=/home/user
@@ -102,8 +102,10 @@ COPY --chown=user: \
      ./ ./
 COPY --chown=user: --from=jsbuild /app/front/dist ./front/dist
 COPY --chown=user: --from=jsbuild /app/front/vite.manifest.json ./front/
-VOLUME /var/www/myapp/back/db
-VOLUME /var/www/myapp/back/media
+VOLUME \
+    /var/www/myapp/back/db \
+    /var/www/myapp/back/media \
+    /var/www/myapp/back/schedule
 RUN echo "*** Django Quick Check" \
  && uv run ./back/manage.py check \
  && echo "*** Django Collect Static" \

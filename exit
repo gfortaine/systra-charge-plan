@@ -16,7 +16,7 @@ else
   exit 1
 fi
 # shellcheck disable=SC2018,SC2019
-uname="$(echo "$name"|cut -c1|tr a-z A-Z)$(echo "$name"|tr '_' ' '|cut -c2-)"
+uname="$(echo "$name"|tr '_' ' '|sed -E 's/(^| )([a-z])/\1\u\2/g')"
 for f in \
   README.md \
   pyproject.toml \
@@ -26,6 +26,7 @@ for f in \
   .gitlab/merge_request_templates/code-review-checklist.md \
   .gitlab-ci.yml \
   .gitignore \
+  .gitleaks.toml \
   .dockerignore \
   .prod-docker-compose.yml \
   $(find .poe -type f) \
@@ -33,7 +34,6 @@ for f in \
   $(find . -type f -name '*.py') \
   $(find . -type f -name '*.po') \
   $(find . -type f \( -name '*.yml' -o -name '*.lock' \)) \
-  leaks.toml \
 ; do
   sed -Ei -e "s/myapp/$name/g" -e "s/Myapp/$uname/g" "$f"
 done
