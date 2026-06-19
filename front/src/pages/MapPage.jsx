@@ -15,7 +15,8 @@ import MapboxGL from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import colorShades from '@scss/color-shades'
 import { mapboxPublicKey } from '@src/config'
-import line from '@static/line.json'
+import useGraphql from '@src/graphql'
+import allLinesQuery from '@src/graphql/AllLines.query.graphql'
 import pkPoints from '@static/markers.json'
 import './MapPage.scoped.scss'
 import './MapPage.scss'
@@ -24,17 +25,44 @@ export default function MapPage() {
   const { t } = useLingui()
   const mapRef = useRef() // Mapbox instance
   const mapContainerRef = useRef() // DOM element for Mapbox
+  const { graphqlQuery } = useGraphql()
+  const [line, setLine] = useState(null)
   const [showPanel, setShowPanel] = useState(false)
   const [showMarkers, setShowMarkers] = useState(true)
   const [showLine, setShowLine] = useState(true)
+  const fetchLines = useCallback(async () => {
+    const { allLines } = await graphqlQuery(allLinesQuery)
+    return allLines.map(line => (
+      {
+        type: 'FeatureCollection',
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'LineString',
+              coordinates: line.points.map(p => [p.longitude, p.latitude]),
+            },
+          },
+        ],
+      }
+    ))
+  }, [graphqlQuery])
+  useEffect(() => {
+    fetchLines().then(lines => {
+      setLine(lines[0])
+    }).catch(console.error)
+  }, [fetchLines])
   const togglePanel = () => setShowPanel(shown => !shown)
   const fitLineBounds = useCallback(map => {
+    if (!line) {
+      return
+    }
     const bounds = new MapboxGL.LngLatBounds()
     line.features[0].geometry.coordinates.forEach(coord => {
       bounds.extend(coord)
     })
     map.fitBounds(bounds, { padding: 100 })
-  }, [])
+  }, [line])
   const drawMarkers = useCallback((map, showMarkers, showLine) => {
     map.setPaintProperty('line-layer', 'line-opacity', showLine ? 1 : 0)
     if (map._pkMarkers) { // Remove previous markers if any
@@ -62,6 +90,9 @@ export default function MapPage() {
   }, [t])
   useEffect(() => { /* Map Init */
     if (mapRef.current || !mapContainerRef.current) { // Create map only once
+      return
+    }
+    if (!line) {
       return
     }
     MapboxGL.accessToken = mapboxPublicKey
@@ -94,7 +125,7 @@ export default function MapPage() {
       fitLineBounds(map)
     })
     mapRef.current = map
-  }, [drawMarkers, fitLineBounds])
+  }, [drawMarkers, fitLineBounds, line])
   useEffect(() => { // react to checkbox changes
     const map = mapRef.current
     if (!map || !map.isStyleLoaded()) {

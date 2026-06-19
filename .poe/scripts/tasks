@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e
+if [ "$1" = "worker" ]; then
+  exec ./back/manage.py db_worker --no-reload
+elif [ "$1" = "scheduler" ]; then
+  exec ./back/manage.py crontask --no-heartbeat
+else
+  exec ./back/manage.py db_worker --reload
+fi

@@ -30,10 +30,15 @@ paths: \n\
     - /home/$USER/.cache/yarn\n\
     - /opt/cache/pip\n\
     - /app/.venv\n\
+    - /app/node_modules\n\
     - /app/back/media\n\
+    - /app/back/schedule\n\
 " > /etc/fixuid/config.yml \
  && rm /etc/supervisor/conf.d/*.conf \
- && mkdir -p /opt/cache/pip /home/$USER/.cache/uv /home/$USER/.cache/yarn \
+ && mkdir -p \
+  /opt/cache/pip \
+  /home/$USER/.cache/uv \
+  /home/$USER/.cache/yarn \
  && chown -R $USER: \
   /etc/supervisor/conf.d \
   /etc/nginx/conf.d \
@@ -50,8 +55,16 @@ ENV UV_CACHE_DIR=/home/${USER}/.cache/uv \
     NO_COLOR=1 \
     DJANGO_HOST=0.0.0.0 \
     VITE_HOST=0.0.0.0
-RUN mkdir -p /app/.venv /app/back/media
-VOLUME /opt/cache/pip /app/.venv /app/back/media
+RUN mkdir -p \
+    /app/.venv \
+    /app/node_modules \
+    /app/back/{media,schedule}
+VOLUME \
+    /opt/cache/pip \
+    /app/.venv \
+    /app/node_modules \
+    /app/back/media \
+    /app/back/schedule
 WORKDIR /app
 COPY --chown=$USER: ./pyproject.toml ./uv.lock ./yarn.lock ./package.json .npmr[c] *.md ./
 RUN --mount=type=secret,mode=0444,id=GITLAB_TOKEN export GITLAB_TOKEN=$(cat /run/secrets/GITLAB_TOKEN 2>/dev/null) \

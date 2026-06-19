@@ -36,7 +36,7 @@ Go through this checklist before the code is reviewed.
     ```
 - [ ] **Update migrations** if there has been a modification to the Django models
   - Run `./manage.py makemigrations` (Or, if you are using `compose`: from the root of `compose`, run `./django makemigrations`)
-  - Commit the file generated in `./myapp/migrations/`
+  - Commit the file generated in `./back/myapp/migrations/`
 - [ ] **Clean the git branch**: `git rebase -i origin/master` or equivalent
   - Squash irrelevant commits on your branch. Often a branch can be squashed into a single commit; this helps the project's history remain uncluttered. Maintain multiple commits if a) the functionalities implemented on them are clearly distinct, b) you carried out major refactoring, in this case the refactoring should be in a separate commit from the feature.
   - Make sure that the commit message is clear and specific for someone unfamiliar with the story. See [Git Flow And Versioning](https://systracorp.gitlab.io/hq/docs/methods/software-development-guide/sds-git-flow.html#commit-messages) for information on the title of commit messages.

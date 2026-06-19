@@ -1,5 +1,7 @@
 import strawberry
 from strawberry.extensions import ParserCache
+from strawberry.schema.config import StrawberryConfig
+from strawberry.types.scalar import identity
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
 from .category.mutations import (
@@ -20,6 +22,7 @@ from .comment.queries import (
     all_comments,
     one_comment,
 )
+from .line.queries import all_lines
 from .post.mutations import (
     create_post,
     delete_post,
@@ -28,6 +31,10 @@ from .post.mutations import (
 from .post.queries import (
     all_posts,
     one_post,
+)
+from .typing import (
+    Latitude,
+    Longitude,
 )
 from .user.queries import (
     all_users,
@@ -51,6 +58,7 @@ class Query:
     all_posts = all_posts
     comment = one_comment
     all_comments = all_comments
+    all_lines = all_lines
 
 
 @strawberry.type
@@ -69,6 +77,22 @@ class Mutation:
 schema = strawberry.Schema(
     query=Query,
     mutation=Mutation,
+    config=StrawberryConfig(
+        scalar_map={
+            Latitude: strawberry.scalar(
+                name="Latitude",
+                description="in Geodesic WGS-84 projection",
+                serialize=identity,
+                parse_value=identity,
+            ),
+            Longitude: strawberry.scalar(
+                name="Longitude",
+                description="in Geodesic WGS-84 projection",
+                serialize=identity,
+                parse_value=identity,
+            ),
+        },
+    ),
     extensions=[
         DjangoOptimizerExtension,
         lambda: ParserCache(maxsize=100),

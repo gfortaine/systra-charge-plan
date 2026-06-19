@@ -1,23 +1,10 @@
 #!/bin/bash
 set -e
-if [ -e /tmp/app.env ]; then
-  set -a # enable auto-export
-  # shellcheck disable=SC1091
-  . /tmp/app.env
-  set +a # disable auto-export
-fi
-quit_db() {
-  if [ "${DJANGO_DB_TYPE:-postgresql}" = "postgresql" ]; then
-    echo '\q'
-  else
-    echo '.q'
-  fi
-}
 cd /var/www/myapp
 maxsec=10
 echo "*** Wait for database ${DJANGO_DB_TYPE} to be ready (max ${maxsec} seconds)"
 for i in $(seq $maxsec); do
-  if quit_db | uv run ./back/manage.py dbshell 2>/dev/null; then
+  if uv run ./back/manage.py inspectdb >/dev/null 2>&1; then
     dbok=1
     break
   fi
@@ -32,5 +19,5 @@ if [ "$dbok" -eq 1 ] && [ -z "$DJANGO_SKIP_MIGRATE" ]; then
   sed -E -i "s|###MAPBOX_PUBLIC_KEY###|${MAPBOX_PUBLIC_KEY}|" back/static/assets/config-*.js
 else
   # allow regular error
-  quit_db | uv run ./back/manage.py dbshell
+  uv run ./back/manage.py inspectdb
 fi

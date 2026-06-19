@@ -1,0 +1,8 @@
+[tasks.tasks]
+help = "Run Tasks worker"
+cmd = "./.poe/scripts/tasks ${ACTION}"
+[[tasks.tasks.args]]
+name = "ACTION"
+positional = true
+default = "dev"
+choices = ["dev", "worker", "scheduler"]

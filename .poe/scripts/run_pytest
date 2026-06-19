@@ -2,7 +2,7 @@
 set -e
 PROJECT_NAME=${CI_PROJECT_NAME:-myapp}
 if [ ${DJANGO_DB_TYPE:-postgresql} = postgresql ]; then
-  POSTGRES_VER=17
+  POSTGRES_VER=18
   [ -z "$DB_PORT" ] && DB_PORT=5432
   [ -z "$DB_HOST" ] && DB_HOST=127.0.0.1
 else # sqlite
@@ -19,7 +19,7 @@ run_docker_postgres() {
     fi
     cid=$(docker run -d \
         --shm-size=256MB \
-        -v ${PROJECT_NAME}_postgres:/var/lib/postgresql/data/pgdata \
+        -v ${PROJECT_NAME}_postgres:/var/lib/postgresql/$version/docker \
         -e "POSTGRES_USER=${PROJECT_NAME}" \
         -e "POSTGRES_PASSWORD=${PROJECT_NAME}" \
         -e "POSTGRES_DB=${PROJECT_NAME}" \

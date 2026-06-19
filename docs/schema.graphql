@@ -51,7 +51,7 @@ input CommentCreateInput {
 input CommentFilter {
   id: IDBaseFilterLookup
   text: StrFilterLookup
-  date: DatetimeDatetimeFilterLookup
+  date: DatetimeFilterLookup
   AND: CommentFilter
   OR: CommentFilter
   NOT: CommentFilter
@@ -70,10 +70,46 @@ input CommentUpdateInput {
   author: OneToManyInput
 }
 
+"""Date (isoformat)"""
+scalar Date
+
+input DateComparisonFilterLookup {
+  """Exact match. Filter will be skipped on `null` value"""
+  exact: Date
+
+  """Assignment test. Filter will be skipped on `null` value"""
+  isNull: Boolean
+
+  """
+  Exact match of items in a given list. Filter will be skipped on `null` value
+  """
+  inList: [Date!]
+
+  """Greater than. Filter will be skipped on `null` value"""
+  gt: Date
+
+  """Greater than or equal to. Filter will be skipped on `null` value"""
+  gte: Date
+
+  """Less than. Filter will be skipped on `null` value"""
+  lt: Date
+
+  """Less than or equal to. Filter will be skipped on `null` value"""
+  lte: Date
+
+  """Inclusive range test (between)"""
+  range: DateRangeLookup
+}
+
+input DateRangeLookup {
+  start: Date = null
+  end: Date = null
+}
+
 """Date with time (isoformat)"""
 scalar DateTime
 
-input DatetimeDatetimeFilterLookup {
+input DatetimeFilterLookup {
   """Exact match. Filter will be skipped on `null` value"""
   exact: DateTime
 
@@ -110,8 +146,8 @@ input DatetimeDatetimeFilterLookup {
   hour: IntComparisonFilterLookup
   minute: IntComparisonFilterLookup
   second: IntComparisonFilterLookup
-  date: IntComparisonFilterLookup
-  time: IntComparisonFilterLookup
+  date: DateComparisonFilterLookup
+  time: TimeComparisonFilterLookup
 }
 
 input DatetimeRangeLookup {
@@ -165,6 +201,17 @@ input IntRangeLookup {
   end: Int = null
 }
 
+"""in Geodesic WGS-84 projection"""
+scalar Latitude
+
+"""Line(id, points)"""
+type Line {
+  points: [Point!]!
+}
+
+"""in Geodesic WGS-84 projection"""
+scalar Longitude
+
 input ManyToManyInput {
   add: [ID!]
   remove: [ID!]
@@ -201,6 +248,11 @@ enum Ordering {
   DESC_NULLS_LAST
 }
 
+type Point {
+  longitude: Longitude!
+  latitude: Latitude!
+}
+
 """Post(id, title, text, image, pubdate, author)"""
 type Post {
   id: ID!
@@ -228,7 +280,7 @@ input PostFilter {
   id: IDBaseFilterLookup
   title: StrFilterLookup
   text: StrFilterLookup
-  pubdate: DatetimeDatetimeFilterLookup
+  pubdate: DatetimeFilterLookup
   AND: PostFilter
   OR: PostFilter
   NOT: PostFilter
@@ -264,6 +316,7 @@ type Query {
   allPosts(filters: PostFilter, ordering: [PostOrder!]! = [], pagination: OffsetPaginationInput): [Post!]!
   comment(pk: ID!): Comment!
   allComments(filters: CommentFilter, ordering: [CommentOrder!]! = [], pagination: OffsetPaginationInput): [Comment!]!
+  allLines(pagination: OffsetPaginationInput): [Line!]!
 }
 
 input StrFilterLookup {
@@ -312,6 +365,42 @@ input StrFilterLookup {
   Case-insensitive regular expression match. Filter will be skipped on `null` value
   """
   iRegex: String
+}
+
+"""Time (isoformat)"""
+scalar Time
+
+input TimeComparisonFilterLookup {
+  """Exact match. Filter will be skipped on `null` value"""
+  exact: Time
+
+  """Assignment test. Filter will be skipped on `null` value"""
+  isNull: Boolean
+
+  """
+  Exact match of items in a given list. Filter will be skipped on `null` value
+  """
+  inList: [Time!]
+
+  """Greater than. Filter will be skipped on `null` value"""
+  gt: Time
+
+  """Greater than or equal to. Filter will be skipped on `null` value"""
+  gte: Time
+
+  """Less than. Filter will be skipped on `null` value"""
+  lt: Time
+
+  """Less than or equal to. Filter will be skipped on `null` value"""
+  lte: Time
+
+  """Inclusive range test (between)"""
+  range: TimeRangeLookup
+}
+
+input TimeRangeLookup {
+  start: Time = null
+  end: Time = null
 }
 
 """Represents a file upload."""
