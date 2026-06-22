@@ -75,6 +75,8 @@ This project regroups all the common code you may need to start a new Django + R
 - Icons with [**MaterialIcons**](https://mui.com/material-ui/material-icons/#search-material-icons)
 - Unit testing with [**Vitest**](https://vitest.dev/)
 
+Use the `typescript` branch if you really needs it.
+
 [//]: # (End of Boilerplate doc)
 
 Django
