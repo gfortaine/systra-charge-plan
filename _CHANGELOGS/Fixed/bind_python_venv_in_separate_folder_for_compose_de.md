@@ -1,0 +1,1 @@
+- Bind python venv in separate folder for compose dev

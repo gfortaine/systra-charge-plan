@@ -26,8 +26,6 @@ paths: \n\
     - /etc/nginx/nginx.conf\n\
     - /etc/nginx/conf.d\n\
     - /home/$USER\n\
-    - /home/$USER/.cache/uv\n\
-    - /home/$USER/.cache/yarn\n\
     - /opt/cache/pip\n\
     - /app/.venv\n\
     - /app/node_modules\n\
@@ -37,6 +35,7 @@ paths: \n\
  && rm /etc/supervisor/conf.d/*.conf \
  && mkdir -p \
   /opt/cache/pip \
+  /home/$USER/venv \
   /home/$USER/.cache/uv \
   /home/$USER/.cache/yarn \
  && chown -R $USER: \
@@ -44,6 +43,7 @@ paths: \n\
   /etc/nginx/conf.d \
   /etc/nginx/nginx.conf \
   /opt/cache/pip \
+  /home/$USER/venv \
   /home/$USER/.cache/uv \
   /home/$USER/.cache/yarn
 USER $USER
@@ -52,16 +52,16 @@ ENV UV_CACHE_DIR=/home/${USER}/.cache/uv \
     UV_FROZEN=1 \
     UV_NO_SYNC=1 \
     UV_NO_PROGRESS=1 \
+    UV_PROJECT_ENVIRONMENT=/home/${USER}/venv \
     NO_COLOR=1 \
     DJANGO_HOST=0.0.0.0 \
     VITE_HOST=0.0.0.0
 RUN mkdir -p \
-    /app/.venv \
     /app/node_modules \
     /app/back/{media,schedule}
 VOLUME \
     /opt/cache/pip \
-    /app/.venv \
+    /home/$USER/venv \
     /app/node_modules \
     /app/back/media \
     /app/back/schedule

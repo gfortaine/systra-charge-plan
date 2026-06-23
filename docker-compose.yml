@@ -47,6 +47,8 @@ services:
         source: .
         target: /app
         read_only: false
+        bind:
+          create_host_path: false
       - type: bind
         source: ./docker/dev/preentrypoint.sh
         target: /preentrypoint.sh
