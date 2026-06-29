@@ -4,42 +4,15 @@ from strawberry.schema.config import StrawberryConfig
 from strawberry.types.scalar import identity
 from strawberry_django.optimizer import DjangoOptimizerExtension
 
-from .category.mutations import (
-    create_category,
-    delete_category,
-    update_category,
-)
-from .category.queries import (
-    all_categories,
-    one_category,
-)
-from .comment.mutations import (
-    create_comment,
-    delete_comment,
-    update_comment,
-)
-from .comment.queries import (
-    all_comments,
-    one_comment,
-)
-from .line.queries import all_lines
-from .post.mutations import (
-    create_post,
-    delete_post,
-    update_post,
-)
-from .post.queries import (
-    all_posts,
-    one_post,
+from .charge_plan.mutations import save_charge_plan
+from .charge_plan.queries import (
+    all_charge_plan_lines,
+    all_people,
+    all_projects,
 )
 from .typing import (
     Latitude,
     Longitude,
-)
-from .user.queries import (
-    all_users,
-    current_user,
-    one_user,
 )
 from ..utils.version import version
 
@@ -49,29 +22,14 @@ class Query:
     @strawberry.field
     def version(self) -> str:
         return version
-    me = current_user
-    user = one_user
-    all_users = all_users
-    category = one_category
-    all_categories = all_categories
-    post = one_post
-    all_posts = all_posts
-    comment = one_comment
-    all_comments = all_comments
-    all_lines = all_lines
+    all_people = all_people
+    all_projects = all_projects
+    all_charge_plan_lines = all_charge_plan_lines
 
 
 @strawberry.type
 class Mutation:
-    create_category = create_category
-    update_category = update_category
-    delete_category = delete_category
-    create_post = create_post
-    update_post = update_post
-    delete_post = delete_post
-    create_comment = create_comment
-    update_comment = update_comment
-    delete_comment = delete_comment
+    save_charge_plan = save_charge_plan
 
 
 schema = strawberry.Schema(
