@@ -29,9 +29,8 @@ services:
       secrets:
         - GITLAB_TOKEN
     depends_on:
-      - db
-    # https://docs.docker.com/reference/compose-file/services/#env_file-format
-    env_file: .env
+      db:
+        condition: service_healthy
     environment:
       - "UV_LINK_MODE=copy"
       - "PRE_EP_PATH=/preentrypoint.sh"
@@ -39,6 +38,7 @@ services:
       - "DJANGO_DB_TYPE=postgresql"
       - "DJANGO_DB_HOST=db"
       - "DJANGO_DB_PORT=5432"
+      - "DJANGO_VITE_DEV_MODE=1"
       - "DJANGO_PORT=${DJANGO_PORT:-8000}"
       - "PORT=${PORT:-3978}"
     user: ${UID:-1000}:${GID:-1000}
