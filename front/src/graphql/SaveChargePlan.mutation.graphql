@@ -1,0 +1,15 @@
+mutation SaveChargePlan($lines: [ChargePlanLineInput!]!) {
+  saveChargePlan(lines: $lines) {
+    id
+    plannedHours
+    amount
+    person {
+      id
+      fullName
+    }
+    project {
+      id
+      name
+    }
+  }
+}

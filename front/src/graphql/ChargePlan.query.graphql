@@ -1,0 +1,23 @@
+query ChargePlan {
+  allPeople {
+    id
+    fullName
+  }
+  allProjects {
+    id
+    name
+  }
+  allChargePlanLines {
+    id
+    plannedHours
+    amount
+    person {
+      id
+      fullName
+    }
+    project {
+      id
+      name
+    }
+  }
+}

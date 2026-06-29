@@ -1,7 +1,0 @@
-mutation DeleteComment (
-  $id: ID!
-) {
-  deleteComment(pk: $id) {
-    id
-  }
-}

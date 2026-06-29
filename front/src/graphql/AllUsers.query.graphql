@@ -1,7 +1,0 @@
-# import './UserFields.fragment.graphql'
-
-query AllUsers {
-  allUsers {
-    ...UserFields
-  }
-}

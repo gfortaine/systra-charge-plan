@@ -1,130 +1,17 @@
 import { msg } from '@lingui/core/macro'
 import {
-  CalendarMonth,
-  Home,
-  LocalPostOffice,
-  Login,
-  Logout,
-  Map,
-  PostAdd,
   TableView,
 } from '@mui/icons-material'
-import AddPostPage from '@page/AddPost'
-import CategoryPage from '@page/Category'
-import XDataGridDemo from '@page/DataGridDemo'
-import HomePage from '@page/Home'
-import LoginPage from '@page/Login'
-import MapPage from '@page/MapPage'
-import PickersPage from '@page/Pickers'
-import PostPage from '@page/Post'
-import UserPage from '@page/User'
-import AuthRequired from '@src/auth/AuthRequired'
+import ChargePlanPage from '@page/ChargePlan'
 
 export default function useRoutes() {
   const baseRoutes = {
-    LoginRoute: {
-      title: msg`Login`,
-      path: '/login',
-      element: <LoginPage />,
-      icon: <Login />,
-      isNav: false,
-    },
-    FailRoute: {
-      title: msg`Fail`,
-      path: '/fail',
-      isNav: false,
-    },
-    UserRoute: {
-      title: msg`User`,
-      path: '/user',
-      element: (
-        <AuthRequired>
-          <UserPage />
-        </AuthRequired>
-      ),
-      isNav: false,
-    },
-    HomeRoute: {
-      title: msg`Home`,
+    ChargePlanRoute: {
+      title: msg`Plan de charge`,
       path: '/',
-      element: (
-        <AuthRequired>
-          <HomePage />
-        </AuthRequired>
-      ),
-      icon: <Home />,
+      element: <ChargePlanPage />,
       isNav: true,
-    },
-    PostRoute: {
-      title: msg`Post`,
-      path: '/post/:id',
-      element: (
-        <AuthRequired>
-          <PostPage />
-        </AuthRequired>
-      ),
-      icon: <LocalPostOffice />,
-      isNav: false,
-    },
-    AddPostRoute: {
-      title: msg`Add Post`,
-      path: '/add-post',
-      element: (
-        <AuthRequired>
-          <AddPostPage />
-        </AuthRequired>
-      ),
-      icon: <PostAdd />,
-      isNav: true,
-    },
-    CategoryRoute: {
-      title: msg`Category`,
-      path: '/category/:id',
-      element: (
-        <AuthRequired>
-          <CategoryPage />
-        </AuthRequired>
-      ),
-      isNav: false,
-    },
-    DatagridRoute: {
-      title: msg`Data grid and charts`,
-      path: '/data',
-      element: (
-        <AuthRequired>
-          <XDataGridDemo />
-        </AuthRequired>
-      ),
       icon: <TableView />,
-      isNav: true,
-    },
-    MapRoute: {
-      title: msg`Map`,
-      path: '/map',
-      element: (
-        <AuthRequired>
-          <MapPage />
-        </AuthRequired>
-      ),
-      icon: <Map />,
-      isNav: true,
-    },
-    PickersRoute: {
-      title: msg`Pickers`,
-      path: '/pickers',
-      element: (
-        <AuthRequired>
-          <PickersPage />
-        </AuthRequired>
-      ),
-      icon: <CalendarMonth />,
-      isNav: true,
-    },
-    LogoutRoute: {
-      title: msg`Logout`,
-      path: '/logout', // not used
-      icon: <Logout />,
-      isNav: true,
     },
   }
   function replacePathParams(path, params) {
@@ -147,5 +34,8 @@ export default function useRoutes() {
   const routes = baseRoutes
   return Object.assign({}, {
     routes: routeList,
+    HomeRoute: baseRoutes.ChargePlanRoute,
+    UserRoute: baseRoutes.ChargePlanRoute,
+    LogoutRoute: null,
   }, routes)
 }
