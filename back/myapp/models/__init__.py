@@ -6,6 +6,9 @@ if __name__ != '__main__':
 
     # START MODELS IMPORT
     from .category import Category  # noqa: F401
+    from .charge_plan import ChargePlanLine  # noqa: F401
+    from .charge_plan import Person  # noqa: F401
+    from .charge_plan import Project  # noqa: F401
     from .comment import Comment  # noqa: F401
     from .line import Line  # noqa: F401
     from .post import Post  # noqa: F401
