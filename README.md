@@ -32,9 +32,64 @@
 
 This guide will help you to quickly install and run the Myapp application locally for development purposes.
 
+## SYSTRA charge-plan exercise
+
+This implementation delivers the coding exercise from `docs/specs/systra-coding-exercise.pdf`.
+
+- The root page is a public charge-plan table; no authentication is required.
+- Backend-provided people and projects are seeded by migration.
+- The frontend can add/delete rows, edit planned hours, sort by person/project, and save the whole table.
+- The backend persists rows and computes amounts with `amount = tjm * planned_hours / 8`.
+- The frontend never receives or sends `tjm`; save payloads include only person ID, project ID, and planned hours.
+- A fresh database starts with an empty saved table. Click **Ajouter**, edit the row, then **Sauvegarder** to persist rows for reload.
+
+### Scope and boilerplate decisions
+
+The project starts from the SYSTRA Django + React boilerplate and keeps its stack and quality gates: Django/Python 3.14, Strawberry GraphQL, PostgreSQL, React/MUI, Vite, JavaScript frontend, pytest, mypy, linters, and Docker Compose.
+
+The submitted runtime is intentionally narrowed to the charge-plan exercise. Because the app is public and no authentication is required by the brief, unused demo GraphQL operations/pages were removed from the public surface instead of leaving unrelated user/blog/comment/category features reachable. The original boilerplate baseline is kept traceable with the `boilerplate-baseline` Git tag.
+
+### AI-driven development note
+
+AI was used as an engineering accelerator, with Spec Kit as the substrate for reviewable AI-augmented development. The goal is not to accept generated code blindly: the specification, implementation plan, task breakdown, and deterministic gates make AI assistance auditable and compatible with a GitLab Duo-style developer experience.
+
+The accepted changes are gated by typed backend code, pytest service coverage for the calculation logic, frontend automated tests, linters, production build, and Docker Compose proof. The concise Spec Kit trail is available in `specs/001-charge-plan/`.
+
+### Local exercise run
+
+```shell
+uv sync
+yarn install --immutable
+DJANGO_DB_TYPE=sqlite uv run ./back/manage.py migrate
+DJANGO_DB_TYPE=sqlite DJANGO_DEBUG=1 DJANGO_NO_HTTPS=1 DJANGO_VITE_DEV_MODE=1 uv run ./back/manage.py runserver 8000
+yarn run start
+```
+
+Then open `http://localhost:3978/`.
+
+### Exercise validation
+
+```shell
+DJANGO_DB_TYPE=sqlite uv run pytest back/tests/test_charge_plan_service.py -q --no-cov
+DJANGO_DB_TYPE=sqlite uv run ./back/manage.py check
+DJANGO_DB_TYPE=sqlite uv run poe lint back/myapp back/tests
+QUICK=1 yarn test
+yarn lint
+yarn run build
+docker compose up --build
+```
+
+The Dockerfile intentionally stays aligned with the SYSTRA boilerplate. On Apple Silicon, the boilerplate image currently runs as `linux/amd64`; if Docker Desktop reports QEMU or `node_modules/.vite` permission issues, run the compose command with the image user IDs:
+
+```shell
+env UID=999 GID=999 docker compose up --build
+```
+
 [//]: # (Start of Boilerplate doc)
 
 ## Boilerplate
+
+This repository was built from the SYSTRA Django + React boilerplate. For the coding exercise, the public runtime surface is intentionally narrowed to the charge-plan feature while keeping the boilerplate stack and tooling.
 
 To use this boilerplate:
 - clone it in some directory
@@ -57,21 +112,16 @@ Don’t forget to:
 - Change the static assets files and `back/favicon.ico` file
 - Check that the version has been set to `0.1.0` in `pyproject.toml` and `package.json`
 
-This project regroups all the common code you may need to start a new Django + React project with DSF (Digital Software Factory) UX charter.
+The original boilerplate regroups common code to start a Django + React project with the DSF (Digital Software Factory) UX charter. This exercise keeps the stack and development tooling, but removes unused demo GraphQL documents/pages from the submitted runtime.
 
-## What's inside?
+## What's inside for this exercise?
 
 - GraphQL with Strawberry
-- OIDC Authentication
 - Unit testing with Pytest
-- All the common interfaces (header, left navigation drawer, notifications, snackbar, ...).
-- A login page
-- A home page with blog post management
-- A map page with a left expansible drawer and classic use of [**Mapbox GL**](https://docs.mapbox.com/mapbox-gl-js/api/)
+- A public charge-plan table with no authentication requirement
 - A router
 - A store
 - A translation module
-- Examples of components (time and date pickers, data tables, radio buttons, file upload interface...)
 - Icons with [**MaterialIcons**](https://mui.com/material-ui/material-icons/#search-material-icons)
 - Unit testing with [**Vitest**](https://vitest.dev/)
 
